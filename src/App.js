@@ -1,28 +1,35 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useReducer } from 'react';
+import './App.css'
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+function App() {
+	const [state, update] = useReducer((state, action) => {
+		switch(action.type) {
+			case 'add':
+				return {
+					...state,
+					[action.key]: action.value
+				}
+			case 'remove':
+				let newState = {...state}
+				if (action.key in newState)
+					delete newState[action.key]
+				return newState
+		}
+	}, {})
+	
+	return (
+		<div>
+			<h1>Hi!</h1>
+			<button onClick={() => update({type: 'add', key: 'Key', value: 'Test'})}>Click!</button>
+			<br/>
+			<button onClick={() => update({type: 'add', key: 'Key', value: '123'})}>Click!</button>
+			<br/>
+			<button onClick={() => update({type: 'remove', key: 'Key'})}>Remove...</button>
+			<div style={{display: 'flex', justifyContent: 'center'}}>
+				<h3>{JSON.stringify(state)}</h3>
+			</div>
+		</div>
+	)
 }
 
 export default App;
