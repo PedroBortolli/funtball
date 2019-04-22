@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Route, Link, BrowserRouter, Switch } from 'react-router-dom'
-import './index.css'
 import App from './App'
 import NotFound from './NotFound'
+import Login from './auth/Login'
 import * as serviceWorker from './serviceWorker'
 
 const routing = (
@@ -13,6 +13,7 @@ const routing = (
 			<Switch>
 				<Route exact path="/" component={App} />
 				<Route path="/test" component={App} />
+				<Route path="/login" component={Login} />
 				<Route component={NotFound} />
 			</Switch>
 		</div>

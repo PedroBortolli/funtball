@@ -14,6 +14,7 @@ function App() {
 				if (action.key in newState)
 					delete newState[action.key]
 				return newState
+			default:
 		}
 	}, {})
 	
