@@ -5,6 +5,7 @@ import App from './App'
 import NotFound from './NotFound'
 import Login from './auth/Login'
 import * as serviceWorker from './serviceWorker'
+import 'bootstrap/dist/css/bootstrap.css'
 
 const routing = (
 	<BrowserRouter>
