@@ -1,4 +1,5 @@
-import React, { useReducer } from 'react'
+import React, {useState, useReducer} from 'react'
+import {Redirect} from 'react-router-dom'
 import styled from 'styled-components'
 import fetchApi from '../api/fetch'
 import beautify from '../utils/parser'
@@ -22,17 +23,8 @@ const Container = styled.div`
 	-webkit-border-radius:20px;
 `
 
-const tryLogin = async (form) => {
-	const ref = document.getElementById('login-response')
-	ref.innerHTML = `<img src=${loading} height="32" width="32"/>`
-	const response = await fetchApi(url + '/sign-in', {
-		username: form.username,
-		password: form.password
-	})
-	ref.innerHTML = beautify(response.message)
-}
-
 function Login() {
+	const [loggedIn, changeLoggedIn] = useState(localStorage.getItem('auth-jwt') ? true : false)
 	const [form, update] = useReducer((state, action) => {
 		return {
 			...state,
@@ -40,17 +32,35 @@ function Login() {
 		}
 	}, {})
 
-	return <Container>
-		<input type="text" style={{width: '200px'}} className="form-control" placeholder="Username" 
-			onChange={(e) => update({key: 'username', value: e.target.value})}
-			onKeyPress={(e) => e.key === 'Enter' && tryLogin(form)} autoFocus/>
-		<input type="password" style={{width: '200px'}} className="form-control" placeholder="Password" 
-			onChange={(e) => update({key: 'password', value: e.target.value})}
-			onKeyPress={(e) => e.key === 'Enter' && tryLogin(form)}/>
-		<div id="login-response"></div>
-		<button type="button" style={{width: '100px'}} className="btn btn-light" 
-			onClick={() => tryLogin(form)}>Submit</button>
-	</Container>
+	const tryLogin = async (form) => {
+		const ref = document.getElementById('login-response')
+		ref.innerHTML = `<img src=${loading} height="32" width="32"/>`
+		const response = await fetchApi(url + '/sign-in', {
+			username: form.username,
+			password: form.password
+		})
+		ref.innerHTML = beautify(response.message)
+		if (response.status === 200) {
+			await localStorage.setItem('auth-jwt', response.token)
+			changeLoggedIn(true)
+		}
+	}
+
+	return (
+		loggedIn ? <Redirect to="/" />
+		:
+		<Container>
+			<input type="text" style={{width: '200px'}} className="form-control" placeholder="Username" 
+				onChange={(e) => update({key: 'username', value: e.target.value})}
+				onKeyPress={(e) => e.key === 'Enter' && tryLogin(form)} autoFocus/>
+			<input type="password" style={{width: '200px'}} className="form-control" placeholder="Password" 
+				onChange={(e) => update({key: 'password', value: e.target.value})}
+				onKeyPress={(e) => e.key === 'Enter' && tryLogin(form)}/>
+			<div id="login-response"></div>
+			<button type="button" style={{width: '100px'}} className="btn btn-light" 
+				onClick={() => tryLogin(form)}>Submit</button>
+		</Container>
+	)
 }
 
 export default Login
