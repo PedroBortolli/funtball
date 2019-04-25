@@ -1,10 +1,10 @@
 import React, { useReducer } from 'react';
 import {Link} from 'react-router-dom'
-import jwtDecode from 'jwt-decode'
+import {getCredentials, assertAuth} from './auth/services'
 import './App.css'
 
 function App() {
-	console.log(localStorage.getItem('auth-jwt'))
+	const credentials = getCredentials()
 	const [state, update] = useReducer((state, action) => {
 		switch(action.type) {
 			case 'add':
@@ -20,16 +20,13 @@ function App() {
 			default:
 		}
 	}, {})
-
-	let decoded
-	const authJwt = localStorage.getItem('auth-jwt')
-	if (authJwt) decoded = jwtDecode(authJwt)
 	
 	return (
 		<div>
-			{authJwt ?
+			{/*assertAuth()*/}
+			{credentials ?
 				<div>
-					<h1>Hi, {decoded.username}</h1>
+					<h1>Hi, {credentials.username}</h1>
 					<Link to="/logoff" style={{fontSize: 32}}>Logoff</Link>
 				</div>
 				:

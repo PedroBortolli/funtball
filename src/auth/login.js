@@ -3,7 +3,8 @@ import {Redirect} from 'react-router-dom'
 import styled from 'styled-components'
 import fetchApi from '../api/fetch'
 import beautify from '../utils/parser'
-import loading from '../assets/loading.gif'
+import loading from '../assets/loading.gif'	
+import {getCredentials} from './services'
 
 const url = 'http://localhost:5000'
 
@@ -24,7 +25,7 @@ const Container = styled.div`
 `
 
 function Login() {
-	const [loggedIn, changeLoggedIn] = useState(localStorage.getItem('auth-jwt') ? true : false)
+	const [loggedIn, changeLoggedIn] = useState(getCredentials() ? true : false)
 	const [form, update] = useReducer((state, action) => {
 		return {
 			...state,
