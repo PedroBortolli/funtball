@@ -1,6 +1,6 @@
-const fetchApi = async (url, body) => {
+const fetchApi = async (method, url, body) => {
 	const response = await fetch(url, {
-		method: 'POST',
+		method: method,
 		headers: {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json'

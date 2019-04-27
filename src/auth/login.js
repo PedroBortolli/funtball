@@ -36,7 +36,7 @@ function Login() {
 	const tryLogin = async (form) => {
 		const ref = document.getElementById('login-response')
 		ref.innerHTML = `<img src=${loading} height="32" width="32"/>`
-		const response = await fetchApi(url + '/sign-in', {
+		const response = await fetchApi('POST', url + '/sign-in', {
 			username: form.username,
 			password: form.password
 		})

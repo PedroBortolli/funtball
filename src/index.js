@@ -5,18 +5,21 @@ import App from './App'
 import NotFound from './NotFound'
 import Login from './auth/login'
 import Logoff from './auth/logoff'
+import Dashboard from './pages/dashboard'
 import * as serviceWorker from './serviceWorker'
 import 'bootstrap/dist/css/bootstrap.css'
+import logo from './assets/funtball-logo.png'
 
 const routing = (
 	<BrowserRouter>
 		<div>
-			<Link to="/">Home</Link>
+			<img src={logo} width="50%" height="15%"/>
 			<Switch>
 				<Route exact path="/" component={App} />
 				<Route path="/test" component={App} />
 				<Route path="/login" component={Login} />
 				<Route path="/logoff" component={Logoff} />
+				<Route path="/dashboard" component={Dashboard} />
 				<Route component={NotFound} />
 			</Switch>
 		</div>
