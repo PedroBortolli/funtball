@@ -9,11 +9,17 @@ import Dashboard from './pages/dashboard'
 import * as serviceWorker from './serviceWorker'
 import 'bootstrap/dist/css/bootstrap.css'
 import logo from './assets/funtball-logo.png'
+import styled from 'styled-components'
+
+const AppContainer = styled.div`
+	background-color: #dcdde1;
+	height: 100%;
+`
 
 const routing = (
 	<BrowserRouter>
-		<div>
-			<img src={logo} width="50%" height="15%"/>
+		<AppContainer>
+			<img src={logo} width="30%" height="15%"/>
 			<Switch>
 				<Route exact path="/" component={App} />
 				<Route path="/test" component={App} />
@@ -22,7 +28,7 @@ const routing = (
 				<Route path="/dashboard" component={Dashboard} />
 				<Route component={NotFound} />
 			</Switch>
-		</div>
+		</AppContainer>
 	</BrowserRouter>
 )
 

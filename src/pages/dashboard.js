@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import fetchApi from '../api/fetch'
 import loading from '../assets/loading.gif'
+import GameCard from '../components/game-card'
+import styled from 'styled-components'
 
 const url = 'http://localhost:5000/get-schedule/'
 
 const weeks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+
+const Schedule = styled.div`
+	
+`
 
 function Dashboard() {
 	const [week, changeWeek] = useState(2) // TODO: begin at current week
@@ -32,9 +38,12 @@ function Dashboard() {
 			<h1>Week {week}</h1>
 			{!loaded ? <img src={loading}/>
 			:
-			schedule.map((game, i) => {
-				return <p key={i}>{game['away_team']} @ {game['home_team']}</p>	
-			})
+			<Schedule>
+				{schedule.map((game, i) => {
+					return <GameCard away={game['away_team']} home={game['home_team']} 
+							date={game['game_date']} time={game['game_time']} style={{marginBottom: '10px'}}/>
+				})}
+			</Schedule>
 			}
 			
 		</div>

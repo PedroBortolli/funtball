@@ -1,13 +1,8 @@
 import React from 'react'
-
 import { storiesOf } from '@storybook/react'
-import { action } from '@storybook/addon-actions'
-import { linkTo } from '@storybook/addon-links'
+import GameCard from '../components/game-card'
 
-import { Button, Welcome } from '@storybook/react/demo'
-
-storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />)
-
-storiesOf('Button', module)
-	.add('with text', () => <Button onClick={action('clicked')}>Hello Button</Button>)
-	.add('with some emoji', () => <Button onClick={action('clicked')}>😀 😎 👍 💯</Button>)
+storiesOf('Components', module)
+	.add('Game card', () => {
+		return <GameCard away="NYG" home="DAL" date="2019-09-09" time="4:25 PM"/>
+	})
