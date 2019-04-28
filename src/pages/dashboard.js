@@ -5,12 +5,8 @@ import GameCard from '../components/game-card'
 import styled from 'styled-components'
 
 const url = 'http://localhost:5000/get-schedule/'
-
 const weeks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
-
-const Schedule = styled.div`
-	
-`
+const Schedule = styled.div``
 
 function Dashboard() {
 	const [week, changeWeek] = useState(2) // TODO: begin at current week
@@ -36,7 +32,7 @@ function Dashboard() {
 				return <a onClick={() => changeWeek(wk)}>{wk} &nbsp;</a>
 			})}
 			<h1>Week {week}</h1>
-			{!loaded ? <img src={loading}/>
+			{!loaded ? <img src={loading} width="80" height="80"/>
 			:
 			<Schedule>
 				{schedule.map((game, i) => {
