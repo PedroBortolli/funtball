@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import fetchApi from '../api/fetch'
-import loading from '../assets/loading.gif'
 import GameCard from '../components/game-card'
 import styled from 'styled-components'
+import loading from '../utils/loading'
 
 const url = 'http://localhost:5000/get-schedule/'
 const weeks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
@@ -29,14 +29,14 @@ function Dashboard() {
 	return (
 		<div>
 			{weeks.map(wk => {
-				return <a onClick={() => changeWeek(wk)}>{wk} &nbsp;</a>
+				return <a key={wk} onClick={() => changeWeek(wk)}>{wk} &nbsp;</a>
 			})}
 			<h1>Week {week}</h1>
-			{!loaded ? <img src={loading} width="80" height="80"/>
+			{!loaded ? <img src={loading()} width="80" height="80"/>
 			:
 			<Schedule>
 				{schedule.map((game, i) => {
-					return <GameCard away={game['away_team']} home={game['home_team']} 
+					return <GameCard key={i} away={game['away_team']} home={game['home_team']} 
 							date={game['game_date']} time={game['game_time']} style={{marginBottom: '10px'}}/>
 				})}
 			</Schedule>

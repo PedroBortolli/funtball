@@ -3,8 +3,8 @@ import {Redirect} from 'react-router-dom'
 import styled from 'styled-components'
 import fetchApi from '../api/fetch'
 import beautify from '../utils/parser'
-import loading from '../assets/loading.gif'	
 import {getCredentials} from './services'
+import loading from '../utils/loading'
 
 const url = 'http://localhost:5000'
 
@@ -35,7 +35,7 @@ function Login() {
 
 	const tryLogin = async (form) => {
 		const ref = document.getElementById('login-response')
-		ref.innerHTML = `<img src=${loading} height="32" width="32"/>`
+		ref.innerHTML = `<img src=${loading()} height="48" width="48"/>`
 		const response = await fetchApi('POST', url + '/sign-in', {
 			username: form.username,
 			password: form.password
