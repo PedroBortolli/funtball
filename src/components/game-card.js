@@ -11,22 +11,25 @@ function importAll(r) {
 const helmets = importAll(require.context('../assets/helmets', false, /\.(png|jpe?g|svg)$/))
 
 const Card = styled.div`
-	width: 540px;
+	width: 400px;
 	height: 80px;
 	border-bottom: 1px solid gray;
 	transition: background-color 0.3s;
 	&:hover { background-color: #c2c3c4 }
 	display: grid;
-	grid-template-columns: 40px 300px 200px;
+	grid-template-columns: 40px 260px 100px;
 	margin-bottom: 10px;
 `
 
 const Teams = styled.div`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+	
+	display: grid;
+	grid-template-columns: 6px 72px 104px 72px 6px;
+	grid-template-rows: 66px 14px;
+	grid-template-areas: ". awayTeam info homeTeam ."
+						". awayStreak . homeStreak .";
 	font-size: 30px;
-	height: 100%;
+	
 `
 
 const Options = styled.div`
@@ -37,6 +40,12 @@ const Options = styled.div`
 
 const Icon = styled.div`
 
+`
+
+const Center = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `
 
 function GameCard(props) {
@@ -54,16 +63,24 @@ function GameCard(props) {
 			<Icon />
 			<Teams>
 				<img src={helmets[props.away + '.png']} width="72" height="72"
-					style={{marginLeft: 6, cursor: 'pointer', opacity: setOpacity(props.away)}}
-					onClick={() => changePick(props.away)}
+					style={{cursor: 'pointer', opacity: setOpacity(props.away), gridArea: 'awayTeam'}}
+					onClick={() => changePick(props.away)} className="awayTeam"
 				/>
-				<p style={{fontSize: 11, marginTop: 16}}>{props.date.substr(0, 10)}&nbsp;&nbsp;&nbsp;
-					&nbsp;&nbsp;{props.time.substr(1, 4)} PM</p>
+
+				<Center style={{gridArea: 'info', fontSize: 11}}>
+					<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+						<div>{props.date.substr(0, 10)}</div>
+						<div>{props.time.substr(1, 4)} PM</div>
+					</div>
+				</Center>
 
 				<img src={helmets[props.home + '2.png']} width="72" height="72" 
-					style={{marginRight: 6, cursor: 'pointer', opacity: setOpacity(props.home)}}
+					style={{cursor: 'pointer', opacity: setOpacity(props.home), gridArea: 'homeTeam'}}
 					onClick={() => changePick(props.home)}
 				/>
+
+				<Center style={{fontSize: 16, gridArea: 'awayStreak'}}>+++</Center>
+				<Center style={{fontSize: 16, gridArea: 'homeStreak'}}>---</Center>
 			</Teams>
 			<Options>
 				<div>a</div>
