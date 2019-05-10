@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import useScreenSize from '../hooks/useScreenSize'
+import test from '../assets/test.png'
 
 function importAll(r) {
 	let helmets = {}
@@ -59,9 +60,8 @@ function GameCard(props) {
 
 	return (
 		<Card style={{...props.style}}>
-			{console.log(pick)}
 			<Icon />
-			<Teams>
+			<Teams> {/*style={{backgroundImage: `url(${test})`, backgroundSize: 'cover'}}>*/}
 				<img src={helmets[props.away + '.png']} width="72" height="72"
 					style={{cursor: 'pointer', opacity: setOpacity(props.away), gridArea: 'awayTeam'}}
 					onClick={() => changePick(props.away)} className="awayTeam"

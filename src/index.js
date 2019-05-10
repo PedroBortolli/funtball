@@ -6,20 +6,25 @@ import NotFound from './NotFound'
 import Login from './auth/login'
 import Logoff from './auth/logoff'
 import Dashboard from './pages/dashboard'
+import Header from './components/header'
 import * as serviceWorker from './serviceWorker'
 import 'bootstrap/dist/css/bootstrap.css'
-import logo from './assets/funtball-logo.png'
 import styled from 'styled-components'
 
 const AppContainer = styled.div`
-	background-color: #dcdde1;
 	height: 100%;
+	width: 100%;
+	margin-left: 20%;
+	margin-right: 20%;
+	font-family: "Bookman Old Style";
 `
+
+
 
 const routing = (
 	<BrowserRouter>
 		<AppContainer>
-			<img src={logo} width="30%" height="15%"/>
+			<Header />
 			<Switch>
 				<Route exact path="/" component={App} />
 				<Route path="/test" component={App} />
