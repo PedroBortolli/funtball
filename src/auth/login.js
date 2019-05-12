@@ -48,7 +48,7 @@ function Login() {
 	}
 
 	return (
-		loggedIn ? <Redirect to="/" />
+		loggedIn ? (window.location.reload(), <Redirect to="/" />)
 		:
 		<Container>
 			<input type="text" style={{width: '200px'}} className="form-control" placeholder="Username" 

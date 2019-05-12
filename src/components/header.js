@@ -23,7 +23,7 @@ function Header() {
 				<Link to="/ranking" style={{fontSize: 22}}>Ranking</Link>
 				<Link to="/dashboard" style={{fontSize: 22}}>Dashboard</Link>
 				{getCredentials() ?
-					<Link to="/logout" style={{fontSize: 22}}>Logout</Link>
+					<Link to="/logoff" style={{fontSize: 22}}>Logoff</Link>
 					:
 					<Link to="/login" style={{fontSize: 22}}>Login</Link>
 				}

@@ -24,7 +24,7 @@ const AppContainer = styled.div`
 const routing = (
 	<BrowserRouter>
 		<AppContainer>
-			<Header />
+			<Header key={Math.random()} />
 			<Switch>
 				<Route exact path="/" component={App} />
 				<Route path="/test" component={App} />
