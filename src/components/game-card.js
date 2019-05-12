@@ -37,6 +37,7 @@ const Options = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	margin-left: 16px;
 `
 
 const Icon = styled.div`
@@ -51,6 +52,7 @@ const Center = styled.div`
 
 function GameCard(props) {
 	const [pick, changePick] = useState(null)
+	const [double, changeDouble] = useState(false)
 	//const [width, height] = useScreenSize()
 
 	const setOpacity = (team) => {
@@ -82,10 +84,11 @@ function GameCard(props) {
 				<Center style={{fontSize: 16, gridArea: 'awayStreak'}}>+++</Center>
 				<Center style={{fontSize: 16, gridArea: 'homeStreak'}}>---</Center>
 			</Teams>
-			<Options>
-				<div>a</div>
-				<div>b</div>
-				<div>c</div>
+			<Options style={{color: '#b5370e', fontWeight: '700', fontSize: 18}}>
+				<div style={{cursor: 'pointer', background: double ? '#b5370e' : 'white', 
+					color: double ? 'white' : '#b5370e'}} onClick={() => changeDouble(!double)}>2x</div>
+				<div>▼</div>
+				<div>✔</div>
 			</Options>
 		</Card>
 	)

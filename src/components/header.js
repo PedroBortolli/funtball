@@ -22,7 +22,6 @@ const MenuOptions = styled.div`
 `
 
 function Header() {
-	console.log("Oi")
 	return (
 		<div>
 			<Container>

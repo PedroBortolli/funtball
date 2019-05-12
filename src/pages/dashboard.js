@@ -52,7 +52,7 @@ function Dashboard() {
 			</Center>
 
 			<Center>
-				<h1>Week {week}</h1>
+				<h1 style={{color: '#b5370e'}}>Week {week}</h1>
 			</Center>
 
 			<Center>
