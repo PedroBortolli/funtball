@@ -11,22 +11,31 @@ const Container = styled.div`
 	justify-content: space-between;
 `
 
+const MenuOptions = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+	* {
+		margin-left: 32px;
+	}
+`
+
 function Header() {
-	useEffect(() => {
-		console.log("Header =)")
-	})
-	
+	console.log("Oi")
 	return (
 		<div>
 			<Container>
-				<img src={logo} width="280" height="100" />
-				<Link to="/ranking" style={{fontSize: 22}}>Ranking</Link>
-				<Link to="/dashboard" style={{fontSize: 22}}>Dashboard</Link>
-				{getCredentials() ?
-					<Link to="/logoff" style={{fontSize: 22}}>Logoff</Link>
-					:
-					<Link to="/login" style={{fontSize: 22}}>Login</Link>
-				}
+				<img style={{float: 'left'}} src={logo} width="280" height="80" />
+				<MenuOptions>
+					<Link to="/ranking" style={{fontSize: 22}}>Ranking</Link>
+					<Link to="/dashboard" style={{fontSize: 22}}>Dashboard</Link>
+					{getCredentials() ?
+						<Link to="/logoff" style={{fontSize: 22}}>Logoff</Link>
+						:
+						<Link to="/login" style={{fontSize: 22}}>Login</Link>
+					}
+				</MenuOptions>
 			</Container>
 			<hr style={{borderWidth: 1}} />
 		</div>
