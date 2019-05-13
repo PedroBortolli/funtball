@@ -13,18 +13,32 @@ function importAll(r) {
 const helmets = importAll(require.context('../assets/helmets', false, /\.(png|jpe?g|svg)$/))
 
 const Card = styled.div`
-	width: 420px;
+	width: 458px;
 	height: 80px;
 	border-bottom: 1px solid gray;
 	transition: background-color 0.3s;
-	&:hover { background-color: #c2c3c4 }
+	&:hover { background: #c2c3c4 }
 	display: grid;
-	grid-template-columns: 40px 260px 100px;
+	grid-template-columns: 40px 260px 158px;
 	margin-bottom: 10px;
 `
 
+const Picker = styled.select`
+	outline: none;
+	border: none !important;
+	-webkit-box-shadow: none !important;
+	-moz-box-shadow: none !important;
+	box-shadow: none !important;
+	color: ${primaryColor} !important;
+	background: none !important;
+	font-size: 18px !important;
+	font-family: "Bookman Old Style" !important;
+	font-weight: 700 !important;
+	cursor: pointer;
+	margin-right: 16px !important;
+`
+
 const Teams = styled.div`
-	
 	display: grid;
 	grid-template-columns: 6px 72px 104px 72px 6px;
 	grid-template-rows: 66px 14px;
@@ -38,11 +52,13 @@ const Options = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	margin-left: 16px;
-	* {
+	> * {
 		padding-left: 8px;
 		padding-right: 8px;
 	}
+	color: ${primaryColor};
+	font-weight: 700;
+	font-size: 18px;
 `
 
 const Icon = styled.div`
@@ -53,16 +69,22 @@ const Center = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	color: ${primaryColor};
 `
 
 function GameCard(props) {
 	const [pick, changePick] = useState(null)
 	const [double, changeDouble] = useState(false)
-	//const [width, height] = useScreenSize()
-
+	const [pointsDifference, changePointsDifference] = useState(false)
+	
 	const setOpacity = (team) => {
 		if (!pick || team === pick) return 1.0
 		return 0.2
+	}
+	const getMargin = () => {
+		if (pointsDifference.length === 4) return 0
+		else if (pointsDifference.length === 3) return 8
+		return 14
 	}
 
 	return (
@@ -74,7 +96,7 @@ function GameCard(props) {
 					onClick={() => changePick(props.away)} className="awayTeam"
 				/>
 
-				<Center style={{gridArea: 'info', fontSize: 11, color: primaryColor}}>
+				<Center style={{gridArea: 'info', fontSize: 11}}>
 					<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
 						<div>{props.date.substr(0, 10)}</div>
 						<div>{props.time.substr(1, 4)} PM</div>
@@ -86,13 +108,19 @@ function GameCard(props) {
 					onClick={() => changePick(props.home)}
 				/>
 
-				<Center style={{fontSize: 16, gridArea: 'awayStreak', color: primaryColor}}>+++</Center>
-				<Center style={{fontSize: 16, gridArea: 'homeStreak', color: primaryColor}}>---</Center>
+				<Center style={{fontSize: 16, gridArea: 'awayStreak'}}>+++</Center>
+				<Center style={{fontSize: 16, gridArea: 'homeStreak'}}>---</Center>
 			</Teams>
-			<Options style={{color: primaryColor, fontWeight: '700', fontSize: 18}}>
+			<Options>
+				<Picker defaultValue="n/a" className="form-control" style={{marginLeft: getMargin()}}
+					onChange={(e) => changePointsDifference(e.target.value)}>
+					<option style={{display: 'none'}}>&nbsp;&nbsp; -</option>
+					{[5, 10, 15, 20, 25].map(x => {
+						return <option key={x}>{'< ' + x}</option>
+					})}
+				</Picker>
 				<div style={{cursor: 'pointer', background: double ? primaryColor : '', opacity: double ? 1.0 : 0.4,
 					color: double ? 'white' : primaryColor}} onClick={() => changeDouble(!double)}>2x</div>
-				<div>▼</div>
 				<div>✔</div>
 			</Options>
 		</Card>

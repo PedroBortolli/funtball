@@ -11,7 +11,7 @@ const weeks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
 const Schedule = styled.div`
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
-	grid-gap: 20px;
+	grid-gap: 32px;
 `
 
 const Center = styled.div`
