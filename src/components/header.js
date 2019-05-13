@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import {getCredentials, assertAuth} from '../auth/services'
 import logo from '../assets/funtball-logo.png'
 import styled from 'styled-components'
+import {primaryColor} from '../utils/constants'
 
 const Container = styled.div`
 	display: flex;
@@ -27,12 +28,12 @@ function Header() {
 			<Container>
 				<img style={{float: 'left'}} src={logo} width="280" height="80" />
 				<MenuOptions>
-					<Link to="/ranking" style={{fontSize: 22}}>Ranking</Link>
-					<Link to="/dashboard" style={{fontSize: 22}}>Dashboard</Link>
+					<Link to="/ranking" style={{fontSize: 22, color: primaryColor}}>Ranking</Link>
+					<Link to="/dashboard" style={{fontSize: 22, color: primaryColor}}>Dashboard</Link>
 					{getCredentials() ?
-						<Link to="/logoff" style={{fontSize: 22}}>Logoff</Link>
+						<Link to="/logoff" style={{fontSize: 22, color: primaryColor}}>Logoff</Link>
 						:
-						<Link to="/login" style={{fontSize: 22}}>Login</Link>
+						<Link to="/login" style={{fontSize: 22, color: primaryColor}}>Login</Link>
 					}
 				</MenuOptions>
 			</Container>

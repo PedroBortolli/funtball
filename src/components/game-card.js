@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import styled from 'styled-components'
 import useScreenSize from '../hooks/useScreenSize'
 import test from '../assets/test.png'
+import {primaryColor} from '../utils/constants'
 
 function importAll(r) {
 	let helmets = {}
@@ -12,7 +13,7 @@ function importAll(r) {
 const helmets = importAll(require.context('../assets/helmets', false, /\.(png|jpe?g|svg)$/))
 
 const Card = styled.div`
-	width: 400px;
+	width: 420px;
 	height: 80px;
 	border-bottom: 1px solid gray;
 	transition: background-color 0.3s;
@@ -38,6 +39,10 @@ const Options = styled.div`
 	align-items: center;
 	justify-content: space-between;
 	margin-left: 16px;
+	* {
+		padding-left: 8px;
+		padding-right: 8px;
+	}
 `
 
 const Icon = styled.div`
@@ -69,7 +74,7 @@ function GameCard(props) {
 					onClick={() => changePick(props.away)} className="awayTeam"
 				/>
 
-				<Center style={{gridArea: 'info', fontSize: 11}}>
+				<Center style={{gridArea: 'info', fontSize: 11, color: primaryColor}}>
 					<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
 						<div>{props.date.substr(0, 10)}</div>
 						<div>{props.time.substr(1, 4)} PM</div>
@@ -81,12 +86,12 @@ function GameCard(props) {
 					onClick={() => changePick(props.home)}
 				/>
 
-				<Center style={{fontSize: 16, gridArea: 'awayStreak'}}>+++</Center>
-				<Center style={{fontSize: 16, gridArea: 'homeStreak'}}>---</Center>
+				<Center style={{fontSize: 16, gridArea: 'awayStreak', color: primaryColor}}>+++</Center>
+				<Center style={{fontSize: 16, gridArea: 'homeStreak', color: primaryColor}}>---</Center>
 			</Teams>
-			<Options style={{color: '#b5370e', fontWeight: '700', fontSize: 18}}>
-				<div style={{cursor: 'pointer', background: double ? '#b5370e' : 'white', 
-					color: double ? 'white' : '#b5370e'}} onClick={() => changeDouble(!double)}>2x</div>
+			<Options style={{color: primaryColor, fontWeight: '700', fontSize: 18}}>
+				<div style={{cursor: 'pointer', background: double ? primaryColor : '', opacity: double ? 1.0 : 0.4,
+					color: double ? 'white' : primaryColor}} onClick={() => changeDouble(!double)}>2x</div>
 				<div>▼</div>
 				<div>✔</div>
 			</Options>
