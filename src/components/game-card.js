@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
-import useScreenSize from '../hooks/useScreenSize'
 import test from '../assets/test.png'
 import {primaryColor} from '../utils/constants'
 
@@ -35,7 +34,7 @@ const Picker = styled.select`
 	font-family: "Bookman Old Style" !important;
 	font-weight: 700 !important;
 	cursor: pointer;
-	margin-right: 16px !important;
+	width: 86px !important;
 `
 
 const Teams = styled.div`
@@ -112,10 +111,11 @@ function GameCard(props) {
 				<Center style={{fontSize: 16, gridArea: 'homeStreak'}}>---</Center>
 			</Teams>
 			<Options>
-				<Picker defaultValue="n/a" className="form-control" style={{marginLeft: getMargin()}}
+				<Picker defaultValue="n/a" className="form-control" 
 					onChange={(e) => changePointsDifference(e.target.value)}>
-					<option style={{display: 'none'}}>&nbsp;&nbsp; -</option>
-					{[5, 10, 15, 20, 25].map(x => {
+					<option key="n/a_option" style={{display: 'none'}}>&nbsp;&nbsp;&nbsp; -</option>
+					<option key={5}>&nbsp;&nbsp;{'< ' + 5}</option>
+					{[10, 15, 20, 25].map(x => {
 						return <option key={x}>{'< ' + x}</option>
 					})}
 				</Picker>

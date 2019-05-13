@@ -3,6 +3,7 @@ import fetchApi from '../api/fetch'
 import GameCard from '../components/game-card'
 import styled from 'styled-components'
 import loading from '../utils/loading'
+import useScreenSize from '../hooks/useScreenSize'
 import {primaryColor} from '../utils/constants'
 
 const url = 'http://localhost:5000/get-schedule/'
@@ -10,7 +11,7 @@ const weeks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
 
 const Schedule = styled.div`
 	display: grid;
-	grid-template-columns: repeat(2, 1fr);
+	grid-template-columns: repeat(${props => props.width ? (props.width < 960 ? 1 : 2) : 2}, 1fr);
 	grid-gap: 32px;
 `
 
@@ -26,6 +27,7 @@ function Dashboard() {
 	const [week, changeWeek] = useState(1) // TODO: begin at current week
 	const [loaded, changeLoaded] = useState(false)
 	const [schedule, updateSchedule] = useState([])
+	const [width, height] = useScreenSize()
 	useEffect(() => {
 		changeLoaded(false)
 		const getSchedule = async () => {
@@ -60,7 +62,7 @@ function Dashboard() {
 			<Center>
 				{!loaded ? <img src={loading()} width="80" height="80"/>
 				:
-				<Schedule>
+				<Schedule width={width} height={height}>
 					{schedule.map((game, i) => {
 						return <GameCard key={i} away={game['away_team']} home={game['home_team']} 
 								date={game['game_date']} time={game['game_time']} />
