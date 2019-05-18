@@ -16,7 +16,7 @@ const Card = styled.div`
 	height: 94px;
 	//border-bottom: 1px solid gray;
 	transition: background-color 0.3s;
-	&:hover { background: #c2c3c4 }
+	&:hover { background-color: #eaeaea }
 	display: grid;
 	grid-template-columns: 40px 260px 158px;
 	margin-bottom: 10px;
