@@ -13,8 +13,8 @@ const helmets = importAll(require.context('../assets/helmets', false, /\.(png|jp
 
 const Card = styled.div`
 	width: 458px;
-	height: 80px;
-	border-bottom: 1px solid gray;
+	height: 94px;
+	//border-bottom: 1px solid gray;
 	transition: background-color 0.3s;
 	&:hover { background: #c2c3c4 }
 	display: grid;
@@ -40,7 +40,7 @@ const Picker = styled.select`
 const Teams = styled.div`
 	display: grid;
 	grid-template-columns: 6px 72px 104px 72px 6px;
-	grid-template-rows: 66px 14px;
+	grid-template-rows: 66px 22px;
 	grid-template-areas: ". awayTeam info homeTeam ."
 						". awayStreak . homeStreak .";
 	font-size: 30px;
@@ -74,7 +74,7 @@ const Center = styled.div`
 function GameCard(props) {
 	const [pick, changePick] = useState(null)
 	const [double, changeDouble] = useState(false)
-	const [pointsDifference, changePointsDifference] = useState(false)
+	const [pointsDifference, changePointsDifference] = useState(999)
 	
 	const setOpacity = (team) => {
 		if (!pick || team === pick) return 1.0
@@ -90,8 +90,8 @@ function GameCard(props) {
 		<Card style={{...props.style}}>
 			<Icon />
 			<Teams> {/*style={{backgroundImage: `url(${test})`, backgroundSize: 'cover'}}>*/}
-				<img src={helmets[props.away + '.png']} width="72" height="72"
-					style={{cursor: 'pointer', opacity: setOpacity(props.away), gridArea: 'awayTeam'}}
+				<img src={helmets[props.away + '.png']} width="72" height="72" style={{cursor: 'pointer', 
+					opacity: setOpacity(props.away), gridArea: 'awayTeam', transition: 'opacity 0.3s'}}
 					onClick={() => changePick(props.away)} className="awayTeam"
 				/>
 
@@ -102,13 +102,13 @@ function GameCard(props) {
 					</div>
 				</Center>
 
-				<img src={helmets[props.home + '2.png']} width="72" height="72" 
-					style={{cursor: 'pointer', opacity: setOpacity(props.home), gridArea: 'homeTeam'}}
+				<img src={helmets[props.home + '2.png']} width="72" height="72" style={{cursor: 'pointer', 
+					opacity: setOpacity(props.home), gridArea: 'homeTeam', transition: 'opacity 0.3s'}}
 					onClick={() => changePick(props.home)}
 				/>
 
-				<Center style={{fontSize: 16, gridArea: 'awayStreak'}}>+++</Center>
-				<Center style={{fontSize: 16, gridArea: 'homeStreak'}}>---</Center>
+				<Center style={{fontSize: 16, paddingTop: 8, gridArea: 'awayStreak'}}>-</Center>
+				<Center style={{fontSize: 16, paddingTop: 8, gridArea: 'homeStreak'}}>-</Center>
 			</Teams>
 			<Options>
 				<Picker defaultValue="n/a" className="form-control" 
@@ -120,8 +120,9 @@ function GameCard(props) {
 					})}
 				</Picker>
 				<div style={{cursor: 'pointer', background: double ? primaryColor : '', opacity: double ? 1.0 : 0.4,
-					color: double ? 'white' : primaryColor}} onClick={() => changeDouble(!double)}>2x</div>
-				<div>✔</div>
+					color: double ? 'white' : primaryColor, transition: 'background 0.3s, opacity 0.3s'}} 
+					onClick={() => changeDouble(!double)}>2x</div>
+				<div style={{cursor: 'pointer'}}>✔</div>
 			</Options>
 		</Card>
 	)
