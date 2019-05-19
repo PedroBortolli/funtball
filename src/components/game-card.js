@@ -1,8 +1,10 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
-import test from '../assets/test.png'
 import {primaryColor} from '../utils/constants'
 import fetchApi from '../api/fetch'
+import loading from '../utils/loading'
+
+const url = 'http://localhost:5000/'
 
 function importAll(r) {
 	let helmets = {}
@@ -15,7 +17,6 @@ const helmets = importAll(require.context('../assets/helmets', false, /\.(png|jp
 const Card = styled.div`
 	width: 458px;
 	height: 94px;
-	//border-bottom: 1px solid gray;
 	transition: background-color 0.3s;
 	&:hover { background-color: #eaeaea }
 	display: grid;
@@ -76,6 +77,12 @@ function GameCard(props) {
 	const [pick, changePick] = useState(null)
 	const [double, changeDouble] = useState(false)
 	const [pointsDifference, changePointsDifference] = useState(null)
+	const [saving, changeSaving] = useState(false)
+	useEffect(() => {
+		if (typeof props.pick !== 'undefined') changePick(props.pick)
+		if (typeof props.double !== 'undefined') changeDouble(props.double)
+		if (typeof props.difference !== 'undefined') changePointsDifference(props.difference)
+	}, [])
 	
 	const setOpacity = (team) => {
 		if (!pick || team === pick) return 1.0
@@ -83,18 +90,31 @@ function GameCard(props) {
 	}
 
 	const savePick = async () => {
+		changeSaving(true)
+		console.log(pointsDifference)
 		try {
-			const response = await fetchApi('POST', 'http://localhost:5000/make-pick', {
+			await fetchApi('POST', url + 'make-pick', {
 				username: 'pedro',
 				gameId: props['game_id'],
 				pick: pick ? (pick === props.home ? true : false) : null,
 				double: double,
-				difference: pointsDifference ? Number(pointsDifference.substr(2)) : null
+				difference: pointsDifference
 			})
 		} catch(err) { console.log('Error saving prediction: ', err) }
+		setTimeout(() => changeSaving(false), 300)
 	}
 
 	return (
+		saving ?
+		<div style={{width: 458, height: 94}}>
+			<Center style={{marginTop: -8}}>
+				<p>Saving</p>
+			</Center>
+			<Center style={{marginTop: -20}}>
+				<img src={loading()} width="60" height="60"/>
+			</Center>
+		</div>
+		:
 		<Card style={{...props.style}}>
 			<Icon />
 			<Teams> {/*style={{backgroundImage: `url(${test})`, backgroundSize: 'cover'}}>*/}
@@ -119,13 +139,16 @@ function GameCard(props) {
 				<Center style={{fontSize: 16, paddingTop: 8, gridArea: 'homeStreak'}}>-</Center>
 			</Teams>
 			<Options>
-				<Picker defaultValue="n/a" className="form-control" 
-					onChange={(e) => changePointsDifference(e.target.value)}>
+				<Picker className="form-control" value={pointsDifference ? '< ' + pointsDifference.toString() : '-'}
+					onChange={(e) => changePointsDifference(Number((e.target.value).substring(e.target.value.indexOf('<')+2)))}>
+					{!pointsDifference &&
 					<option key="n/a_option" style={{display: 'none'}}>&nbsp;&nbsp;&nbsp; -</option>
+					}
 					<option key={5}>&nbsp;&nbsp;{'< ' + 5}</option>
 					{[10, 15, 20, 25].map(x => {
 						return <option key={x}>{'< ' + x}</option>
 					})}
+
 				</Picker>
 				<div style={{cursor: 'pointer', background: double ? primaryColor : '', opacity: double ? 1.0 : 0.4,
 					color: double ? 'white' : primaryColor, transition: 'background 0.3s, opacity 0.3s'}} 

@@ -6,14 +6,13 @@ import loading from '../utils/loading'
 import useScreenSize from '../hooks/useScreenSize'
 import {primaryColor} from '../utils/constants'
 
-const url = 'http://localhost:5000/get-schedule/'
+const url = 'http://localhost:5000/'
 const weeks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
 
 const Schedule = styled.div`
 	display: grid;
 	grid-template-columns: repeat(${props => props.width ? (props.width < 980 ? 1 : 2) : 2}, 1fr);
 	grid-column-gap: 42px;
-	//grid-row-gap: 8px;
 `
 
 const Center = styled.div`
@@ -32,10 +31,18 @@ function Dashboard() {
 	useEffect(() => {
 		changeLoaded(false)
 		const getSchedule = async () => {
-			const result = await fetchApi('GET', url + week.toString(), undefined)
-			let games = []
+			const result = await fetchApi('GET', url + 'get-schedule/' + week.toString(), undefined)
+			let games = [], promises = []
 			Object.keys(result).forEach(game => {
-				if (typeof result[game] === 'object') games.push(result[game])
+				if (typeof result[game] === 'object') {
+					const picks = fetchApi('GET', url + 'get-pick/' + 'pedro' + '/' + result[game]['game_id'], undefined)
+					promises.push(picks)
+					games.push(result[game])
+				}
+			})
+			const allPicks = await Promise.all(promises)
+			allPicks.forEach((picks, i) => {
+				games[i] = {...games[i], ...picks}
 			})
 			setTimeout(() => {
 				updateSchedule(games)
@@ -67,7 +74,8 @@ function Dashboard() {
 					{schedule.map((game, i) => {
 						return <div key={i}>
 							<GameCard away={game['away_team']} home={game['home_team']} 
-								date={game['game_date']} time={game['game_time']} game_id={game['game_id']}/>
+								date={game['game_date']} time={game['game_time']} game_id={game['game_id']}
+								pick={game.pick} double={game.double} difference={game.difference} />
 							<hr style={{marginTop: -10}} />
 						</div>
 					})}
