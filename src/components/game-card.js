@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import styled from 'styled-components'
 import test from '../assets/test.png'
 import {primaryColor} from '../utils/constants'
+import fetchApi from '../api/fetch'
 
 function importAll(r) {
 	let helmets = {}
@@ -74,16 +75,23 @@ const Center = styled.div`
 function GameCard(props) {
 	const [pick, changePick] = useState(null)
 	const [double, changeDouble] = useState(false)
-	const [pointsDifference, changePointsDifference] = useState(999)
+	const [pointsDifference, changePointsDifference] = useState(null)
 	
 	const setOpacity = (team) => {
 		if (!pick || team === pick) return 1.0
 		return 0.2
 	}
-	const getMargin = () => {
-		if (pointsDifference.length === 4) return 0
-		else if (pointsDifference.length === 3) return 8
-		return 14
+
+	const savePick = async () => {
+		try {
+			const response = await fetchApi('POST', 'http://localhost:5000/make-pick', {
+				username: 'pedro',
+				gameId: props['game_id'],
+				pick: pick ? (pick === props.home ? true : false) : null,
+				double: double,
+				difference: pointsDifference ? Number(pointsDifference.substr(2)) : null
+			})
+		} catch(err) { console.log('Error saving prediction: ', err) }
 	}
 
 	return (
@@ -122,7 +130,7 @@ function GameCard(props) {
 				<div style={{cursor: 'pointer', background: double ? primaryColor : '', opacity: double ? 1.0 : 0.4,
 					color: double ? 'white' : primaryColor, transition: 'background 0.3s, opacity 0.3s'}} 
 					onClick={() => changeDouble(!double)}>2x</div>
-				<div style={{cursor: 'pointer'}}>✔</div>
+				<div style={{cursor: 'pointer'}} onClick={() => savePick()}>✔</div>
 			</Options>
 		</Card>
 	)

@@ -67,7 +67,7 @@ function Dashboard() {
 					{schedule.map((game, i) => {
 						return <div key={i}>
 							<GameCard away={game['away_team']} home={game['home_team']} 
-								date={game['game_date']} time={game['game_time']} />
+								date={game['game_date']} time={game['game_time']} game_id={game['game_id']}/>
 							<hr style={{marginTop: -10}} />
 						</div>
 					})}
