@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import {primaryColor} from '../utils/constants'
 import fetchApi from '../api/fetch'
 import loading from '../utils/loading'
+import { diff } from 'deep-object-diff';
 
 const url = 'http://localhost:5000/'
 
@@ -50,16 +51,10 @@ const Teams = styled.div`
 `
 
 const Options = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	> * {
-		padding-left: 8px;
-		padding-right: 8px;
-	}
-	color: ${primaryColor};
-	font-weight: 700;
-	font-size: 18px;
+	display: grid;
+	grid-template-rows: 74px 20px;
+	grid-template-areas: "buttons"
+						"info";
 `
 
 const Icon = styled.div`
@@ -73,15 +68,43 @@ const Center = styled.div`
 	color: ${primaryColor};
 `
 
+const Buttons = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	> * {
+		padding-left: 8px;
+		padding-right: 8px;
+	}
+	color: ${primaryColor};
+	font-weight: 700;
+	font-size: 18px;
+	grid-area: "buttons";
+	
+`
+
 function GameCard(props) {
 	const [pick, changePick] = useState(null)
 	const [double, changeDouble] = useState(false)
 	const [pointsDifference, changePointsDifference] = useState(null)
 	const [saving, changeSaving] = useState(false)
+	const [originalPick, changeOriginalPick] = useState(null)
+	const [originalDouble, changeOriginalDouble] = useState(false)
+	const [originalDifference, changeOriginalDifference] = useState(null)
+	const [allowSameSave, changeAllowSameSave] = useState(true)
 	useEffect(() => {
-		if (typeof props.pick !== 'undefined') changePick(props.pick)
-		if (typeof props.double !== 'undefined') changeDouble(props.double)
-		if (typeof props.difference !== 'undefined') changePointsDifference(props.difference)
+		if (typeof props.pick !== 'undefined') {
+			changePick(props.pick)
+			changeOriginalPick(props.pick)
+		}
+		if (typeof props.double !== 'undefined') {
+			changeDouble(props.double)
+			changeOriginalDouble(props.double)
+		}
+		if (typeof props.difference !== 'undefined') {
+			changePointsDifference(props.difference)
+			changeOriginalDifference(props.difference)
+		}
 	}, [])
 	
 	const setOpacity = (team) => {
@@ -89,19 +112,35 @@ function GameCard(props) {
 		return 0.2
 	}
 
+	const selectionDiffers = () => {
+		return pick !== originalPick || double !== originalDouble || pointsDifference !== originalDifference
+	}
+
+	const enableSave = () => {
+		if (!selectionDiffers()) return allowSameSave
+		return true
+	}
+
 	const savePick = async () => {
-		changeSaving(true)
-		console.log(pointsDifference)
-		try {
-			await fetchApi('POST', url + 'make-pick', {
-				username: 'pedro',
-				gameId: props['game_id'],
-				pick: pick ? (pick === props.home ? true : false) : null,
-				double: double,
-				difference: pointsDifference
-			})
-		} catch(err) { console.log('Error saving prediction: ', err) }
-		setTimeout(() => changeSaving(false), 300)
+		if (enableSave()) {
+			changeSaving(true)
+			try {
+				await fetchApi('POST', url + 'make-pick', {
+					username: 'pedro',
+					gameId: props['game_id'],
+					pick: pick ? (pick === props.home ? true : false) : null,
+					double: double,
+					difference: pointsDifference
+				})
+			} catch(err) { console.log('Error saving prediction: ', err) }
+			setTimeout(() => {
+				changeOriginalPick(pick)
+				changeOriginalDouble(double)
+				changeOriginalDifference(pointsDifference)
+				changeAllowSameSave(false)
+				changeSaving(false)
+			}, 300)
+		}
 	}
 
 	return (
@@ -117,7 +156,7 @@ function GameCard(props) {
 		:
 		<Card style={{...props.style}}>
 			<Icon />
-			<Teams> {/*style={{backgroundImage: `url(${test})`, backgroundSize: 'cover'}}>*/}
+			<Teams>
 				<img src={helmets[props.away + '.png']} width="72" height="72" style={{cursor: 'pointer', 
 					opacity: setOpacity(props.away), gridArea: 'awayTeam', transition: 'opacity 0.3s'}}
 					onClick={() => changePick(props.away)} className="awayTeam"
@@ -139,21 +178,33 @@ function GameCard(props) {
 				<Center style={{fontSize: 16, paddingTop: 8, gridArea: 'homeStreak'}}>-</Center>
 			</Teams>
 			<Options>
-				<Picker className="form-control" value={pointsDifference ? '< ' + pointsDifference.toString() : '-'}
-					onChange={(e) => changePointsDifference(Number((e.target.value).substring(e.target.value.indexOf('<')+2)))}>
-					{!pointsDifference &&
-					<option key="n/a_option" style={{display: 'none'}}>&nbsp;&nbsp;&nbsp; -</option>
-					}
-					<option key={5}>&nbsp;&nbsp;{'< ' + 5}</option>
-					{[10, 15, 20, 25].map(x => {
-						return <option key={x}>{'< ' + x}</option>
-					})}
+				{selectionDiffers() &&
+				<div style={{fontSize: 14, fontWeight: 900, color: '#c69a29', gridArea: 'info', 
+							display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
+					Unsaved changes&nbsp;⚠️
+				</div>
+				}
+				<Buttons>
+					<Picker className="form-control" value={pointsDifference ? '< ' + pointsDifference.toString() : '-'}
+						onChange={(e) => changePointsDifference(Number((e.target.value).substring(e.target.value.indexOf('<')+2)))}>
+						{!pointsDifference &&
+						<option key="n/a_option" style={{display: 'none'}}>&nbsp;&nbsp;&nbsp; -</option>
+						}
+						<option key={5}>&nbsp;&nbsp;{'< ' + 5}</option>
+						{[10, 15, 20, 25].map(x => {
+							return <option key={x}>{'< ' + x}</option>
+						})}
 
-				</Picker>
-				<div style={{cursor: 'pointer', background: double ? primaryColor : '', opacity: double ? 1.0 : 0.4,
-					color: double ? 'white' : primaryColor, transition: 'background 0.3s, opacity 0.3s'}} 
-					onClick={() => changeDouble(!double)}>2x</div>
-				<div style={{cursor: 'pointer'}} onClick={() => savePick()}>✔</div>
+					</Picker>
+
+					<div style={{cursor: 'pointer', background: double ? primaryColor : '', opacity: double ? 1.0 : 0.4,
+						color: double ? 'white' : primaryColor, transition: 'background 0.3s, opacity 0.3s'}} 
+						onClick={() => changeDouble(!double)}>2x</div>
+
+					<div style={{cursor: enableSave() && 'pointer', opacity: enableSave() ? 1.0 : 0.4}} onClick={() => savePick()}>
+						✔
+					</div>
+				</Buttons>
 			</Options>
 		</Card>
 	)
