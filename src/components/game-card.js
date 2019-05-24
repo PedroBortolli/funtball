@@ -16,12 +16,12 @@ function importAll(r) {
 const helmets = importAll(require.context('../assets/helmets', false, /\.(png|jpe?g|svg)$/))
 
 const Card = styled.div`
-	width: 458px;
+	width: 462px;
 	height: 94px;
 	transition: background-color 0.3s;
 	&:hover { background-color: #eaeaea }
 	display: grid;
-	grid-template-columns: 40px 260px 158px;
+	grid-template-columns: 44px 260px 158px;
 	margin-bottom: 10px;
 `
 
@@ -58,7 +58,13 @@ const Options = styled.div`
 `
 
 const Icon = styled.div`
-
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 14px;
+	color: #4f9646;
+	font-weight: 900;
+	height: 74px;
 `
 
 const Center = styled.div`
@@ -107,6 +113,16 @@ function GameCard(props) {
 		}
 	}, [])
 	
+	const calcPoints = () => {
+		let achievablePoints = 0
+		if (pick) achievablePoints += 10
+		console.log(typeof pointsDifference)
+		if (pointsDifference) achievablePoints += ((30-pointsDifference)/5)
+		// TODO: add streak
+		if (double) achievablePoints *= 2
+		return achievablePoints
+	}
+
 	const setOpacity = (team) => {
 		if (!pick || team === pick) return 1.0
 		return 0.2
@@ -155,7 +171,9 @@ function GameCard(props) {
 		</div>
 		:
 		<Card style={{...props.style}}>
-			<Icon />
+			<Icon>
+				+ {calcPoints()}
+			</Icon>
 			<Teams>
 				<img src={helmets[props.away + '.png']} width="72" height="72" style={{cursor: 'pointer', 
 					opacity: setOpacity(props.away), gridArea: 'awayTeam', transition: 'opacity 0.3s'}}
