@@ -75,7 +75,8 @@ function Dashboard() {
 						return <div key={i}>
 							<GameCard away={game['away_team']} home={game['home_team']} 
 								date={game['game_date']} time={game['game_time']} game_id={game['game_id']}
-								pick={game.pick} double={game.double} difference={game.difference} />
+								pick={game.pick} double={game.double} difference={game.difference} 
+								pickPoints={game.pickPoints} differencePoints={game.differencePoints} />
 							<hr style={{marginTop: -10}} />
 						</div>
 					})}

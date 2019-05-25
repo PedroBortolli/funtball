@@ -62,7 +62,7 @@ const Icon = styled.div`
 	align-items: center;
 	justify-content: center;
 	font-size: 14px;
-	color: #4f9646;
+	color: #44893b;
 	font-weight: 900;
 	height: 74px;
 `
@@ -90,6 +90,7 @@ const Buttons = styled.div`
 `
 
 function GameCard(props) {
+	console.log("Game " + props.game_id, props)
 	const [pick, changePick] = useState(null)
 	const [double, changeDouble] = useState(false)
 	const [pointsDifference, changePointsDifference] = useState(null)
@@ -114,6 +115,14 @@ function GameCard(props) {
 	}, [])
 	
 	const calcPoints = () => {
+		if (typeof props.pickPoints !== 'undefined') {
+			let actualPoints = props.pickPoints
+			console.log(actualPoints)
+			if (typeof props.differencePoints !== 'undefined')
+				actualPoints += props.differencePoints
+			console.log(actualPoints)
+			return actualPoints * (props.double ? 2 : 1)
+		}
 		let achievablePoints = 0
 		if (pick) achievablePoints += 10
 		console.log(typeof pointsDifference)
@@ -128,8 +137,19 @@ function GameCard(props) {
 		return 0.2
 	}
 
+	const getBackgroundColor = () => {
+		if (typeof props.pickPoints === 'undefined') return 'white'
+		if (props.pickPoints) return '#dbfccc'
+		return '#f7b4b4'
+	}
+
 	const selectionDiffers = () => {
 		return pick !== originalPick || double !== originalDouble || pointsDifference !== originalDifference
+	}
+
+	const isDifferenceCorrect = () => {
+		if (typeof props.differencePoints === 'undefined' || !props.differencePoints) return false
+		return true
 	}
 
 	const enableSave = () => {
@@ -170,7 +190,7 @@ function GameCard(props) {
 			</Center>
 		</div>
 		:
-		<Card style={{...props.style}}>
+		<Card style={{...props.style, backgroundColor: getBackgroundColor()}}>
 			<Icon>
 				+ {calcPoints()}
 			</Icon>
@@ -201,6 +221,12 @@ function GameCard(props) {
 							display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
 					Unsaved changes&nbsp;⚠️
 				</div>
+				}
+				{typeof props.pickPoints !== 'undefined' &&
+					<div style={{gridArea: 'info', paddingLeft: 40, marginTop: -16, 
+						color: isDifferenceCorrect() ? '#44893b' : 'red'}}>
+						{isDifferenceCorrect() ? '✓' : '✖'}
+					</div>
 				}
 				<Buttons>
 					<Picker className="form-control" value={pointsDifference ? '< ' + pointsDifference.toString() : '-'}
