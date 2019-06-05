@@ -26,7 +26,7 @@ function Header() {
 	return (
 		<div>
 			<Container>
-				<img style={{float: 'left'}} src={logo} width="280" height="80" />
+				<img style={{float: 'left'}} src={logo} width="230" height="60" />
 				<MenuOptions>
 					<Link to="/ranking" style={{fontSize: 22, color: primaryColor}}>Ranking</Link>
 					<Link to="/dashboard" style={{fontSize: 22, color: primaryColor}}>Dashboard</Link>

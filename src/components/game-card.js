@@ -203,7 +203,7 @@ function GameCard(props) {
 				<Center style={{gridArea: 'info', fontSize: 11}}>
 					<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
 						<div>{props.date.substr(0, 10)}</div>
-						<div>{props.time.substr(1, 4)} PM</div>
+						<div>{props.time.substr(0, 5)}</div>
 					</div>
 				</Center>
 
