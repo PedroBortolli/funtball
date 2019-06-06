@@ -90,7 +90,6 @@ const Buttons = styled.div`
 `
 
 function GameCard(props) {
-	console.log("Game " + props.game_id, props)
 	const [pick, changePick] = useState(null)
 	const [double, changeDouble] = useState(false)
 	const [pointsDifference, changePointsDifference] = useState(null)
@@ -117,15 +116,12 @@ function GameCard(props) {
 	const calcPoints = () => {
 		if (typeof props.pickPoints !== 'undefined') {
 			let actualPoints = props.pickPoints
-			console.log(actualPoints)
 			if (typeof props.differencePoints !== 'undefined')
 				actualPoints += props.differencePoints
-			console.log(actualPoints)
 			return actualPoints * (props.double ? 2 : 1)
 		}
 		let achievablePoints = 0
 		if (pick) achievablePoints += 10
-		console.log(typeof pointsDifference)
 		if (pointsDifference) achievablePoints += ((30-pointsDifference)/5)
 		// TODO: add streak
 		if (double) achievablePoints *= 2
