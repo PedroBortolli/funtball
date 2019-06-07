@@ -45,10 +45,9 @@ function Dashboard() {
 			allPicks.forEach((picks, i) => {
 				games[i] = {...games[i], ...picks}
 			})
-			setTimeout(() => {
-				updateSchedule(games)
-				changeLoaded(true)
-			}, 500)
+			updateSchedule(games)
+			changeLoaded(true)
+
 		}
 		const getStreaks = async () => {
 			if (week === 1) return
