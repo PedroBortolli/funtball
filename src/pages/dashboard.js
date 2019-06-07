@@ -29,6 +29,7 @@ function Dashboard() {
 	const [schedule, updateSchedule] = useState([])
 	const [width, height] = useScreenSize()
 	const [streaks, setStreaks] = useState({})
+	const [loadingGif, changeLoadingGif] = useState(loading())
 	useEffect(() => {
 		changeLoaded(false)
 		const getSchedule = async () => {
@@ -57,6 +58,9 @@ function Dashboard() {
 		getSchedule()
 		getStreaks()
 	}, [week])
+	useEffect(() => {
+		changeLoadingGif(loading())
+	}, [week])
 
 	return (
 		<div>
@@ -74,7 +78,7 @@ function Dashboard() {
 			</Center>
 
 			<Center>
-				{!loaded ? <img src={loading()} width="80" height="80"/>
+				{!loaded ? <img src={loadingGif} width="80" height="80"/>
 				:
 				<Schedule width={width} height={height}>
 					{schedule.map((game, i) => {
