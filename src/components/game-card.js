@@ -4,6 +4,7 @@ import {primaryColor} from '../utils/constants'
 import fetchApi from '../api/fetch'
 import loading from '../utils/loading'
 import { diff } from 'deep-object-diff';
+import streakIcon from '../assets/streak-icon.png'
 
 const url = 'http://localhost:5000/'
 
@@ -121,10 +122,12 @@ function GameCard(props) {
 			return actualPoints * (props.double ? 2 : 1)
 		}
 		let achievablePoints = 0
-		if (pick) achievablePoints += 10
-		if (pointsDifference) achievablePoints += ((30-pointsDifference)/5)
-		// TODO: add streak
-		if (double) achievablePoints *= 2
+		if (pick) {
+			achievablePoints = 10
+			if (pointsDifference) achievablePoints += ((30-pointsDifference)/5)
+			achievablePoints += props.streakAway + props.streakHome
+			if (double) achievablePoints *= 2
+		}
 		return achievablePoints
 	}
 
@@ -208,8 +211,17 @@ function GameCard(props) {
 					onClick={() => changePick(props.home)}
 				/>
 
-				<Center style={{fontSize: 16, paddingTop: 8, gridArea: 'awayStreak'}}>-</Center>
-				<Center style={{fontSize: 16, paddingTop: 8, gridArea: 'homeStreak'}}>-</Center>
+				<Center style={{fontSize: 16, paddingTop: 8, gridArea: 'awayStreak'}}>
+					{Array(props.streakAway).fill(0).map(i => {
+						return <img src={streakIcon} width="12" height="12" style={{opacity: 0.8}} />
+					})}
+				</Center>
+
+				<Center style={{fontSize: 16, paddingTop: 8, gridArea: 'homeStreak'}}>
+					{Array(props.streakHome).fill(0).map(i => {
+						return <img src={streakIcon} width="12" height="12" style={{opacity: 0.8}} />
+					})}
+				</Center>
 			</Teams>
 			<Options>
 				{selectionDiffers() &&

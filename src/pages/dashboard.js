@@ -28,6 +28,7 @@ function Dashboard() {
 	const [loaded, changeLoaded] = useState(false)
 	const [schedule, updateSchedule] = useState([])
 	const [width, height] = useScreenSize()
+	const [streaks, setStreaks] = useState({})
 	useEffect(() => {
 		changeLoaded(false)
 		const getSchedule = async () => {
@@ -49,7 +50,13 @@ function Dashboard() {
 				changeLoaded(true)
 			}, 500)
 		}
+		const getStreaks = async () => {
+			if (week === 1) return
+			const result = await fetchApi('GET', url + 'get-streak/pedro/' + (week-1).toString())
+			setStreaks(result)
+		}
 		getSchedule()
+		getStreaks()
 	}, [week])
 
 	return (
@@ -76,7 +83,10 @@ function Dashboard() {
 							<GameCard away={game['away_team']} home={game['home_team']} 
 								date={game['game_date']} time={game['game_time']} game_id={game['game_id']}
 								pick={game.pick} double={game.double} difference={game.difference} 
-								pickPoints={game.pickPoints} differencePoints={game.differencePoints} />
+								pickPoints={game.pickPoints} differencePoints={game.differencePoints}
+								streakHome={streaks[game['home_team']] || 0} streakAway={streaks[game['away_team']] || 0} />
+								{/*streakHome={typeof streaks[game['home_team']] !== 'undefined' ? Number(streaks[game['home_team']]) : 0}
+					streakAway={typeof streaks[game['away_team']] !== 'undefined' ? Number(streaks[game['away_team']]) : 0} />*/}
 							<hr style={{marginTop: -10}} />
 						</div>
 					})}
