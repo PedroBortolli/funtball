@@ -51,8 +51,8 @@ function Dashboard() {
 
 		}
 		const getStreaks = async () => {
-			if (week === 1) return
-			const result = await fetchApi('GET', url + 'get-streak/pedro/' + (week-1).toString())
+			let result = {}
+			if (week > 1) result = await fetchApi('GET', url + 'get-streak/pedro/' + (week-1).toString())
 			setStreaks(result)
 		}
 		getSchedule()
