@@ -6,6 +6,7 @@ import NotFound from './NotFound'
 import Login from './auth/login'
 import Logoff from './auth/logoff'
 import Dashboard from './pages/dashboard'
+import Ranking from './pages/ranking'
 import Header from './components/header'
 import * as serviceWorker from './serviceWorker'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -31,6 +32,7 @@ const routing = (
 				<Route path="/login" component={Login} />
 				<Route path="/logoff" component={Logoff} />
 				<Route path="/dashboard" component={Dashboard} />
+				<Route path="/ranking" component={Ranking} />
 				<Route component={NotFound} />
 			</Switch>
 		</AppContainer>
