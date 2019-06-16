@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
-import {getCredentials, assertAuth} from '../auth/services'
+import {getCredentials} from '../auth/services'
 import logo from '../assets/funtball-logo.png'
 import styled from 'styled-components'
 import {primaryColor} from '../utils/constants'
@@ -39,9 +39,9 @@ function Header() {
 	return (
 		<div>
 			<Container>
-				<img style={{float: 'left'}} src={logo} width="230" height="60" />
+				<img alt='' style={{float: 'left'}} src={logo} width="230" height="60" />
 				<MenuOptions>
-					<a style={{color: primaryColor}}>{userPoints || 0} Points</a>
+					<div style={{color: primaryColor}}>{userPoints || 0} Points</div>
 					<Link to="/ranking" style={{color: primaryColor}}>Ranking</Link>
 					<Link to="/dashboard" style={{color: primaryColor}}>Dashboard</Link>
 					{getCredentials() ?

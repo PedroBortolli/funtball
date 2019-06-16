@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import {primaryColor} from '../utils/constants'
 import fetchApi from '../api/fetch'
 import loading from '../utils/loading'
-import { diff } from 'deep-object-diff';
 import streakIcon from '../assets/streak-icon.png'
 
 const url = 'http://localhost:5000/'
@@ -185,7 +184,7 @@ function GameCard(props) {
 				<p>Saving</p>
 			</Center>
 			<Center style={{marginTop: -20}}>
-				<img src={loading()} width="60" height="60"/>
+				<img alt='' src={loading()} width="60" height="60"/>
 			</Center>
 		</div>
 		:
@@ -194,7 +193,7 @@ function GameCard(props) {
 				+ {calcPoints()}
 			</Icon>
 			<Teams>
-				<img src={helmets[props.away + '.png']} width="72" height="72" style={{cursor: 'pointer', 
+				<img alt='' src={helmets[props.away + '.png']} width="72" height="72" style={{cursor: 'pointer', 
 					opacity: setOpacity(props.away), gridArea: 'awayTeam', transition: 'opacity 0.3s'}}
 					onClick={() => changePick(props.away)} className="awayTeam"
 				/>
@@ -206,20 +205,20 @@ function GameCard(props) {
 					</div>
 				</Center>
 
-				<img src={helmets[props.home + '2.png']} width="72" height="72" style={{cursor: 'pointer', 
+				<img alt='' src={helmets[props.home + '2.png']} width="72" height="72" style={{cursor: 'pointer', 
 					opacity: setOpacity(props.home), gridArea: 'homeTeam', transition: 'opacity 0.3s'}}
 					onClick={() => changePick(props.home)}
 				/>
 
 				<Center style={{fontSize: 16, paddingTop: 8, gridArea: 'awayStreak'}}>
 					{Array(props.streakAway).fill(0).map(i => {
-						return <img src={streakIcon} width="12" height="12" style={{opacity: 0.8}} />
+						return <img alt='' src={streakIcon} width="12" height="12" style={{opacity: 0.8}} />
 					})}
 				</Center>
 
 				<Center style={{fontSize: 16, paddingTop: 8, gridArea: 'homeStreak'}}>
 					{Array(props.streakHome).fill(0).map(i => {
-						return <img src={streakIcon} width="12" height="12" style={{opacity: 0.8}} />
+						return <img alt='' src={streakIcon} width="12" height="12" style={{opacity: 0.8}} />
 					})}
 				</Center>
 			</Teams>
@@ -227,7 +226,7 @@ function GameCard(props) {
 				{selectionDiffers() &&
 				<div style={{fontSize: 14, fontWeight: 900, color: '#c69a29', gridArea: 'info', 
 							display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
-					Unsaved changes&nbsp;⚠️
+					Unsaved changes&nbsp;<span aria-labelledby="jsx-a11y/accessible-emoji" role="img">⚠️</span>
 				</div>
 				}
 				{typeof props.pickPoints !== 'undefined' &&

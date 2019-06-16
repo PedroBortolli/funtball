@@ -6,7 +6,7 @@ import loading from '../utils/loading'
 import useScreenSize from '../hooks/useScreenSize'
 import {primaryColor} from '../utils/constants'
 
-const url = 'http://localhost:5000/'
+const url = 'http://localhost:5000'
 const weeks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
 
 const Schedule = styled.div`
@@ -33,11 +33,11 @@ function Dashboard() {
 	useEffect(() => {
 		changeLoaded(false)
 		const getSchedule = async () => {
-			const result = await fetchApi('GET', url + 'get-schedule/' + week.toString(), undefined)
+			const result = await fetchApi('GET', `${url}/get-schedule/${week.toString()}`, undefined)
 			let games = [], promises = []
 			Object.keys(result).forEach(game => {
 				if (typeof result[game] === 'object') {
-					const picks = fetchApi('GET', url + 'get-pick/' + 'pedro' + '/' + result[game]['game_id'], undefined)
+					const picks = fetchApi('GET', `${url}/get-pick/pedro/${result[game]['game_id']}`, undefined)
 					promises.push(picks)
 					games.push(result[game])
 				}
@@ -67,8 +67,8 @@ function Dashboard() {
 			<Center>
 				<div>
 					{weeks.map(wk => {
-						return <a key={wk} style={{color: primaryColor}}
-						 onClick={() => changeWeek(wk)}>{wk}&nbsp;&nbsp;</a>
+						return <span key={wk} style={{color: primaryColor}}
+						 onClick={() => changeWeek(wk)}>{wk}&nbsp;&nbsp;</span>
 					})}
 				</div>
 			</Center>
@@ -78,7 +78,7 @@ function Dashboard() {
 			</Center>
 
 			<Center>
-				{!loaded ? <img src={loadingGif} width="80" height="80"/>
+				{!loaded ? <img alt='' src={loadingGif} width="80" height="80"/>
 				:
 				<Schedule width={width} height={height}>
 					{schedule.map((game, i) => {

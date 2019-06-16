@@ -1,10 +1,11 @@
-import React, { useReducer } from 'react';
+import React/*, { useReducer }*/ from 'react';
 import {Link} from 'react-router-dom'
-import {getCredentials, assertAuth} from './auth/services'
+import {getCredentials} from './auth/services'
 import './App.css'
 
 function App() {
 	const credentials = getCredentials()
+	/*
 	const [state, update] = useReducer((state, action) => {
 		switch(action.type) {
 			case 'add':
@@ -20,10 +21,10 @@ function App() {
 			default:
 		}
 	}, {})
+	*/
 	
 	return (
 		<div>
-			{/*assertAuth()*/}
 			{credentials ?
 				<div>
 					<h1>Hi, {credentials.username}</h1>

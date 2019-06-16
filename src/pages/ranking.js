@@ -32,7 +32,7 @@ function Ranking() {
 	ranking.sort((a, b) => {return b.pts - a.pts})
 	
 	return <Center>
-		{!loaded ? <img src={loadingGif} width="80" height="80"/> :
+		{!loaded ? <img src={loadingGif} alt='' width="80" height="80"/> :
 		<RankingTable ranking={ranking} title='Points' />
 		}
 	</Center>
