@@ -13,6 +13,12 @@ const Center = styled.div`
 	margin-top: 60px;
 `
 
+const RankingContainer = styled.div`
+	display: flex;
+	justify-content: center;
+	> :not(:last-child) {margin-right: 64px;}
+`
+
 
 function Ranking() {
 	const [ranking, setRanking] = useState([])
@@ -29,11 +35,15 @@ function Ranking() {
 		}
 		fetchRanking()
 	}, [])
-	ranking.sort((a, b) => {return b.pts - a.pts})
+	const pointsRanking = [...ranking.sort((a, b) => {return b.pts - a.pts})]
+	const winsRanking = [...ranking.sort((a, b) => {return b.wins - a.wins})]
 	
 	return <Center>
 		{!loaded ? <img src={loadingGif} alt='' width="80" height="80"/> :
-		<RankingTable ranking={ranking} title='Points' />
+		<RankingContainer>
+			<RankingTable ranking={pointsRanking} title='Points' />
+			<RankingTable ranking={winsRanking} title='Wins' />
+		</RankingContainer>
 		}
 	</Center>
 }

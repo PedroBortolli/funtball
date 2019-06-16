@@ -61,7 +61,9 @@ function RankingTable({ranking = [], title = 'Ranking', itemsPer = 10}) {
 					{user.username}
 				</div>
 			</RankName>
-			<div style={{display: 'flex', alignItems: 'center'}}>{user.pts}</div>
+			<div style={{display: 'flex', alignItems: 'center'}}>
+				{title === 'Points' ? user.pts : `${user.wins}-${user.losses}`}
+			</div>
 		</div>)
 	})
 	const totalPages = Math.ceil(entries.length / itemsPer)
