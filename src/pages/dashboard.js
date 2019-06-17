@@ -23,6 +23,19 @@ const Center = styled.div`
 	width: 100%;
 `
 
+const WeeksContainer = styled.div`
+	> span {
+		color: ${primaryColor};
+		cursor: pointer;
+		:hover {
+			border-bottom: 2px solid ${primaryColor};
+			font-weight: 900;
+		}
+	}
+	> :not(:last-child) {margin-right: 10px;}
+
+`
+
 function Dashboard() {
 	const [week, changeWeek] = useState(1) // TODO: begin at current week
 	const [loaded, changeLoaded] = useState(false)
@@ -52,7 +65,7 @@ function Dashboard() {
 		}
 		const getStreaks = async () => {
 			let result = {}
-			if (week > 1) result = await fetchApi('GET', url + 'get-streak/pedro/' + (week-1).toString())
+			if (week > 1) result = await fetchApi('GET', `${url}/get-streak/pedro/${(week-1).toString()}`)
 			setStreaks(result)
 		}
 		getSchedule()
@@ -62,15 +75,21 @@ function Dashboard() {
 		changeLoadingGif(loading())
 	}, [week])
 
+	const getFontWeight = (wk) => {
+		if (wk === week) return 900
+		return 100
+	}
+
 	return (
 		<div>
 			<Center>
-				<div>
+				<WeeksContainer>
 					{weeks.map(wk => {
-						return <span key={wk} style={{color: primaryColor}}
-						 onClick={() => changeWeek(wk)}>{wk}&nbsp;&nbsp;</span>
+						return <span key={wk} onClick={() => changeWeek(wk)}
+								style={{fontWeight: wk === week && 900, cursor: wk === week && 'default',
+								borderBottom: wk === week && '0'}}>{wk}</span>
 					})}
-				</div>
+				</WeeksContainer>
 			</Center>
 
 			<Center style={{marginBottom: 16}}>
