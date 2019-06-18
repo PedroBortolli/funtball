@@ -159,7 +159,7 @@ function GameCard(props) {
 		if (enableSave()) {
 			changeSaving(true)
 			try {
-				await fetchApi('POST', url + 'make-pick', {
+				await fetchApi('POST', `${url}make-pick`, undefined, {
 					username: 'pedro',
 					gameId: props['game_id'],
 					pick: pick ? (pick === props.home ? true : false) : null,
@@ -211,13 +211,13 @@ function GameCard(props) {
 				/>
 
 				<Center style={{fontSize: 16, paddingTop: 8, gridArea: 'awayStreak'}}>
-					{Array(props.streakAway).fill(0).map(i => {
+					{Array(props.streakAway).fill(0).map((foo, i) => {
 						return <img key={i} alt='' src={streakIcon} width="12" height="12" style={{opacity: 0.8}} />
 					})}
 				</Center>
 
 				<Center style={{fontSize: 16, paddingTop: 8, gridArea: 'homeStreak'}}>
-					{Array(props.streakHome).fill(0).map(i => {
+					{Array(props.streakHome).fill(0).map((foo, i) => {
 						return <img key={i} alt='' src={streakIcon} width="12" height="12" style={{opacity: 0.8}} />
 					})}
 				</Center>

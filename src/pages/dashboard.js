@@ -45,7 +45,7 @@ function Dashboard() {
 	const [loadingGif, changeLoadingGif] = useState(loading())
 	useEffect(() => {
 		changeLoaded(false)
-		if (schedule.length) {
+		if (schedule.length || week !== 1) {
 			aborters[aborters.length-1].abort()
 			aborters = [...aborters, new AbortController()]
 		}
