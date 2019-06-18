@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import loading from '../utils/loading'
 import useScreenSize from '../hooks/useScreenSize'
 import {primaryColor} from '../utils/constants'
-import AbortController from 'abort-controller'
+import 'abortcontroller-polyfill/dist/polyfill-patch-fetch'
 
 const url = 'http://localhost:5000'
 const weeks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
