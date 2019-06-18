@@ -212,13 +212,13 @@ function GameCard(props) {
 
 				<Center style={{fontSize: 16, paddingTop: 8, gridArea: 'awayStreak'}}>
 					{Array(props.streakAway).fill(0).map(i => {
-						return <img alt='' src={streakIcon} width="12" height="12" style={{opacity: 0.8}} />
+						return <img key={i} alt='' src={streakIcon} width="12" height="12" style={{opacity: 0.8}} />
 					})}
 				</Center>
 
 				<Center style={{fontSize: 16, paddingTop: 8, gridArea: 'homeStreak'}}>
 					{Array(props.streakHome).fill(0).map(i => {
-						return <img alt='' src={streakIcon} width="12" height="12" style={{opacity: 0.8}} />
+						return <img key={i} alt='' src={streakIcon} width="12" height="12" style={{opacity: 0.8}} />
 					})}
 				</Center>
 			</Teams>
