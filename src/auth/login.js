@@ -36,7 +36,7 @@ function Login() {
 	const tryLogin = async (form) => {
 		const ref = document.getElementById('login-response')
 		ref.innerHTML = `<img src=${loading()} height="48" width="48"/>`
-		const response = await fetchApi('POST', url + '/sign-in', {
+		const response = await fetchApi('POST', `${url}/sign-in`, undefined, {
 			username: form.username,
 			password: form.password
 		})
@@ -48,7 +48,7 @@ function Login() {
 	}
 
 	return (
-		loggedIn ? (window.location.reload(), <Redirect to="/" />)
+		loggedIn ? (<Redirect to="/" />)
 		:
 		<Container>
 			<input type="text" style={{width: '200px'}} className="form-control" placeholder="Username" 

@@ -20,8 +20,6 @@ const AppContainer = styled.div`
 	font-family: "Bookman Old Style";
 `
 
-
-
 const routing = (
 	<BrowserRouter>
 		<AppContainer>
@@ -31,7 +29,7 @@ const routing = (
 				<Route path="/test" component={App} />
 				<Route path="/login" component={Login} />
 				<Route path="/logoff" component={Logoff} />
-				<Route path="/dashboard" component={Dashboard} />
+				<Route path="/dashboard" render={props => (<Dashboard location={props.location} {...props} />)} />
 				<Route path="/ranking" component={Ranking} />
 				<Route component={NotFound} />
 			</Switch>

@@ -14,7 +14,6 @@ const Container = styled.div`
 	align-items: center;
 	justify-content: space-between;
 `
-
 const MenuOptions = styled.div`
 	display: flex;
 	flex-direction: row;
@@ -28,14 +27,15 @@ const MenuOptions = styled.div`
 
 function Header() {
 	const [userPoints, setUserPoints] = useState(null)
+	const [dashboard, updateDashboard] = useState(0)
 	useEffect(() => {
 		const fetchPoints = async () => {
 			const pts = await fetchApi('GET', url + 'get-points/pedro')
 			setUserPoints(pts.points)
 		}
 		fetchPoints()
-	}, [])
-	
+	}, [dashboard])
+
 	return (
 		<div>
 			<Container>
@@ -43,7 +43,7 @@ function Header() {
 				<MenuOptions>
 					<div style={{color: primaryColor}}>{userPoints || 0} Points</div>
 					<Link to="/ranking" style={{color: primaryColor}}>Ranking</Link>
-					<Link to="/dashboard" style={{color: primaryColor}}>Dashboard</Link>
+					<Link to={{pathname: "/dashboard", upd: updateDashboard}} style={{color: primaryColor}}>Dashboard</Link>
 					{getCredentials() ?
 						<Link to="/logoff" style={{color: primaryColor}}>Logoff</Link>
 						:
