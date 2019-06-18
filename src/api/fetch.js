@@ -1,6 +1,7 @@
-const fetchApi = async (method, url, body) => {
+const fetchApi = async (method, url, signal, body) => {
 	const response = await fetch(url, {
 		method: method,
+		signal: signal,
 		headers: {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json'

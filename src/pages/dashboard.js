@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import loading from '../utils/loading'
 import useScreenSize from '../hooks/useScreenSize'
 import {primaryColor} from '../utils/constants'
+import AbortController from 'abort-controller'
 
 const url = 'http://localhost:5000'
 const weeks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
@@ -14,7 +15,6 @@ const Schedule = styled.div`
 	grid-template-columns: repeat(${props => props.width ? (props.width < 988 ? 1 : 2) : 2}, 1fr);
 	grid-column-gap: 42px;
 `
-
 const Center = styled.div`
 	display: flex;
 	justify-content: center;
@@ -22,7 +22,6 @@ const Center = styled.div`
 	height: 100%;
 	width: 100%;
 `
-
 const WeeksContainer = styled.div`
 	> span {
 		color: ${primaryColor};
@@ -33,8 +32,9 @@ const WeeksContainer = styled.div`
 		}
 	}
 	> :not(:last-child) {margin-right: 10px;}
-
 `
+
+let aborters = [new AbortController()]
 
 function Dashboard() {
 	const [week, changeWeek] = useState(1) // TODO: begin at current week
@@ -45,41 +45,41 @@ function Dashboard() {
 	const [loadingGif, changeLoadingGif] = useState(loading())
 	useEffect(() => {
 		changeLoaded(false)
+		if (schedule.length) {
+			aborters[aborters.length-1].abort()
+			aborters = [...aborters, new AbortController()]
+		}
 		const getSchedule = async () => {
-			const result = await fetchApi('GET', `${url}/get-schedule/${week.toString()}`, undefined)
-			let games = [], promises = []
-			Object.keys(result).forEach(game => {
-				if (typeof result[game] === 'object') {
-					const picks = fetchApi('GET', `${url}/get-pick/pedro/${result[game]['game_id']}`, undefined)
-					promises.push(picks)
-					games.push(result[game])
-				}
-			})
-			const allPicks = await Promise.all(promises)
-			allPicks.forEach((picks, i) => {
-				games[i] = {...games[i], ...picks}
-			})
-			updateSchedule(games)
-			changeLoaded(true)
-
+			try {
+				const result = await fetchApi('GET', `${url}/get-schedule/${week.toString()}`, aborters[aborters.length-1].signal)
+				let games = [], promises = []
+				Object.keys(result).forEach(game => {
+					if (typeof result[game] === 'object') {
+						const picks = fetchApi('GET', `${url}/get-pick/pedro/${result[game]['game_id']}`, aborters[aborters.length-1].signal)
+						promises.push(picks)
+						games.push(result[game])
+					}
+				})
+				const allPicks = await Promise.all(promises)
+				allPicks.forEach((picks, i) => {
+					games[i] = {...games[i], ...picks}
+				})
+				updateSchedule(games)
+				changeLoaded(true)
+			} catch(err) {}
 		}
 		const getStreaks = async () => {
-			let result = {}
-			if (week > 1) result = await fetchApi('GET', `${url}/get-streak/pedro/${(week-1).toString()}`)
-			setStreaks(result)
+			try {
+				let result = {}
+				if (week > 1) result = await fetchApi('GET', `${url}/get-streak/pedro/${(week-1).toString()}`, aborters[aborters.length-1].signal)
+				setStreaks(result)
+			} catch(err) {}
 		}
+		changeLoadingGif(loading())
 		getSchedule()
 		getStreaks()
 	}, [week])
-	useEffect(() => {
-		changeLoadingGif(loading())
-	}, [week])
-
-	const getFontWeight = (wk) => {
-		if (wk === week) return 900
-		return 100
-	}
-
+	
 	return (
 		<div>
 			<Center>
@@ -107,8 +107,6 @@ function Dashboard() {
 								pick={game.pick} double={game.double} difference={game.difference} 
 								pickPoints={game.pickPoints} differencePoints={game.differencePoints}
 								streakHome={streaks[game['home_team']] || 0} streakAway={streaks[game['away_team']] || 0} />
-								{/*streakHome={typeof streaks[game['home_team']] !== 'undefined' ? Number(streaks[game['home_team']]) : 0}
-					streakAway={typeof streaks[game['away_team']] !== 'undefined' ? Number(streaks[game['away_team']]) : 0} />*/}
 							<hr style={{marginTop: -10}} />
 						</div>
 					})}
