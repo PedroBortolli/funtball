@@ -15,8 +15,6 @@ import styled from 'styled-components'
 const AppContainer = styled.div`
 	height: 100%;
 	width: 100%;
-	margin-left: 20%;
-	margin-right: 20%;
 	font-family: "Bookman Old Style";
 `
 
