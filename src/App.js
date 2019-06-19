@@ -1,9 +1,10 @@
 import React/*, { useReducer }*/ from 'react';
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router'
 import {getCredentials} from './auth/services'
+import Header from './components/header'
 import './App.css'
 
-function App() {
+function App(props) {
 	const credentials = getCredentials()
 	/*
 	const [state, update] = useReducer((state, action) => {
@@ -22,9 +23,12 @@ function App() {
 		}
 	}, {})
 	*/
-	
+	console.log(props)
 	return (
 		<div>
+			<Header />
+			{props.children}
+			{/*
 			{credentials ?
 				<div>
 					<h1>Hi, {credentials.username}</h1>
@@ -36,8 +40,6 @@ function App() {
 					<Link to="/login" style={{fontSize: 32}}>Login</Link><br/>
 				</div>
 			}
-			
-			{/*
 			<button onClick={() => update({type: 'add', key: 'Key', value: 'Test'})}>Click!</button>
 			<br/>
 			<button onClick={() => update({type: 'add', key: 'Key', value: '123'})}>Click!</button>

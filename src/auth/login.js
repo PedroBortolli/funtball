@@ -1,5 +1,5 @@
 import React, {useState, useReducer} from 'react'
-import {Redirect} from 'react-router-dom'
+import {Redirect} from 'react-router'
 import styled from 'styled-components'
 import fetchApi from '../api/fetch'
 import beautify from '../utils/parser'
