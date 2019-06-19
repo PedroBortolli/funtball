@@ -1,9 +1,9 @@
 import React from 'react'
-import {Redirect} from 'react-router-dom'
 
-function Logoff() {
+function Logoff(props) {
 	if (localStorage.getItem('auth-jwt')) localStorage.removeItem('auth-jwt')
-	return <Redirect to="/" />
+	props.history.push('/')
+	return <div>foo</div>
 }
 
 export default Logoff
