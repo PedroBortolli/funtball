@@ -1,5 +1,4 @@
 import React, {useState, useReducer} from 'react'
-import {Redirect} from 'react-router'
 import styled from 'styled-components'
 import fetchApi from '../api/fetch'
 import beautify from '../utils/parser'
@@ -24,7 +23,7 @@ const Container = styled.div`
 	-webkit-border-radius:20px;
 `
 
-function Login() {
+function Login(props) {
 	const [loggedIn, changeLoggedIn] = useState(getCredentials() ? true : false)
 	const [form, update] = useReducer((state, action) => {
 		return {
@@ -44,12 +43,14 @@ function Login() {
 		if (response.status === 200) {
 			await localStorage.setItem('auth-jwt', response.token)
 			changeLoggedIn(true)
+			console.log(props.history)
+			props.history.goBack()
+			//Route.browserHistory.push('/')
 		}
 	}
 
 	return (
-		loggedIn ? (<Redirect to="/" />)
-		:
+		!loggedIn ?
 		<Container>
 			<input type="text" style={{width: '200px'}} className="form-control" placeholder="Username" 
 				onChange={(e) => update({key: 'username', value: e.target.value})}
@@ -60,6 +61,11 @@ function Login() {
 			<div id="login-response"></div>
 			<button type="button" style={{width: '100px'}} className="btn btn-light" 
 				onClick={() => tryLogin(form)}>Submit</button>
+		</Container>
+		:
+		<Container>
+			<h3>Already logged in. Redirecting...</h3>
+			{props.history.push('/')}
 		</Container>
 	)
 }

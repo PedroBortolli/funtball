@@ -36,7 +36,7 @@ const WeeksContainer = styled.div`
 
 let aborters = [new AbortController()]
 
-function Dashboard(props) {
+function Dashboard() {
 	const [week, changeWeek] = useState(1) // TODO: begin at current week
 	const [loaded, changeLoaded] = useState(false)
 	const [schedule, updateSchedule] = useState([])
@@ -106,8 +106,7 @@ function Dashboard(props) {
 								date={game['game_date']} time={game['game_time']} game_id={game['game_id']}
 								pick={game.pick} double={game.double} difference={game.difference} 
 								pickPoints={game.pickPoints} differencePoints={game.differencePoints}
-								streakHome={streaks[game['home_team']] || 0} streakAway={streaks[game['away_team']] || 0} 
-								upd={props.location.upd} />
+								streakHome={streaks[game['home_team']] || 0} streakAway={streaks[game['away_team']] || 0} />
 							<hr style={{marginTop: -10}} />
 						</div>
 					})}

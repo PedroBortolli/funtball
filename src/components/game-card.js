@@ -166,7 +166,6 @@ function GameCard(props) {
 					double: double,
 					difference: pointsDifference
 				})
-				if (props.upd) props.upd(+ new Date())
 			} catch(err) { console.log('Error saving prediction: ', err) }
 			setTimeout(() => {
 				changeOriginalPick(pick)

@@ -22,8 +22,8 @@ const routing = (
 		<Router history={browserHistory}>
 			<Route exact path="/" component={App}>
 				<Route path="/test" component={App} />
-				<Route path="/login" component={Login} />
-				<Route path="/logoff" component={Logoff} />
+				<Route path="/login" component={() => <Login history={browserHistory} />} />
+				<Route path="/logoff" component={() => <Logoff history={browserHistory} />} />
 				<Route path="/dashboard" component={Dashboard} />
 				<Route path="/ranking" component={Ranking} />
 				<Route component={NotFound} />
