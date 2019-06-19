@@ -1,14 +1,16 @@
-import React/*, { useReducer }*/ from 'react';
+import React, {useState} from 'react';
 import {getCredentials} from './auth/services'
 import Header from './components/header'
 import './App.css'
 
 function App(props) {
 	const credentials = getCredentials()
+	const [foo, update] = useState(0)
+	const forceUpdate = () => update(+ new Date())
 	return (
 		<div>
-			<Header />
-			{props.children}
+			<Header key={foo} />
+			{props.children && React.cloneElement(props.children, props={update: forceUpdate})}
 
 			{/*
 			{credentials ?
