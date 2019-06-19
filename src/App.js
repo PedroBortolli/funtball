@@ -1,7 +1,22 @@
 import React, {useState} from 'react';
 import {getCredentials} from './auth/services'
 import Header from './components/header'
-import './App.css'
+import styled from 'styled-components'
+import { primaryColor } from './utils/constants'
+
+const Container = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	padding-top: 24px;
+	//height: calc(100vh - 80px);
+	> * {
+		color: ${primaryColor}
+	}
+`
 
 function App(props) {
 	const credentials = getCredentials()
@@ -10,7 +25,14 @@ function App(props) {
 	return (
 		<div>
 			<Header key={foo} />
-			{props.children && React.cloneElement(props.children, props={update: forceUpdate})}
+			{props.children ?
+				React.cloneElement(props.children, props={update: forceUpdate})
+				:
+				<Container>
+					<h2>Welcome to Funtball!</h2>
+					{credentials && <p>You are now logged in as <b>{credentials.username}</b></p>}
+				</Container>
+			}
 
 			{/*
 			{credentials ?

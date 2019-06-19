@@ -7,6 +7,7 @@ import {primaryColor} from '../utils/constants'
 import fetchApi from '../api/fetch'
 import useScreenSize from '../hooks/useScreenSize'
 import pointsLoading from '../assets/loadings/1.gif'
+import { get } from 'https';
 
 const url = 'http://localhost:5000/'
 
@@ -45,12 +46,19 @@ function Header() {
 		fetchPoints()
 	}, [dashboard])
 
+	const credentials = getCredentials()
+
 	return (
 		<HeaderContainer width={width} height={height}>
 			<Container>
-				<img alt='' style={{float: 'left'}} src={logo} width="230" height="60" />
+				<Link to="/">
+					<img alt='' style={{float: 'left'}} src={logo} width="230" height="60" />
+				</Link> 
 				<MenuOptions>
-					<div style={{color: primaryColor}}>{userPoints || <img width={26} height={26} src={pointsLoading} alt='' />} Points</div>
+					{credentials &&
+					<div style={{color: primaryColor}}>
+						{userPoints || <img width={26} height={26} src={pointsLoading} alt='' />} Points
+					</div>}
 					<Link to="/ranking" style={{color: primaryColor}}>Ranking</Link>
 					<Link to={{pathname: "/dashboard", upd: updateDashboard}} style={{color: primaryColor}}>Dashboard</Link>
 					{getCredentials() ?
