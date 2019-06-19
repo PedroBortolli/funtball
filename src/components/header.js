@@ -5,9 +5,7 @@ import logo from '../assets/funtball-logo.png'
 import styled from 'styled-components'
 import {primaryColor} from '../utils/constants'
 import fetchApi from '../api/fetch'
-import useScreenSize from '../hooks/useScreenSize'
 import pointsLoading from '../assets/loadings/1.gif'
-import { get } from 'https';
 
 const url = 'http://localhost:5000/'
 
@@ -27,16 +25,10 @@ const MenuOptions = styled.div`
 		font-size: 22px;
 	}
 `
-const HeaderContainer = styled.div`
-	width: ${props => props.width > 987 ? '988px' : '100%'};
-	margin-left: ${props => props.width > 987 ? 'calc((100% - 966px)/2)' : 0};
-	margin-right: ${props => props.with > 987 ? 'calc((100% - 966px)/2)' : 0};
-`
 
 function Header() {
 	const [userPoints, setUserPoints] = useState(null)
 	const [dashboard, updateDashboard] = useState(0)
-	const [width, height] = useScreenSize()
 	useEffect(() => {
 		const fetchPoints = async () => {
 			const requestBegin = + new Date()
@@ -49,7 +41,7 @@ function Header() {
 	const credentials = getCredentials()
 
 	return (
-		<HeaderContainer width={width} height={height}>
+		<div>
 			<Container>
 				<Link to="/">
 					<img alt='' style={{float: 'left'}} src={logo} width="230" height="60" />
@@ -69,7 +61,7 @@ function Header() {
 				</MenuOptions>
 			</Container>
 			<hr style={{borderWidth: 1}} />
-		</HeaderContainer>
+		</div>
 	)
 }
 

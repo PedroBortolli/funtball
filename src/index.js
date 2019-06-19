@@ -9,14 +9,7 @@ import Dashboard from './pages/dashboard'
 import Ranking from './pages/ranking'
 import * as serviceWorker from './serviceWorker'
 import 'bootstrap/dist/css/bootstrap.css'
-import styled from 'styled-components'
 import {getCredentials} from './auth/services'
-
-const AppContainer = styled.div`
-	height: 100%;
-	width: 100%;
-	font-family: "Bookman Old Style";
-`
 
 const verifyLogin = () => {
 	const credentials = getCredentials()
@@ -26,18 +19,16 @@ const verifyLogin = () => {
 	})
 }
 
-const routing = (	
-	<AppContainer>
-		<Router history={browserHistory}>
-			<Route exact path="/" component={App}>
-				<Route path="/login" component={() => <Login history={browserHistory} />} />
-				<Route path="/logoff" component={() => <Logoff history={browserHistory} />} />
-				<Route path="/dashboard" component={Dashboard} onEnter={() => verifyLogin()} />
-				<Route path="/ranking" component={Ranking} />
-				<Route component={NotFound} />
-			</Route>
-		</Router>
-	</AppContainer>
+const routing = (
+	<Router history={browserHistory}>
+		<Route exact path="/" component={App}>
+			<Route path="/login" component={() => <Login history={browserHistory} />} />
+			<Route path="/logoff" component={() => <Logoff history={browserHistory} />} />
+			<Route path="/dashboard" component={Dashboard} onEnter={() => verifyLogin()} />
+			<Route path="/ranking" component={Ranking} />
+			<Route component={NotFound} />
+		</Route>
+	</Router>
 )
 
 ReactDOM.render(routing, document.getElementById('root'))
