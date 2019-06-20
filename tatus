@@ -1,27 +1,0 @@
-[1mdiff --git a/src/components/header.js b/src/components/header.js[m
-[1mindex c4bb89d..5ac45f3 100644[m
-[1m--- a/src/components/header.js[m
-[1m+++ b/src/components/header.js[m
-[36m@@ -24,6 +24,9 @@[m [mconst MenuOptions = styled.div`[m
- 		margin-left: 32px;[m
- 		font-size: 22px;[m
- 	}[m
-[32m+[m	[32m> :first-child {[m[41m[m
-[32m+[m		[32mmargin-right: 32px;[m[41m[m
-[32m+[m	[32m}[m[41m[m
- `[m
- [m
- function Header() {[m
-[36m@@ -49,10 +52,10 @@[m [mfunction Header() {[m
- 				<MenuOptions>[m
- 					{credentials &&[m
- 					<div style={{color: primaryColor}}>[m
-[31m-						{userPoints || <img width={26} height={26} src={pointsLoading} alt='' />} Points[m
-[32m+[m						[32m{credentials.username}: {userPoints || <img width={26} height={26} src={pointsLoading} alt='' />} Points[m[41m[m
- 					</div>}[m
-[31m-					<Link to="/ranking" style={{color: primaryColor}}>Ranking</Link>[m
- 					{credentials && <Link to={{pathname: "/dashboard", upd: updateDashboard}} style={{color: primaryColor}}>Dashboard</Link>}[m
-[32m+[m					[32m<Link to="/ranking" style={{color: primaryColor}}>Ranking</Link>[m[41m[m
- 					{credentials ?[m
- 						<Link to="/logoff" style={{color: primaryColor}}>Logoff</Link>[m
- 						:[m
