@@ -24,6 +24,9 @@ const MenuOptions = styled.div`
 		margin-left: 32px;
 		font-size: 22px;
 	}
+	> :first-child {
+		margin-right: 32px;
+	}
 `
 
 function Header() {
@@ -49,10 +52,10 @@ function Header() {
 				<MenuOptions>
 					{credentials &&
 					<div style={{color: primaryColor}}>
-						{userPoints || <img width={26} height={26} src={pointsLoading} alt='' />} Points
+						{credentials.username}: {userPoints || <img width={26} height={26} src={pointsLoading} alt='' />} Points
 					</div>}
-					<Link to="/ranking" style={{color: primaryColor}}>Ranking</Link>
 					{credentials && <Link to={{pathname: "/dashboard", upd: updateDashboard}} style={{color: primaryColor}}>Dashboard</Link>}
+					<Link to="/ranking" style={{color: primaryColor}}>Ranking</Link>
 					{credentials ?
 						<Link to="/logoff" style={{color: primaryColor}}>Logoff</Link>
 						:
