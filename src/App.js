@@ -88,15 +88,15 @@ function App(props) {
 						</Row>
 					</Home>
 					<Center>
-						<img src={footballGif} width={120} height={120} style={{marginTop: 24}} />
+						<img alt='' src={footballGif} width={120} height={120} style={{marginTop: 24}} />
 					</Center>
 					<Footer>
 						<ImgLinks>
-							<a target='_blank' href="https://github.com/PedroBortolli/funtball" style={{cursor: 'poiinter'}}>
-								<img src={GitHubLogo} width={48} height={48}/>
+							<a target='_blank' href="https://github.com/PedroBortolli/funtball" rel='noopener noreferrer' style={{cursor: 'poiinter'}}>
+								<img alt='' src={GitHubLogo} width={48} height={48}/>
 							</a>
-							<a target='_blank' href="https://twitter.com/PedroBortolli" style={{cursor: 'poiinter'}}>
-								<img src={TwitterLogo} width={48} height={48}/>
+							<a target='_blank' href="https://twitter.com/PedroBortolli" rel='noopener noreferrer' style={{cursor: 'poiinter'}}>
+								<img alt='' src={TwitterLogo} width={48} height={48}/>
 							</a>
 						</ImgLinks>
 						<Center>
