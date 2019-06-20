@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import {primaryColor} from '../utils/constants'
 import fetchApi from '../api/fetch'
 import pointsLoading from '../assets/loadings/1.gif'
+import useScreenSize from '../hooks/useScreenSize'
 
 const url = 'http://localhost:5000/'
 
@@ -30,6 +31,7 @@ const MenuOptions = styled.div`
 `
 
 function Header() {
+	const [width, height] = useScreenSize()
 	const [userPoints, setUserPoints] = useState(null)
 	const [dashboard, updateDashboard] = useState(0)
 	useEffect(() => {
@@ -41,13 +43,17 @@ function Header() {
 		fetchPoints()
 	}, [dashboard])
 
+	const isMobile = () => {
+		if (width < 500) return true
+		return false
+	}
 	const credentials = getCredentials()
 
 	return (
 		<div>
 			<Container>
 				<Link to="/">
-					<img alt='' style={{float: 'left'}} src={logo} width="230" height="60" />
+					<img alt='' style={{float: 'left'}} src={logo} width={isMobile() ? 150 : 230} height={isMobile() ? 40 : 60} />
 				</Link> 
 				<MenuOptions>
 					{credentials &&
