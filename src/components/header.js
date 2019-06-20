@@ -52,8 +52,8 @@ function Header() {
 						{userPoints || <img width={26} height={26} src={pointsLoading} alt='' />} Points
 					</div>}
 					<Link to="/ranking" style={{color: primaryColor}}>Ranking</Link>
-					<Link to={{pathname: "/dashboard", upd: updateDashboard}} style={{color: primaryColor}}>Dashboard</Link>
-					{getCredentials() ?
+					{credentials && <Link to={{pathname: "/dashboard", upd: updateDashboard}} style={{color: primaryColor}}>Dashboard</Link>}
+					{credentials ?
 						<Link to="/logoff" style={{color: primaryColor}}>Logoff</Link>
 						:
 						<Link to="/login" style={{color: primaryColor}}>Login</Link>
