@@ -30,13 +30,15 @@ const Css = styled.div`
 		height: 0;
 		border-left: 22px solid ${secondaryColor};
 		border-top: 22px solid transparent;
-		border-bottom: 22px solid transparent;
+		border-bottom: 22px solid transparent;		
 	}
 `
 
 const Container = styled.div`
 	display: flex;
 	align-items: center;
+	position: relative;
+	z-index: -1;
 `
 
 export default function Pointer(props) {

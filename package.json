@@ -10,6 +10,7 @@
     "bootstrap": "^4.3.1",
     "jwt-decode": "^2.2.0",
     "react": "^16.8.6",
+    "react-burger-menu": "^2.6.10",
     "react-dom": "^16.8.6",
     "react-router": "3",
     "react-router-dom": "^5.0.0",
@@ -26,7 +27,20 @@
     "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "rules": {
+      "jsx-a11y/anchor-is-valid": [
+        "error",
+        {
+          "components": [
+            "Link"
+          ],
+          "specialLink": [
+            "to"
+          ]
+        }
+      ]
+    }
   },
   "browserslist": [
     ">0.2%",

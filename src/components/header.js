@@ -7,9 +7,16 @@ import {primaryColor} from '../utils/constants'
 import fetchApi from '../api/fetch'
 import pointsLoading from '../assets/loadings/1.gif'
 import useScreenSize from '../hooks/useScreenSize'
+import Menu from 'react-burger-menu/lib/menus/slide'
+import './side-menu.css'
 
 const url = 'http://localhost:5000/'
 
+const HeaderContainer = styled.div`
+	position: fixed;
+	width: 988px;
+	background: #ffffff;
+`
 const Container = styled.div`
 	display: flex;
 	flex-direction: row;
@@ -25,13 +32,10 @@ const MenuOptions = styled.div`
 		margin-left: 32px;
 		font-size: 22px;
 	}
-	> :first-child {
-		margin-right: 32px;
-	}
 `
 
 function Header() {
-	const [width, height] = useScreenSize()
+	const [width] = useScreenSize()
 	const [userPoints, setUserPoints] = useState(null)
 	const [dashboard, updateDashboard] = useState(0)
 	useEffect(() => {
@@ -44,20 +48,39 @@ function Header() {
 	}, [dashboard])
 
 	const isMobile = () => {
-		if (width < 500) return true
+		if (width < 800) return true
 		return false
 	}
 	const credentials = getCredentials()
 
 	return (
-		<div>
+		<HeaderContainer>
+			{isMobile() &&
+			<Menu right width={'180px'}>
+				{credentials ?
+					<a className='menu-item'>
+						<Link to="/logoff" style={{color: primaryColor}}>Logoff</Link>
+					</a>
+					:
+					<a className='menu-item'>
+						<Link to="/login" style={{color: primaryColor}}>Login</Link>
+					</a>
+				}
+				<a className='menu-item'>
+					{credentials && <Link to={{pathname: "/dashboard", upd: updateDashboard}} style={{color: primaryColor}}>Dashboard</Link>}
+				</a>
+				<a className='menu-item'>
+					<Link to="/ranking" style={{color: primaryColor}}>Ranking</Link>
+				</a>
+			</Menu>}
 			<Container>
 				<Link to="/">
-					<img alt='' style={{float: 'left'}} src={logo} width={isMobile() ? 150 : 230} height={isMobile() ? 40 : 60} />
-				</Link> 
+					<img alt='' style={{float: 'left'}} src={logo} width={isMobile() ? 230 : 230} height={isMobile() ? 60 : 60} />
+				</Link>
+				{!isMobile() &&
 				<MenuOptions>
 					{credentials &&
-					<div style={{color: primaryColor}}>
+					<div style={{color: primaryColor, marginRight: 32}}>
 						{credentials.username}: {userPoints || <img width={26} height={26} src={pointsLoading} alt='' />} Points
 					</div>}
 					{credentials && <Link to={{pathname: "/dashboard", upd: updateDashboard}} style={{color: primaryColor}}>Dashboard</Link>}
@@ -67,10 +90,10 @@ function Header() {
 						:
 						<Link to="/login" style={{color: primaryColor}}>Login</Link>
 					}
-				</MenuOptions>
+				</MenuOptions>}
 			</Container>
 			<hr style={{borderWidth: 1}} />
-		</div>
+		</HeaderContainer>
 	)
 }
 
