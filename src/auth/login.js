@@ -4,8 +4,7 @@ import fetchApi from '../api/fetch'
 import beautify from '../utils/parser'
 import {getCredentials} from './services'
 import loading from '../utils/loading'
-
-const url = 'http://localhost:5000'
+import {url} from '../utils/constants'
 
 const Container = styled.div`
 	display: flex;

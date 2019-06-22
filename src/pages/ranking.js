@@ -3,8 +3,8 @@ import fetchApi from '../api/fetch'
 import styled from 'styled-components'
 import loading from '../utils/loading'
 import RankingTable from '../components/ranking-table'
+import {url} from '../utils/constants'
 
-const url = 'http://localhost:5000/'
 const loadingGif = loading()
 
 const Center = styled.div`
@@ -26,7 +26,7 @@ function Ranking() {
 	useEffect(() => {
 		const fetchRanking = async () => {
 			const beginReq = + new Date()
-			const usersPoints = await fetchApi('GET', url + 'get-all-points')
+			const usersPoints = await fetchApi('GET', `${url}/get-all-points`)
 			setRanking(usersPoints.ranking)
 			const endReq = + new Date()			
 			setTimeout(() => {

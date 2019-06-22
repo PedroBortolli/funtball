@@ -5,8 +5,7 @@ import fetchApi from '../api/fetch'
 import loading from '../utils/loading'
 import streakIcon from '../assets/streak-icon.png'
 import useScreenSize from '../hooks/useScreenSize'
-
-const url = 'http://localhost:5000/'
+import {url} from '../utils/constants'
 
 function importAll(r) {
 	let helmets = {}
@@ -163,7 +162,7 @@ function GameCard(props) {
 		if (enableSave()) {
 			changeSaving(true)
 			try {
-				await fetchApi('POST', `${url}make-pick`, undefined, {
+				await fetchApi('POST', `${url}/make-pick`, undefined, {
 					username: 'pedro',
 					gameId: props['game_id'],
 					pick: pick ? (pick === props.home ? true : false) : null,

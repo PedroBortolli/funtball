@@ -7,10 +7,9 @@ import {primaryColor} from '../utils/constants'
 import fetchApi from '../api/fetch'
 import pointsLoading from '../assets/loadings/1.gif'
 import useScreenSize from '../hooks/useScreenSize'
+import {url} from '../utils/constants'
 import Menu from 'react-burger-menu/lib/menus/slide'
 import './side-menu.css'
-
-const url = 'http://localhost:5000/'
 
 const HeaderContainer = styled.div`
 	position: fixed;
@@ -42,7 +41,7 @@ function Header() {
 	useEffect(() => {
 		const fetchPoints = async () => {
 			const requestBegin = + new Date()
-			const pts = await fetchApi('GET', url + 'get-points/pedro')
+			const pts = await fetchApi('GET', `${url}/get-points/pedro`)
 			setTimeout(() => {setUserPoints(pts.points)}, Math.max(1, 400 - (new Date() - requestBegin)))
 		}
 		fetchPoints()
