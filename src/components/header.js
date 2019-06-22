@@ -38,6 +38,7 @@ function Header() {
 	const [width] = useScreenSize()
 	const [userPoints, setUserPoints] = useState(null)
 	const [dashboard, updateDashboard] = useState(0)
+	const [menuOpen, changeMenuOpen] = useState(false)
 	useEffect(() => {
 		const fetchPoints = async () => {
 			const requestBegin = + new Date()
@@ -51,26 +52,30 @@ function Header() {
 		if (width < 800) return true
 		return false
 	}
+	const toggleMenu = (state) => changeMenuOpen(state.isOpen)
+	const closeMenu = () => changeMenuOpen(false)
+
 	const credentials = getCredentials()
 
 	return (
 		<HeaderContainer>
 			{isMobile() &&
-			<Menu right width={'180px'}>
+			<Menu isOpen={menuOpen} onStateChange={state => toggleMenu(state)} right width={'180px'}>
 				{credentials ?
 					<a className='menu-item'>
-						<Link to="/logoff" style={{color: primaryColor}}>Logoff</Link>
+						<Link to="/logoff" onClick={closeMenu} style={{color: primaryColor}}>Logoff</Link>
 					</a>
 					:
 					<a className='menu-item'>
-						<Link to="/login" style={{color: primaryColor}}>Login</Link>
+						<Link to="/login" onClick={closeMenu} style={{color: primaryColor}}>Login</Link>
 					</a>
 				}
 				<a className='menu-item'>
-					{credentials && <Link to={{pathname: "/dashboard", upd: updateDashboard}} style={{color: primaryColor}}>Dashboard</Link>}
+					{credentials && 
+					<Link to={{pathname: "/dashboard", upd: updateDashboard}} onClick={closeMenu} style={{color: primaryColor}}>Dashboard</Link>}
 				</a>
 				<a className='menu-item'>
-					<Link to="/ranking" style={{color: primaryColor}}>Ranking</Link>
+					<Link to="/ranking" onClick={closeMenu} style={{color: primaryColor}}>Ranking</Link>
 				</a>
 			</Menu>}
 			<Container>
