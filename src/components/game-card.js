@@ -4,6 +4,7 @@ import {primaryColor} from '../utils/constants'
 import fetchApi from '../api/fetch'
 import loading from '../utils/loading'
 import streakIcon from '../assets/streak-icon.png'
+import useScreenSize from '../hooks/useScreenSize'
 
 const url = 'http://localhost:5000/'
 
@@ -23,6 +24,8 @@ const Card = styled.div`
 	display: grid;
 	grid-template-columns: 44px 260px 158px;
 	margin-bottom: 10px;
+	zoom: ${props => props.scale};
+	-moz-transform: scale(${props => props.scale});
 `
 
 const Picker = styled.select`
@@ -98,6 +101,7 @@ function GameCard(props) {
 	const [originalDouble, changeOriginalDouble] = useState(false)
 	const [originalDifference, changeOriginalDifference] = useState(null)
 	const [allowSameSave, changeAllowSameSave] = useState(true)
+	const [width] = useScreenSize()
 	useEffect(() => {
 		if (typeof props.pick !== 'undefined') {
 			changePick(props.pick)
@@ -178,6 +182,8 @@ function GameCard(props) {
 		}
 	}
 
+	const getScale = () => {return Math.min(width/462.0, 1.0)}
+
 	return (
 		saving ?
 		<div style={{width: 458, height: 94}}>
@@ -189,7 +195,7 @@ function GameCard(props) {
 			</Center>
 		</div>
 		:
-		<Card style={{...props.style, backgroundColor: getBackgroundColor()}}>
+		<Card scale={getScale()} style={{...props.style, backgroundColor: getBackgroundColor()}}>
 			<Icon>
 				+ {calcPoints()}
 			</Icon>
