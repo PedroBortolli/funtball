@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import useScreenSize from '../hooks/useScreenSize'
 import {primaryColor} from '../utils/constants'
+import { isMobile } from '../utils/modules'
 import Slider from 'react-slick'
 import './css/slider.css'
 import 'slick-carousel/slick/slick.css'
@@ -49,12 +50,9 @@ function Weeks({week, changeWeek}) {
 			nextArrow: <NavButton week={week} right />
 		})
 	}, [dummy])
-	const isMobile = () => {
-		if (width < 800) return true
-		return false
-	}
+
 	return (
-		isMobile() ?
+		isMobile(width) ?
 			<Slider style={{width: 150}} {...settings}>
 			{weeksMobile.map((batch, i) => {
 				return <MobileContainer>

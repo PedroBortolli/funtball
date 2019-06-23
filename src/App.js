@@ -3,6 +3,7 @@ import {getCredentials} from './auth/services'
 import Header from './components/header'
 import styled from 'styled-components'
 import { primaryColor } from './utils/constants'
+import { isMobile } from './utils/modules'
 import useScreenSize from './hooks/useScreenSize'
 import Pointer from './components/pointer'
 import footballGif from './assets/loadings/5.gif'
@@ -51,10 +52,7 @@ function App(props) {
 	const [foo, update] = useState(0)
 	const credentials = getCredentials()
 	const forceUpdate = () => update(+ new Date())
-	const isMobile = () => {
-		if (width < 800) return true
-		return false
-	}
+
 	return (
 		<AppContainer width={width} height={height}>
 			<Header key={foo} />
@@ -64,26 +62,26 @@ function App(props) {
 					:
 					<div>
 						<Center>
-							{!isMobile() ?
+							{!isMobile(width) ?
 							<h1>Welcome to Funtball!</h1>
 							:
 							<h2>Welcome to Funtball!</h2>}
 							{credentials && <span>You are now logged in as <b>{credentials.username}</b></span>}
 						</Center>
 						<Home>
-							<Row style={isMobile() ? {marginLeft: 16, marginRight: 16} : {}}>
+							<Row style={isMobile(width) ? {marginLeft: 16, marginRight: 16} : {}}>
 								<span id='text'>Funtball is a new pick 'em styled fantasy football game under development</span>
 								<Pointer direction='left' />
 							</Row>
-							<Row style={isMobile() ? {marginLeft: 16, marginRight: 16} : {}}>
+							<Row style={isMobile(width) ? {marginLeft: 16, marginRight: 16} : {}}>
 								<Pointer direction='right' />
 								<span id='text'>Score points by correctly choosing the winner of every game from the upcoming football season</span>
 							</Row>
-							<Row style={isMobile() ? {marginLeft: 16, marginRight: 16} : {}}>
+							<Row style={isMobile(width) ? {marginLeft: 16, marginRight: 16} : {}}>
 								<span id='text'>Points may also be gained by correctly guessing the score difference of a given game</span>
 								<Pointer direction='left' />
 							</Row>
-							<Row style={isMobile() ? {marginLeft: 16, marginRight: 16} : {}}>
+							<Row style={isMobile(width) ? {marginLeft: 16, marginRight: 16} : {}}>
 								<Pointer direction='right' />
 								<span id='text'>Play smart! Sacrifice points to double up the reward obtained from a correctly guessed game</span>
 							</Row>

@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import loading from '../utils/loading'
 import RankingTable from '../components/ranking-table'
 import {url} from '../utils/constants'
+import { isMobile } from '../utils/modules'
 import useScreenSize from '../hooks/useScreenSize'
 import Switch from 'react-switch'
 import '../components/css/toggle-switch.css'
@@ -51,14 +52,10 @@ function Ranking() {
 	}, [])
 	const pointsRanking = [...ranking.sort((a, b) => {return b.pts - a.pts})]
 	const winsRanking = [...ranking.sort((a, b) => {return b.wins - a.wins})]
-	const isMobile = () => {
-		if (width < 800) return true
-		return false
-	}
 
 	return <Center loaded={loaded}>
 		{!loaded ? <img src={loadingGif} alt='' width="80" height="80" style={{marginBottom: 200}} /> :
-		isMobile() ?
+		isMobile(width) ?
 			<div>
 				<FlexContainer>
 					<span style={{fontWeight: _switch ? 100 : 900}}>Points</span>

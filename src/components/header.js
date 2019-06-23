@@ -4,6 +4,7 @@ import {getCredentials} from '../auth/services'
 import logo from '../assets/funtball-logo.png'
 import styled from 'styled-components'
 import {primaryColor} from '../utils/constants'
+import { isMobile } from '../utils/modules'
 import fetchApi from '../api/fetch'
 import pointsLoading from '../assets/loadings/1.gif'
 import useScreenSize from '../hooks/useScreenSize'
@@ -47,10 +48,6 @@ function Header() {
 		fetchPoints()
 	}, [dashboard])
 
-	const isMobile = () => {
-		if (width < 800) return true
-		return false
-	}
 	const toggleMenu = (state) => changeMenuOpen(state.isOpen)
 	const closeMenu = () => changeMenuOpen(false)
 
@@ -58,7 +55,7 @@ function Header() {
 
 	return (
 		<HeaderContainer>
-			{isMobile() &&
+			{isMobile(width) &&
 			<Menu isOpen={menuOpen} onStateChange={state => toggleMenu(state)} right width={'180px'}>
 				{credentials ?
 					<a className='menu-item'>
@@ -79,9 +76,9 @@ function Header() {
 			</Menu>}
 			<Container>
 				<Link to="/">
-					<img alt='' style={{float: 'left'}} src={logo} width={isMobile() ? 230 : 230} height={isMobile() ? 60 : 60} />
+					<img alt='' style={{float: 'left'}} src={logo} width={isMobile(width) ? 230 : 230} height={isMobile(width) ? 60 : 60} />
 				</Link>
-				{!isMobile() &&
+				{!isMobile(width) &&
 				<MenuOptions>
 					{credentials &&
 					<div style={{color: primaryColor, marginRight: 32}}>
