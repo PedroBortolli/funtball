@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import fetchApi from '../api/fetch'
 import GameCard from '../components/game-card'
+import Weeks from '../components/weeks'
 import styled from 'styled-components'
 import loading from '../utils/loading'
 import useScreenSize from '../hooks/useScreenSize'
 import {primaryColor} from '../utils/constants'
 import {url} from '../utils/constants'
 import 'abortcontroller-polyfill/dist/polyfill-patch-fetch'
-
-const weeks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
 
 const Schedule = styled.div`
 	display: grid;
@@ -21,17 +20,6 @@ const Center = styled.div`
 	align-items: center;
 	height: 100%;
 	width: 100%;
-`
-const WeeksContainer = styled.div`
-	> span {
-		color: ${primaryColor};
-		cursor: pointer;
-		:hover {
-			border-bottom: 2px solid ${primaryColor};
-			font-weight: 900;
-		}
-	}
-	> :not(:last-child) {margin-right: 10px;}
 `
 
 let aborters = [new AbortController()]
@@ -83,13 +71,7 @@ function Dashboard(props) {
 	return (
 		<div>
 			<Center>
-				<WeeksContainer>
-					{weeks.map(wk => {
-						return <span key={wk} onClick={() => changeWeek(wk)}
-								style={{fontWeight: wk === week && 900, cursor: wk === week && 'default',
-								borderBottom: wk === week && '0'}}>{wk}</span>
-					})}
-				</WeeksContainer>
+				<Weeks week={week} changeWeek={changeWeek} />
 			</Center>
 
 			<Center style={{marginBottom: 16}}>
@@ -114,7 +96,6 @@ function Dashboard(props) {
 				</Schedule>
 				}
 			</Center>
-
 		</div>
 	)
 }
