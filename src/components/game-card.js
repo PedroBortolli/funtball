@@ -161,6 +161,7 @@ function GameCard(props) {
 	const savePick = async () => {
 		if (enableSave()) {
 			changeSaving(true)
+			props.updStyle({...props.hrStyle, [props.game_id]: true})
 			try {
 				await fetchApi('POST', `${url}/make-pick`, undefined, {
 					username: 'pedro',
@@ -172,6 +173,7 @@ function GameCard(props) {
 				props.forceUpdate()
 			} catch(err) { console.log('Error saving prediction: ', err) }
 			setTimeout(() => {
+				props.updStyle({...props.hrStyle, [props.game_id]: false})
 				changeOriginalPick(pick)
 				changeOriginalDouble(double)
 				changeOriginalDifference(pointsDifference)
@@ -185,8 +187,8 @@ function GameCard(props) {
 
 	return (
 		saving ?
-		<div style={{width: 458, height: 94}}>
-			<Center style={{marginTop: -8}}>
+		<div style={{width: Math.min(width, 462), height: 94}}>
+			<Center>
 				<p>Saving</p>
 			</Center>
 			<Center style={{marginTop: -20}}>

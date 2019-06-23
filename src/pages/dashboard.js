@@ -31,6 +31,7 @@ function Dashboard(props) {
 	const [width, height] = useScreenSize()
 	const [streaks, setStreaks] = useState({})
 	const [loadingGif, changeLoadingGif] = useState(loading())
+	const [hrStyle, upd] = useState({})
 	useEffect(() => {
 		changeLoaded(false)
 		if (schedule.length || week !== 1) {
@@ -83,14 +84,15 @@ function Dashboard(props) {
 				:
 				<Schedule width={width} height={height}>
 					{schedule.map((game, i) => {
+						const hrMargin = (game['game_id'] in hrStyle && hrStyle[game['game_id']]) ? 0 : -10
 						return <div key={i}>
 							<GameCard away={game['away_team']} home={game['home_team']} 
 								date={game['game_date']} time={game['game_time']} game_id={game['game_id']}
 								pick={game.pick} double={game.double} difference={game.difference} 
 								pickPoints={game.pickPoints} differencePoints={game.differencePoints}
 								streakHome={streaks[game['home_team']] || 0} streakAway={streaks[game['away_team']] || 0} 
-								forceUpdate={props.update} />
-							<hr style={{marginTop: -10}} />
+								forceUpdate={props.update} updStyle={upd} hrStyle={hrStyle} />
+							<hr style={{marginTop: hrMargin}} />
 						</div>
 					})}
 				</Schedule>
