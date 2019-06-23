@@ -5,6 +5,7 @@ import beautify from '../utils/parser'
 import {getCredentials} from './services'
 import loading from '../utils/loading'
 import {url} from '../utils/constants'
+import '../components/css/login.css'
 
 const Container = styled.div`
 	display: flex;
@@ -12,11 +13,11 @@ const Container = styled.div`
 	justify-content: center;
 	align-items: center;
 	width: 400px;
-	* {
+	> {
 		margin: 16px;
 		margin-top: 0px;
 	}
-	*:first-child { margin-top: 16px }
+	> :first-child { margin-top: 16px }
 `
 
 const Center = styled.div`
@@ -36,12 +37,15 @@ function Login(props) {
 
 	const tryLogin = async (form) => {
 		const ref = document.getElementById('login-response')
-		ref.innerHTML = `<img src=${loading()} height="48" width="48"/>`
+		ref.innerHTML = `<img src=${loading()} height="42" width="42"/>`
 		const response = await fetchApi('POST', `${url}/sign-in`, undefined, {
 			username: form.username,
 			password: form.password
 		})
-		ref.innerHTML = beautify(response.message)
+		setTimeout(() => {
+			ref.innerHTML = beautify(response.message)
+
+		}, 1000)
 		if (response.status === 200) {
 			await localStorage.setItem('auth-jwt', response.token)
 			changeLoggedIn(true)
@@ -62,7 +66,7 @@ function Login(props) {
 				<input type="password" style={{width: '200px'}} className="form-control" placeholder="Password" 
 					onChange={(e) => update({key: 'password', value: e.target.value})}
 					onKeyPress={(e) => e.key === 'Enter' && tryLogin(form)}/>
-				<div id="login-response"></div>
+				<div id="login-response" style={{height: 60, paddingTop: 12, width: 300, textAlign: 'center'}}></div>
 				<button type="button" style={{width: '100px'}} className="btn btn-light" 
 					onClick={() => tryLogin(form)}>Log in</button>
 			</Container>

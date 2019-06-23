@@ -1,0 +1,14 @@
+.form-control {
+	margin-bottom: 6px !important;
+	border-color: #d84c20 !important;
+}
+
+.form-control:focus {
+	box-shadow: none !important;
+	border-color: #ffeac9 !important;
+}
+
+.btn {
+	background-color: white !important;
+	border: 2px solid #d84c20 !important;
+}
