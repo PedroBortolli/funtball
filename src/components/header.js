@@ -9,7 +9,7 @@ import pointsLoading from '../assets/loadings/1.gif'
 import useScreenSize from '../hooks/useScreenSize'
 import {url} from '../utils/constants'
 import Menu from 'react-burger-menu/lib/menus/slide'
-import './side-menu.css'
+import './css/side-menu.css'
 
 const HeaderContainer = styled.div`
 	position: fixed;
