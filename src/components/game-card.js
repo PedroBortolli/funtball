@@ -22,7 +22,6 @@ const Card = styled.div`
 	&:hover { background-color: #eaeaea }
 	display: grid;
 	grid-template-columns: 44px 260px 158px;
-	margin-bottom: 10px;
 	zoom: ${props => props.scale};
 	-moz-transform: scale(${props => props.scale});
 `
@@ -161,7 +160,6 @@ function GameCard(props) {
 	const savePick = async () => {
 		if (enableSave()) {
 			changeSaving(true)
-			props.updStyle({...props.hrStyle, [props.game_id]: true})
 			try {
 				await fetchApi('POST', `${url}/make-pick`, undefined, {
 					username: 'pedro',
@@ -173,7 +171,6 @@ function GameCard(props) {
 				props.forceUpdate()
 			} catch(err) { console.log('Error saving prediction: ', err) }
 			setTimeout(() => {
-				props.updStyle({...props.hrStyle, [props.game_id]: false})
 				changeOriginalPick(pick)
 				changeOriginalDouble(double)
 				changeOriginalDifference(pointsDifference)
@@ -184,21 +181,22 @@ function GameCard(props) {
 	}
 
 	const getScale = () => {return Math.min(width/462.0, 1.0)}
+	const pts = calcPoints()
 
 	return (
 		saving ?
-		<div style={{width: Math.min(width, 462), height: 94}}>
-			<Center>
-				<p>Saving</p>
-			</Center>
-			<Center style={{marginTop: -20}}>
-				<img alt='' src={loading()} width="60" height="60"/>
-			</Center>
-		</div>
+			<div style={{width: Math.min(462, width), minHeight: 94*getScale(), maxHeight: 94*getScale()}}>
+				<Center>
+					<p>Saving</p>
+				</Center>
+				<Center style={{marginTop: -20}}>
+					<img alt='' src={loading()} width="60" height="60"/>
+				</Center>
+			</div>
 		:
 		<Card scale={getScale()} style={{...props.style, backgroundColor: getBackgroundColor()}}>
 			<Icon>
-				+ {calcPoints()}
+				{pts > 0 && `+ ${pts}`}
 			</Icon>
 			<Teams>
 				<img alt='' src={helmets[props.away + '.png']} width="72" height="72" style={{cursor: 'pointer', 
