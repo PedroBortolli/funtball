@@ -63,7 +63,7 @@ const Icon = styled.div`
 	align-items: center;
 	justify-content: center;
 	font-size: 14px;
-	color: #44893b;
+	color: #e5a212;
 	font-weight: 900;
 	height: 74px;
 `
@@ -136,6 +136,8 @@ function GameCard(props) {
 		if (!pick || team === pick) return 1.0
 		return 0.2
 	}
+	
+	const hasGameFinished = () => typeof props.pickPoints !== 'undefined'
 
 	const getBackgroundColor = () => {
 		if (typeof props.pickPoints === 'undefined') return 'white'
@@ -182,6 +184,7 @@ function GameCard(props) {
 
 	const getScale = () => {return Math.min(width/462.0, 1.0)}
 	const pts = calcPoints()
+	const iconStyle = hasGameFinished() ? {color: '#44893b'} : {}
 
 	return (
 		saving ?
@@ -195,7 +198,7 @@ function GameCard(props) {
 			</div>
 		:
 		<Card scale={getScale()} style={{...props.style, backgroundColor: getBackgroundColor()}}>
-			<Icon>
+			<Icon style={iconStyle}>
 				{pts > 0 && `+ ${pts}`}
 			</Icon>
 			<Teams>
