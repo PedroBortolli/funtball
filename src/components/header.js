@@ -16,6 +16,7 @@ const HeaderContainer = styled.div`
 	position: fixed;
 	width: 988px;
 	background: #ffffff;
+	z-index: 999;
 `
 const Container = styled.div`
 	display: flex;
@@ -34,11 +35,11 @@ const MenuOptions = styled.div`
 	}
 `
 
-function Header() {
+function Header({menuOpen, changeMenuOpen}) {
 	const [width] = useScreenSize()
 	const [userPoints, setUserPoints] = useState(null)
 	const [dashboard, updateDashboard] = useState(0)
-	const [menuOpen, changeMenuOpen] = useState(false)
+	const [menuActive, changeMenuActive] = useState(false)
 	useEffect(() => {
 		const fetchPoints = async () => {
 			const requestBegin = + new Date()
@@ -48,15 +49,28 @@ function Header() {
 		fetchPoints()
 	}, [dashboard])
 
-	const toggleMenu = (state) => changeMenuOpen(state.isOpen)
-	const closeMenu = () => changeMenuOpen(false)
+	const toggleMenu = (state) => {
+		changeMenuActive(state.isOpen)
+		if (!state.isOpen) {
+			setTimeout(() => {
+				changeMenuOpen(false)
+			}, 300)
+		}
+		else changeMenuOpen(true)
+	}
+	const closeMenu = () => {
+		changeMenuActive(false)
+		setTimeout(() => {
+			changeMenuOpen(false)
+		}, 300)
+	}
 
 	const credentials = getCredentials()
 
 	return (
 		<HeaderContainer>
 			{isMobile(width) &&
-			<Menu isOpen={menuOpen} onStateChange={state => toggleMenu(state)} right width={'180px'}>
+			<Menu isOpen={menuActive} onStateChange={state => toggleMenu(state)} right width={'180px'}>
 				{credentials ?
 					<a className='menu-item'>
 						<Link to="/logoff" onClick={closeMenu} style={{color: primaryColor}}>Logoff</Link>

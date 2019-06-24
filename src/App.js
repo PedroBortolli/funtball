@@ -50,13 +50,16 @@ const Footer = styled.div`
 function App(props) {
 	const [width, height] = useScreenSize()
 	const [foo, update] = useState(0)
+	const [menuOpen, changeMenuOpen] = useState(false)
 	const credentials = getCredentials()
 	const forceUpdate = () => update(+ new Date())
 
+	let divStyle = {paddingTop: 100}
+	if (menuOpen) divStyle = {top: 100, zIndex: -1, position: 'relative'}
 	return (
 		<AppContainer width={width} height={height}>
-			<Header key={foo} />
-			<div style={{paddingTop: 100}}>
+			<Header key={foo} menuOpen={menuOpen} changeMenuOpen={changeMenuOpen} />
+			<div style={divStyle}>
 				{props.children ?
 					React.cloneElement(props.children, props={update: forceUpdate})
 					:
