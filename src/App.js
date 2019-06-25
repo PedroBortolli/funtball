@@ -21,7 +21,6 @@ const Center = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding-top: 16px;
 `
 const Home = styled.div`
 `
@@ -53,9 +52,10 @@ function App(props) {
 	const [menuOpen, changeMenuOpen] = useState(false)
 	const credentials = getCredentials()
 	const forceUpdate = () => update(+ new Date())
+	const gap = 90
 
-	let divStyle = {paddingTop: 100}
-	if (menuOpen) divStyle = {top: 100, zIndex: -1, position: 'relative'}
+	let divStyle = {height: '100%', paddingTop: gap}
+	if (menuOpen) divStyle = {height: '100%', top: gap, zIndex: -1, position: 'relative'}
 	return (
 		<AppContainer width={width} height={height}>
 			<Header key={foo} menuOpen={menuOpen} changeMenuOpen={changeMenuOpen} />
@@ -89,8 +89,8 @@ function App(props) {
 								<span id='text'>Play smart! Sacrifice points to double up the reward obtained from a correctly guessed game</span>
 							</Row>
 						</Home>
-						<Center>
-							<img alt='' src={footballGif} width={120} height={120} style={{marginTop: 24}} />
+						<Center style={{marginTop: 48}}>
+							<img alt='' src={footballGif} width={120} height={120} />
 						</Center>
 						<Footer>
 							<ImgLinks>

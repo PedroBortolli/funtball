@@ -31,7 +31,16 @@ const FlexContainer = styled.div`
 	}
 	margin-bottom: 24px;
 `
-
+const CenterScreen = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 100vw;
+`
 
 function Ranking() {
 	const [ranking, setRanking] = useState([])
@@ -54,7 +63,11 @@ function Ranking() {
 	const winsRanking = [...ranking.sort((a, b) => {return b.wins - a.wins})]
 
 	return <Center loaded={loaded}>
-		{!loaded ? <img src={loadingGif} alt='' width="80" height="80" style={{marginBottom: 200}} /> :
+		{!loaded ? 
+			<CenterScreen>
+				<img src={loadingGif} alt='' width="80" height="80" /> 
+			</CenterScreen>
+		:
 		isMobile(width) ?
 			<div>
 				<FlexContainer>

@@ -39,6 +39,7 @@ const Container = styled.div`
 	align-items: center;
 	position: relative;
 	z-index: -1;
+	opacity: 0.85;
 `
 
 export default function Pointer(props) {

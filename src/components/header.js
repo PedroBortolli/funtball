@@ -17,6 +17,8 @@ const HeaderContainer = styled.div`
 	width: 988px;
 	background: #ffffff;
 	z-index: 999;
+	padding-bottom: 8px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 `
 const Container = styled.div`
 	display: flex;
@@ -107,7 +109,6 @@ function Header({menuOpen, changeMenuOpen}) {
 					}
 				</MenuOptions>}
 			</Container>
-			<hr style={{borderWidth: 1}} />
 		</HeaderContainer>
 	)
 }

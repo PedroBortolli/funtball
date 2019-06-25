@@ -21,8 +21,18 @@ const Center = styled.div`
 	height: 100%;
 	width: 100%;
 `
+const CenterScreen = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 100vw;
+`
 
-let aborters = [new AbortController()]
+let aborters = [new AbortController()]//, contentHeight
 
 function Dashboard(props) {
 	const [week, changeWeek] = useState(1) // TODO: begin at current week
@@ -31,6 +41,7 @@ function Dashboard(props) {
 	const [width, height] = useScreenSize()
 	const [streaks, setStreaks] = useState({})
 	const [loadingGif, changeLoadingGif] = useState(loading())
+	const [contentHeight, changeContentHeight] = useState(0)
 	useEffect(() => {
 		changeLoaded(false)
 		if (schedule.length || week !== 1) {
@@ -78,9 +89,12 @@ function Dashboard(props) {
 				<h1 style={{color: primaryColor, fontWeight: 900}}>Week {week}</h1>
 			</Center>
 
-			<Center>
-				{!loaded ? <img alt='' src={loadingGif} width="80" height="80"/>
+			{!loaded ? 
+				<CenterScreen>
+					<img alt='' src={loadingGif} width="80" height="80"/>
+				</CenterScreen>
 				:
+			<Center>
 				<Schedule width={width} height={height}>
 					{schedule.map((game, i) => {
 						return <div key={i} style={{borderBottom: '1px solid rgba(0, 0, 0, 0.1)', marginBottom: 10}}>
@@ -93,8 +107,8 @@ function Dashboard(props) {
 						</div>
 					})}
 				</Schedule>
-				}
 			</Center>
+			}
 		</div>
 	)
 }
