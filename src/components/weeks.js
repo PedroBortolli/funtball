@@ -1,8 +1,10 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import useScreenSize from '../hooks/useScreenSize'
 import {primaryColor} from '../utils/constants'
 import { isMobile } from '../utils/modules'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons'
 import Slider from 'react-slick'
 import './css/slider.css'
 import 'slick-carousel/slick/slick.css'
@@ -31,39 +33,35 @@ const MobileContainer = styled.div`
 const SliderContainer = styled.div`
 	position: relative;
 	z-index: 100;
+	> div > svg {
+		transform: scale(1.3);
+		margin-top: 4px;
+	}
 `
 
 function NavButton(props) {
 	const {className, style, onClick} = props
-	let arrow = '<'
-	if (props.right) arrow = '>'
-	const margin = arrow === '<' ? 'marginRight' : 'marginLeft'
-	return (
-		<span className='slick-arrow' style={{...style, [margin]: 16}} onClick={onClick}>
-			{arrow}
-		</span>
-	)
+	if (props.right) {
+		return <FontAwesomeIcon className='slick-arrow' style={{...style, marginLeft: 16}} icon={faCaretRight} onClick={onClick} />
+	}
+	else return <FontAwesomeIcon className='slick-arrow' style={{...style, marginRight: 16}} icon={faCaretLeft} onClick={onClick} />
 }
 
 function Weeks({week, changeWeek}) {
 	const [width] = useScreenSize()
-	const [settings, changeSettings] = useState({dots: false})
-	const [dummy, updateNav] = useState(0)
-	useEffect(() => {
-		changeSettings({
-			dots: false,
-			prevArrow: <NavButton week={week} />,
-			nextArrow: <NavButton week={week} right />
-		})
-	}, [dummy])
+	const settings = {
+		dots: false,
+		prevArrow: <NavButton week={week} />,
+		nextArrow: <NavButton week={week} right />
+	}
 
 	return (
 		isMobile(width) ?
 			<SliderContainer>
 				<Slider style={{width: 150}} {...settings}>
-				{weeksMobile.map((batch, i) => {
+				{weeksMobile.map(batch => {
 					return <MobileContainer>
-						{weeksMobile[i].map(week => {
+						{batch.map(week => {
 							return <span onClick={() => changeWeek(week)}>{week}</span>
 						})}
 					</MobileContainer>

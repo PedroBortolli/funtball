@@ -7,6 +7,8 @@ import loading from '../utils/loading'
 import useScreenSize from '../hooks/useScreenSize'
 import {primaryColor} from '../utils/constants'
 import {url} from '../utils/constants'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import 'abortcontroller-polyfill/dist/polyfill-patch-fetch'
 
 const Schedule = styled.div`
@@ -20,6 +22,13 @@ const Center = styled.div`
 	align-items: center;
 	height: 100%;
 	width: 100%;
+	> svg {
+		transform: scale(1.3);
+		margin-bottom: 6px;
+		cursor: pointer;
+		:nth-child(1) {margin-right: 20px}
+		:nth-child(3) {margin-left: 20px}
+	}
 `
 const CenterScreen = styled.div`
 	display: flex;
@@ -85,8 +94,12 @@ function Dashboard(props) {
 				<Weeks week={week} changeWeek={changeWeek} />
 			</Center>
 
-			<Center style={{marginBottom: 16}}>
+			<Center style={{marginTop: 8, marginBottom: 16, position: 'relative', zIndex: 10, userSelect: 'none'}}>
+				<FontAwesomeIcon icon={faChevronLeft} onClick={() => week > 1 && changeWeek(week-1)} 
+					style={{cursor: week > 1 ? 'pointer' : 'auto', opacity: week > 1 ? 1 : 0}} />
 				<h1 style={{color: primaryColor, fontWeight: 900}}>Week {week}</h1>
+				<FontAwesomeIcon icon={faChevronRight} onClick={() => week < 17 && changeWeek(week+1)} 
+				style={{cursor: week < 17 ? 'pointer' : 'auto', opacity: week < 17 ? 1 : 0}} />
 			</Center>
 
 			{!loaded ? 
