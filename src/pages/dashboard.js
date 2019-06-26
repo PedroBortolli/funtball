@@ -30,9 +30,10 @@ const CenterScreen = styled.div`
 	left: 0;
 	height: 100vh;
 	width: 100vw;
+	z-index: 0;
 `
 
-let aborters = [new AbortController()]//, contentHeight
+let aborters = [new AbortController()]
 
 function Dashboard(props) {
 	const [week, changeWeek] = useState(1) // TODO: begin at current week
@@ -41,7 +42,6 @@ function Dashboard(props) {
 	const [width, height] = useScreenSize()
 	const [streaks, setStreaks] = useState({})
 	const [loadingGif, changeLoadingGif] = useState(loading())
-	const [contentHeight, changeContentHeight] = useState(0)
 	useEffect(() => {
 		changeLoaded(false)
 		if (schedule.length || week !== 1) {

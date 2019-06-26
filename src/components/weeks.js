@@ -21,10 +21,16 @@ const Container = styled.div`
 		}
 	}
 	> :not(:last-child) {margin-right: 12px}
+	position: relative;
+	z-index: 100;
 `
 const MobileContainer = styled.div`
 	display: flex !important;
 	justify-content: space-around;
+`
+const SliderContainer = styled.div`
+	position: relative;
+	z-index: 100;
 `
 
 function NavButton(props) {
@@ -53,15 +59,17 @@ function Weeks({week, changeWeek}) {
 
 	return (
 		isMobile(width) ?
-			<Slider style={{width: 150}} {...settings}>
-			{weeksMobile.map((batch, i) => {
-				return <MobileContainer>
-					{weeksMobile[i].map(week => {
-						return <span onClick={() => changeWeek(week)}>{week}</span>
-					})}
-				</MobileContainer>
-			})}
-			</Slider>
+			<SliderContainer>
+				<Slider style={{width: 150}} {...settings}>
+				{weeksMobile.map((batch, i) => {
+					return <MobileContainer>
+						{weeksMobile[i].map(week => {
+							return <span onClick={() => changeWeek(week)}>{week}</span>
+						})}
+					</MobileContainer>
+				})}
+				</Slider>
+			</SliderContainer>
 			:
 			<Container width={500}>
 				{weeks.map(wk => {
