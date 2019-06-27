@@ -50,6 +50,7 @@ function App(props) {
 	const [width, height] = useScreenSize()
 	const [foo, update] = useState(0)
 	const [menuOpen, changeMenuOpen] = useState(false)
+	const [isDashMobile, changeDashMobile] = useState(false)
 	const credentials = getCredentials()
 	const forceUpdate = () => update(+ new Date())
 	const gap = 90
@@ -58,10 +59,11 @@ function App(props) {
 	if (menuOpen) divStyle = {height: '100%', top: gap, zIndex: -1, position: 'relative'}
 	return (
 		<AppContainer width={width} height={height}>
-			<Header key={foo} menuOpen={menuOpen} changeMenuOpen={changeMenuOpen} />
+			<Header key={foo} menuOpen={menuOpen} changeMenuOpen={changeMenuOpen} isDashMobile={isDashMobile} />
 			<div style={divStyle}>
 				{props.children ?
-					React.cloneElement(props.children, props={update: forceUpdate})
+					React.cloneElement(props.children, props={update: forceUpdate, 
+										isDashMobile: isDashMobile, changeDashMobile: changeDashMobile})
 					:
 					<div>
 						<Center>

@@ -18,7 +18,7 @@ const HeaderContainer = styled.div`
 	background: #ffffff;
 	z-index: 999;
 	padding-bottom: 8px;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	border-bottom: ${props => props.renderBorder ? '1px solid rgba(0, 0, 0, 0.1)' : 0};
 `
 const Container = styled.div`
 	display: flex;
@@ -36,8 +36,25 @@ const MenuOptions = styled.div`
 		font-size: 22px;
 	}
 `
+const User = styled.div`
+	position: fixed;
+	top: 60px;
+	width: 100%;
+	z-index: 800;
+	height: 40px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	display: flex;
+	align-items: flex-start;
+	padding-left: 12px;
+	font-size: 22px;
+	background-color: #ffffff;
+	> span:nth-child(1) {
+		margin-right: 18px;
+		font-weight: 900;
+	}
+`
 
-function Header({menuOpen, changeMenuOpen}) {
+function Header({menuOpen, changeMenuOpen, isDashMobile}) {
 	const [width] = useScreenSize()
 	const [userPoints, setUserPoints] = useState(null)
 	const [dashboard, updateDashboard] = useState(0)
@@ -70,7 +87,7 @@ function Header({menuOpen, changeMenuOpen}) {
 	const credentials = getCredentials()
 
 	return (
-		<HeaderContainer>
+		<HeaderContainer renderBorder={!isDashMobile}>
 			{isMobile(width) &&
 			<Menu isOpen={menuActive} onStateChange={state => toggleMenu(state)} right width={'180px'}>
 				{credentials ?
@@ -90,6 +107,12 @@ function Header({menuOpen, changeMenuOpen}) {
 					<Link to="/ranking" onClick={closeMenu} style={{color: primaryColor}}>Ranking</Link>
 				</a>
 			</Menu>}
+			{isDashMobile && isMobile(width) && credentials &&
+				<User id='oi'>
+					<span>{credentials.username}:</span>
+					<span>{userPoints || <img width={26} height={26} src={pointsLoading} alt='' />} Points</span>
+				</User>
+			}
 			<Container>
 				<Link to="/">
 					<img alt='' style={{float: 'left'}} src={logo} width={isMobile(width) ? 230 : 230} height={isMobile(width) ? 60 : 60} />

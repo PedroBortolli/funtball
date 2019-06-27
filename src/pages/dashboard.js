@@ -10,6 +10,7 @@ import {url} from '../utils/constants'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import 'abortcontroller-polyfill/dist/polyfill-patch-fetch'
+import { isMobile } from '../utils/modules';
 
 const Schedule = styled.div`
 	display: grid;
@@ -52,6 +53,10 @@ function Dashboard(props) {
 	const [streaks, setStreaks] = useState({})
 	const [loadingGif, changeLoadingGif] = useState(loading())
 	useEffect(() => {
+		if (isMobile(width)) props.changeDashMobile(true)
+		else props.changeDashMobile(false)
+	}, [width])
+	useEffect(() => {
 		changeLoaded(false)
 		if (schedule.length || week !== 1) {
 			aborters[aborters.length-1].abort()
@@ -89,7 +94,7 @@ function Dashboard(props) {
 	}, [week])
 
 	return (
-		<div>
+		<div style={{paddingTop: props.isDashMobile ? 40 : 0}}>
 			<Center>
 				<Weeks week={week} changeWeek={changeWeek} />
 			</Center>
