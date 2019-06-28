@@ -57,6 +57,7 @@ function App(props) {
 
 	let divStyle = {height: '100%', paddingTop: gap}
 	if (menuOpen) divStyle = {height: '100%', top: gap, zIndex: -1, position: 'relative'}
+	if (isDashMobile && (!props.children || props.children.props.route.path !== '/dashboard')) changeDashMobile(false)
 	return (
 		<AppContainer width={width} height={height}>
 			<Header key={foo} menuOpen={menuOpen} changeMenuOpen={changeMenuOpen} isDashMobile={isDashMobile} />
