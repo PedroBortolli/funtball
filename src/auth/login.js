@@ -60,10 +60,10 @@ function Login(props) {
 		<Center>
 			<Container>
 				<div style={{color: '#d60000', paddingBottom: 10, fontWeight: 900}}>{msg}</div>
-				<input type="text" style={{width: '200px'}} className="form-control" placeholder="Username" 
+				<input type="text" style={{width: '200px'}} className="form-control customForm" placeholder="Username" 
 					onChange={(e) => update({key: 'username', value: e.target.value})}
 					onKeyPress={(e) => e.key === 'Enter' && tryLogin(form)} autoFocus/>
-				<input type="password" style={{width: '200px'}} className="form-control" placeholder="Password" 
+				<input type="password" style={{width: '200px'}} className="form-control customForm" placeholder="Password" 
 					onChange={(e) => update({key: 'password', value: e.target.value})}
 					onKeyPress={(e) => e.key === 'Enter' && tryLogin(form)}/>
 				<div id="login-response" style={{height: 60, paddingTop: 12, width: 300, textAlign: 'center'}}></div>
