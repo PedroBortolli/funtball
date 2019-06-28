@@ -1,11 +1,15 @@
 import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
+import Select, {components} from 'react-select'
 import {primaryColor} from '../utils/constants'
 import fetchApi from '../api/fetch'
 import loading from '../utils/loading'
 import streakIcon from '../assets/streak-icon.png'
 import useScreenSize from '../hooks/useScreenSize'
 import {url} from '../utils/constants'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
+import './css/game-card.css'
 
 function importAll(r) {
 	let helmets = {}
@@ -16,31 +20,15 @@ function importAll(r) {
 const helmets = importAll(require.context('../assets/helmets', false, /\.(png|jpe?g|svg)$/))
 
 const Card = styled.div`
-	width: 462px;
+	width: 480px;
 	height: 94px;
 	transition: background-color 0.3s;
 	&:hover { background-color: #eaeaea }
 	display: grid;
-	grid-template-columns: 44px 260px 158px;
+	grid-template-columns: 44px 260px 176px;
 	zoom: ${props => props.scale};
 	-moz-transform: scale(${props => props.scale});
 `
-
-const Picker = styled.select`
-	outline: none;
-	border: none !important;
-	-webkit-box-shadow: none !important;
-	-moz-box-shadow: none !important;
-	box-shadow: none !important;
-	color: ${primaryColor} !important;
-	background: none !important;
-	font-size: 18px !important;
-	font-family: "Bookman Old Style" !important;
-	font-weight: 700 !important;
-	cursor: pointer;
-	width: 86px !important;
-`
-
 const Teams = styled.div`
 	display: grid;
 	grid-template-columns: 6px 72px 104px 72px 6px;
@@ -50,14 +38,12 @@ const Teams = styled.div`
 	font-size: 30px;
 	
 `
-
 const Options = styled.div`
 	display: grid;
 	grid-template-rows: 74px 20px;
 	grid-template-areas: "buttons"
 						"info";
 `
-
 const Icon = styled.div`
 	display: flex;
 	align-items: center;
@@ -67,18 +53,16 @@ const Icon = styled.div`
 	font-weight: 900;
 	height: 74px;
 `
-
 const Center = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	color: ${primaryColor};
 `
-
 const Buttons = styled.div`
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: flex-start;
 	> * {
 		padding-left: 8px;
 		padding-right: 8px;
@@ -87,7 +71,8 @@ const Buttons = styled.div`
 	font-weight: 700;
 	font-size: 18px;
 	grid-area: "buttons";
-	
+	//margin-left: -8px;
+	width: 176px;
 `
 
 function GameCard(props) {
@@ -182,13 +167,38 @@ function GameCard(props) {
 		}
 	}
 
-	const getScale = () => {return Math.min(width/462.0, 1.0)}
+	const selectOptions = [
+		{value: 5, label: '< 5'},
+		{value: 10, label: '< 10'},
+		{value: 15, label: '< 15'},
+		{value: 20, label: '< 20'},
+		{value: 25, label: '< 25'},
+	]
+	const defaultSelectValue = {value: pointsDifference ? `< ${pointsDifference}` : '-',
+								label: pointsDifference ? `< ${pointsDifference}` : '-'}
+	const getScale = () => {return Math.min(width/480.0, 1.0)}
 	const pts = calcPoints()
 	const iconStyle = hasGameFinished() ? {color: '#44893b'} : {}
 
+	const ValueContainer = ({ children, ...props }) => {
+		let pos = 'flex-end', minWidth = 35
+		if (children[0].props.data.value === '-') pos = 'center'
+		if (children[0].props.data.value === '< 5') minWidth = 47
+		else if (children[0].props.data.value === '-') minWidth = 65
+		return (
+			components.ValueContainer && (
+				<components.ValueContainer {...props}>
+					<div style={{minWidth: minWidth, display: 'flex', justifyContent: pos}}>
+						{children}
+					</div>
+				</components.ValueContainer>
+			)
+		)
+	}
+
 	return (
 		saving ?
-			<div style={{width: Math.min(462, width), minHeight: 94*getScale(), maxHeight: 94*getScale()}}>
+			<div style={{width: Math.min(480, width), minHeight: 94*getScale(), maxHeight: 94*getScale()}}>
 				<Center>
 					<p>Saving</p>
 				</Center>
@@ -233,37 +243,31 @@ function GameCard(props) {
 			</Teams>
 			<Options>
 				{selectionDiffers() &&
-				<div style={{fontSize: 14, fontWeight: 900, color: '#c69a29', gridArea: 'info', 
+				<div style={{fontSize: 14, fontWeight: 900, color: '#c69a29', gridArea: 'info', marginRight: 8,
 							display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
 					Unsaved changes&nbsp;<span aria-labelledby="jsx-a11y/accessible-emoji" role="img">⚠️</span>
 				</div>
 				}
 				{typeof props.pickPoints !== 'undefined' &&
-					<div style={{gridArea: 'info', paddingLeft: 40, marginTop: -16, 
+					<div style={{gridArea: 'info', paddingLeft: 38, marginTop: -12, 
 						color: isDifferenceCorrect() ? '#44893b' : 'red'}}>
-						{isDifferenceCorrect() ? '✓' : '✖'}
+						{isDifferenceCorrect() ?
+							<FontAwesomeIcon icon={faCheck} style={{width: 24}} />
+							:
+							<FontAwesomeIcon icon={faTimes} style={{width: 24}} />
+						}
 					</div>
 				}
 				<Buttons>
-					<Picker className="form-control" value={pointsDifference ? '< ' + pointsDifference.toString() : '-'}
-						onChange={(e) => changePointsDifference(Number((e.target.value).substring(e.target.value.indexOf('<')+2)))}>
-						{!pointsDifference &&
-						<option key="n/a_option" style={{display: 'none'}}>&nbsp;&nbsp;&nbsp; -</option>
-						}
-						<option key={5}>&nbsp;&nbsp;{'< ' + 5}</option>
-						{[10, 15, 20, 25].map(x => {
-							return <option key={x}>{'< ' + x}</option>
-						})}
-
-					</Picker>
+					<Select options={selectOptions} style={{cursor: 'pointer'}} value={defaultSelectValue}
+							onChange={e => changePointsDifference(e.value)} components={{ValueContainer}} isSearchable={false} />
 
 					<div style={{cursor: 'pointer', background: double ? primaryColor : '', opacity: double ? 1.0 : 0.4,
 						color: double ? 'white' : primaryColor, transition: 'background 0.3s, opacity 0.3s'}} 
 						onClick={() => changeDouble(!double)}>2x</div>
 
-					<div style={{cursor: enableSave() && 'pointer', opacity: enableSave() ? 1.0 : 0.4}} onClick={() => savePick()}>
-						✔
-					</div>
+					<FontAwesomeIcon icon={faCheck} onClick={() => savePick()}
+					style={{cursor: enableSave() && 'pointer', opacity: enableSave() ? 1.0 : 0.4, width: 42, marginLeft: 4}} />
 				</Buttons>
 			</Options>
 		</Card>

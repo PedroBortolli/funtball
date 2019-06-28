@@ -14,7 +14,7 @@ import { isMobile } from '../utils/modules';
 
 const Schedule = styled.div`
 	display: grid;
-	grid-template-columns: repeat(${props => props.width ? (props.width < 988 ? 1 : 2) : 2}, 1fr);
+	grid-template-columns: repeat(${props => props.width ? (props.width < 1006 ? 1 : 2) : 2}, 1fr);
 	grid-column-gap: 42px;
 `
 const Center = styled.div`

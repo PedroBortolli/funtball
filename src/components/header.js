@@ -14,7 +14,7 @@ import './css/side-menu.css'
 
 const HeaderContainer = styled.div`
 	position: fixed;
-	width: 988px;
+	width: 1006px;
 	background: #ffffff;
 	z-index: 999;
 	padding-bottom: 8px;

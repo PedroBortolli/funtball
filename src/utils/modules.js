@@ -1,4 +1,4 @@
 export const isMobile = (width) => {
-	if (width < 988) return true
+	if (width < 1006) return true
 	return false
 }

@@ -11,10 +11,10 @@ import GitHubLogo from './assets/github-logo.png'
 import TwitterLogo from './assets/twitter-logo.png'
 
 const AppContainer = styled.div`
-	width: ${props => props.width > 987 ? '988px' : '100%'};
+	width: ${props => props.width > 1005 ? '1006px' : '100%'};
 	height: 100vh;
 	font-family: 'Bookman Old Style';
-	margin-left: ${props => props.width > 987 ? 'calc((100vw - 988px)/2)' : 0};
+	margin-left: ${props => props.width > 1005 ? 'calc((100vw - 1006px)/2)' : 0};
 	> * {color: ${primaryColor}}
 `
 const Center = styled.div`
