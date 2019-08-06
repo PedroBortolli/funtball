@@ -7,7 +7,6 @@ import Login from './auth/login'
 import Logoff from './auth/logoff'
 import Dashboard from './pages/dashboard'
 import Ranking from './pages/ranking'
-import * as serviceWorker from './serviceWorker'
 import 'bootstrap/dist/css/bootstrap.css'
 import {getCredentials} from './auth/services'
 
@@ -32,4 +31,3 @@ const routing = (
 )
 
 ReactDOM.render(routing, document.getElementById('root'))
-serviceWorker.unregister();
