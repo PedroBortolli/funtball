@@ -15,7 +15,7 @@ function ConfirmEmail() {
 		confirm()
 	}, [])
 	
-	if (confirmed) window.location = `${url}/login`
+	if (confirmed) window.location = `$https://funtball.netlify.com/login`
 
 	return (
 		set ? <h3>Account {confirmed ? 'confirmed. Redirecting...' : 'not confirmed...'}</h3>
