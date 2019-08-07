@@ -54,6 +54,8 @@ const User = styled.div`
 	}
 `
 
+const credentials = getCredentials()
+
 function Header({menuOpen, changeMenuOpen, isDashMobile}) {
 	const [width] = useScreenSize()
 	const [userPoints, setUserPoints] = useState(null)
@@ -62,7 +64,7 @@ function Header({menuOpen, changeMenuOpen, isDashMobile}) {
 	useEffect(() => {
 		const fetchPoints = async () => {
 			const requestBegin = + new Date()
-			const pts = await fetchApi('GET', `${url}/get-points/pedro`)
+			const pts = await fetchApi('GET', `${url}/get-points/${credentials.username}`)
 			setTimeout(() => {setUserPoints(pts.points)}, Math.max(1, 400 - (new Date() - requestBegin)))
 		}
 		fetchPoints()
@@ -83,8 +85,6 @@ function Header({menuOpen, changeMenuOpen, isDashMobile}) {
 			changeMenuOpen(false)
 		}, 300)
 	}
-
-	const credentials = getCredentials()
 
 	return (
 		<HeaderContainer renderBorder={!isDashMobile}>

@@ -149,7 +149,7 @@ function GameCard(props) {
 			changeSaving(true)
 			try {
 				await fetchApi('POST', `${url}/make-pick`, undefined, {
-					username: 'pedro',
+					username: props.authToken.username,
 					gameId: props['game_id'],
 					pick: pick ? (pick === props.home ? true : false) : null,
 					double: double,

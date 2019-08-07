@@ -7,6 +7,7 @@ import loading from '../utils/loading'
 import useScreenSize from '../hooks/useScreenSize'
 import {primaryColor} from '../utils/constants'
 import {url} from '../utils/constants'
+import { getCredentials } from '../auth/services'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import 'abortcontroller-polyfill/dist/polyfill-patch-fetch'
@@ -43,7 +44,9 @@ const CenterScreen = styled.div`
 	z-index: 0;
 `
 
+const authToken = getCredentials()
 let aborters = [new AbortController()]
+console.log(authToken)
 
 function Dashboard(props) {
 	const [week, changeWeek] = useState(0) // TODO: begin at current week
@@ -68,7 +71,7 @@ function Dashboard(props) {
 				let games = [], promises = []
 				Object.keys(result).forEach(game => {
 					if (typeof result[game] === 'object') {
-						const picks = fetchApi('GET', `${url}/get-pick/pedro/${result[game]['game_id']}`, aborters[aborters.length-1].signal)
+						const picks = fetchApi('GET', `${url}/get-pick/${authToken.username}/${result[game]['game_id']}`, aborters[aborters.length-1].signal)
 						promises.push(picks)
 						games.push(result[game])
 					}
@@ -84,7 +87,7 @@ function Dashboard(props) {
 		const getStreaks = async () => {
 			try {
 				let result = {}
-				if (week > 1) result = await fetchApi('GET', `${url}/get-streak/pedro/${(week-1).toString()}`, aborters[aborters.length-1].signal)
+				if (week > 1) result = await fetchApi('GET', `${url}/get-streak/${authToken.username}/${(week-1).toString()}`, aborters[aborters.length-1].signal)
 				setStreaks(result)
 			} catch(err) {}
 		}
@@ -121,7 +124,7 @@ function Dashboard(props) {
 								pick={game.pick} double={game.double} difference={game.difference} 
 								pickPoints={game.pickPoints} differencePoints={game.differencePoints}
 								streakHome={streaks[game['home_team']] || 0} streakAway={streaks[game['away_team']] || 0} 
-								forceUpdate={props.update} />
+								forceUpdate={props.update} authToken={authToken} />
 						</div>
 					})}
 				</Schedule>
