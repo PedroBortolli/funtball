@@ -43,6 +43,7 @@ function Login(props) {
 			password: form.password
 		})
 		setTimeout(() => {
+			if (response.message === 'Account not confirmed')
 			ref.innerHTML = beautify(response.message)
 
 		}, 1000)

@@ -5,6 +5,8 @@ import App from './App'
 import NotFound from './NotFound'
 import Login from './auth/login'
 import Logoff from './auth/logoff'
+import Signup from './auth/signup'
+import ConfirmEmail from './auth/confirm-emai'
 import Dashboard from './pages/dashboard'
 import Ranking from './pages/ranking'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -24,6 +26,8 @@ const routing = (
 			<Route path="/login" component={() => <Login history={browserHistory} />} />
 			<Route path="/logoff" component={() => <Logoff history={browserHistory} />} />
 			<Route path="/dashboard" component={Dashboard} onEnter={() => verifyLogin()} />
+			<Route path="/signup" component={() => <Signup history={browserHistory} />} />
+			<Route path="/confirm-email" component={ConfirmEmail} />
 			<Route path="/ranking" component={Ranking} />
 			<Route component={NotFound} />
 		</Route>
