@@ -67,7 +67,7 @@ function Header({menuOpen, changeMenuOpen, isDashMobile}) {
 			const pts = await fetchApi('GET', `${url}/get-points/${credentials.username}`)
 			setTimeout(() => {setUserPoints(pts.points)}, Math.max(1, 400 - (new Date() - requestBegin)))
 		}
-		fetchPoints()
+		if (credentials) fetchPoints()
 	}, [dashboard])
 
 	const toggleMenu = (state) => {
