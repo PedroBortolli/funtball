@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {getCredentials} from './auth/services'
 import Header from './components/header'
 import styled from 'styled-components'
@@ -51,7 +51,14 @@ function App(props) {
 	const [foo, update] = useState(0)
 	const [menuOpen, changeMenuOpen] = useState(false)
 	const [isDashMobile, changeDashMobile] = useState(false)
-	const credentials = getCredentials()
+	const [credentials, setCredentials] = useState(null)
+	useEffect(() => {
+		const getToken = async () => {
+			const cred = await getCredentials()
+			setCredentials(cred)
+		}
+		getToken()
+	}, [window.location.href])
 	const forceUpdate = () => update(+ new Date())
 	const gap = 90
 
