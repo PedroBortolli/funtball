@@ -54,21 +54,25 @@ const User = styled.div`
 	}
 `
 
-const credentials = getCredentials()
 
 function Header({menuOpen, changeMenuOpen, isDashMobile}) {
 	const [width] = useScreenSize()
 	const [userPoints, setUserPoints] = useState(null)
 	const [dashboard, updateDashboard] = useState(0)
 	const [menuActive, changeMenuActive] = useState(false)
+	const [credentials, setCredentials] = useState(null)
 	useEffect(() => {
 		const fetchPoints = async () => {
 			const requestBegin = + new Date()
-			const pts = await fetchApi('GET', `${url}/get-points/${credentials.username}`)
-			setTimeout(() => {setUserPoints(pts.points)}, Math.max(1, 400 - (new Date() - requestBegin)))
+			const tempCredentials = await getCredentials()
+			setCredentials(tempCredentials)
+			if (tempCredentials) {
+				const pts = await fetchApi('GET', `${url}/get-points/${tempCredentials.username}`)
+				setTimeout(() => {setUserPoints(pts.points)}, Math.max(1, 400 - (new Date() - requestBegin)))
+			}
 		}
-		if (credentials) fetchPoints()
-	}, [dashboard])
+		fetchPoints()
+	}, [dashboard, window.location.href])
 
 	const toggleMenu = (state) => {
 		changeMenuActive(state.isOpen)
@@ -110,7 +114,7 @@ function Header({menuOpen, changeMenuOpen, isDashMobile}) {
 			{isDashMobile && isMobile(width) && credentials &&
 				<User id='oi'>
 					<span>{credentials.username}:</span>
-					<span>{userPoints || <img width={26} height={26} src={pointsLoading} alt='' />} Points</span>
+					<span>{typeof userPoints === 'number' ? userPoints : <img width={26} height={26} src={pointsLoading} alt='' />} Points</span>
 				</User>
 			}
 			<Container>
@@ -121,7 +125,7 @@ function Header({menuOpen, changeMenuOpen, isDashMobile}) {
 				<MenuOptions>
 					{credentials &&
 					<div style={{color: primaryColor, marginRight: 32}}>
-						{credentials.username}: {userPoints || <img width={26} height={26} src={pointsLoading} alt='' />} Points
+						{credentials.username}: {typeof userPoints === 'number' ? userPoints : <img width={26} height={26} src={pointsLoading} alt='' />} Points
 					</div>}
 					{credentials && <Link to={{pathname: "/dashboard", upd: updateDashboard}} style={{color: primaryColor}}>Dashboard</Link>}
 					<Link to="/ranking" style={{color: primaryColor}}>Ranking</Link>

@@ -44,9 +44,7 @@ const CenterScreen = styled.div`
 	z-index: 0;
 `
 
-const authToken = getCredentials()
 let aborters = [new AbortController()]
-console.log(authToken)
 
 function Dashboard(props) {
 	const [week, changeWeek] = useState(0) // TODO: begin at current week
@@ -54,6 +52,7 @@ function Dashboard(props) {
 	const [schedule, updateSchedule] = useState([])
 	const [width, height] = useScreenSize()
 	const [streaks, setStreaks] = useState({})
+	const [authToken, setToken] = useState(null)
 	const [loadingGif, changeLoadingGif] = useState(loading())
 	useEffect(() => {
 		if (isMobile(width)) props.changeDashMobile(true)
@@ -91,7 +90,12 @@ function Dashboard(props) {
 				setStreaks(result)
 			} catch(err) {}
 		}
+		const getToken = async () => {
+			const tempCredentials = await getCredentials()
+			setToken(tempCredentials)
+		}
 		changeLoadingGif(loading())
+		getToken()
 		getSchedule()
 		getStreaks()
 	}, [week])

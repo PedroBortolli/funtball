@@ -1,4 +1,4 @@
-import React, {useState, useReducer} from 'react'
+import React, {useState, useReducer, useEffect} from 'react'
 import styled from 'styled-components'
 import fetchApi from '../api/fetch'
 import beautify from '../utils/parser'
@@ -26,13 +26,22 @@ const Center = styled.div`
 `
 
 function Login(props) {
-	const [loggedIn, changeLoggedIn] = useState(getCredentials() ? true : false)
+	const [loggedIn, changeLoggedIn] = useState(null)
 	const [form, update] = useReducer((state, action) => {
 		return {
 			...state,
 			[action.key]: action.value
 		}
 	}, {})
+	
+	useEffect(() => {
+		const getToken = async () => {
+			const tempCredentials = await getCredentials()
+			changeLoggedIn(tempCredentials ? true : false)
+		}
+		getToken()
+	}, [])
+
 	const msg = props.history.getCurrentLocation().state
 
 	const tryLogin = async (form) => {
@@ -50,11 +59,12 @@ function Login(props) {
 		if (response.status === 200) {
 			await localStorage.setItem('auth-jwt', response.token)
 			changeLoggedIn(true)
-			console.log(props.history)
 			props.history.goBack()
 			//Route.browserHistory.push('/')
 		}
 	}
+
+	if (loggedIn) props.history.push('/')
 
 	return (
 		!loggedIn ?
@@ -75,7 +85,6 @@ function Login(props) {
 		:
 		<Center>
 			<h3>Already logged in. Redirecting...</h3>
-			{props.history.push('/')}
 		</Center>
 	)
 }
