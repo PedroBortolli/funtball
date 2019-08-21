@@ -259,7 +259,7 @@ function GameCard(props) {
 					</div>
 				}
 				<Buttons>
-					<Select options={selectOptions} style={{cursor: 'pointer'}} value={defaultSelectValue}
+					<Select options={selectOptions} style={{cursor: 'pointer'}} value={defaultSelectValue} menuPlacement="auto"
 							onChange={e => changePointsDifference(e.value)} components={{ValueContainer}} isSearchable={false} />
 
 					<div style={{cursor: 'pointer', background: double ? primaryColor : '', opacity: double ? 1.0 : 0.4,
