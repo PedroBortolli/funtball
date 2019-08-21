@@ -10,8 +10,8 @@ import './css/slider.css'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
-const weeks = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
-const weeksMobile = [[0], [1, 2, 3, 4, 5, 6], [7, 8, 9, 10, 11, 12], [13, 14, 15, 16, 17]]
+const weeks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+const weeksMobile = [[1, 2, 3, 4, 5, 6], [7, 8, 9, 10, 11, 12], [13, 14, 15, 16, 17]]
 
 const Container = styled.div`
 	> span {
@@ -62,7 +62,7 @@ function Weeks({week, changeWeek}) {
 				{weeksMobile.map(batch => {
 					return <MobileContainer>
 						{batch.map(week => {
-							return <span onClick={() => changeWeek(week)}>{week > 0 ? week : 'Pre-Season'}</span>
+							return <span onClick={() => changeWeek(week)}>{week}</span>
 						})}
 					</MobileContainer>
 				})}
@@ -73,7 +73,7 @@ function Weeks({week, changeWeek}) {
 				{weeks.map(wk => {
 					return <span key={wk} onClick={() => changeWeek(wk)}
 							style={{fontWeight: wk === week && 900, cursor: wk === week && 'default',
-							borderBottom: wk === week && '0'}}>{wk > 0 ? wk : 'Pre-Season'}</span>
+							borderBottom: wk === week && '0'}}>{wk}</span>
 				})}
 			</Container>
 	)

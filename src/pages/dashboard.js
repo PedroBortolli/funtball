@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import loading from '../utils/loading'
 import useScreenSize from '../hooks/useScreenSize'
 import {primaryColor} from '../utils/constants'
-import {url} from '../utils/constants'
+import {url, getWeek} from '../utils/constants'
 import { getCredentials } from '../auth/services'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
@@ -47,7 +47,7 @@ const CenterScreen = styled.div`
 let aborters = [new AbortController()]
 
 function Dashboard(props) {
-	const [week, changeWeek] = useState(0) // TODO: begin at current week
+	const [week, changeWeek] = useState(getWeek())
 	const [loaded, changeLoaded] = useState(false)
 	const [schedule, updateSchedule] = useState([])
 	const [width, height] = useScreenSize()
