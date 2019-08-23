@@ -47,7 +47,7 @@ const CenterScreen = styled.div`
 let aborters = [new AbortController()]
 
 function Dashboard(props) {
-	const [week, changeWeek] = useState(getWeek()+1)
+	const [week, changeWeek] = useState(getWeek())
 	const [loaded, changeLoaded] = useState(false)
 	const [schedule, updateSchedule] = useState([])
 	const [width, height] = useScreenSize()

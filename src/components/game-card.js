@@ -4,6 +4,7 @@ import Select, {components} from 'react-select'
 import {primaryColor} from '../utils/constants'
 import fetchApi from '../api/fetch'
 import loading from '../utils/loading'
+import useCountdown from './countdown'
 import streakIcon from '../assets/streak-icon.png'
 import useScreenSize from '../hooks/useScreenSize'
 import {url} from '../utils/constants'
@@ -71,7 +72,6 @@ const Buttons = styled.div`
 	font-weight: 700;
 	font-size: 18px;
 	grid-area: "buttons";
-	//margin-left: -8px;
 	width: 176px;
 `
 
@@ -85,6 +85,7 @@ function GameCard(props) {
 	const [originalDifference, changeOriginalDifference] = useState(null)
 	const [allowSameSave, changeAllowSameSave] = useState(true)
 	const [width] = useScreenSize()
+	const [timeLeft, formattedTimeLeft] = useCountdown(new Date(`${props.date.substr(0, 10)} ${props.time.substr(0, 5)} EST`) - 4800000 - new Date())
 	useEffect(() => {
 		if (typeof props.pick !== 'undefined') {
 			changePick(props.pick)
@@ -125,9 +126,10 @@ function GameCard(props) {
 	const hasGameFinished = () => typeof props.pickPoints !== 'undefined'
 
 	const getBackgroundColor = () => {
-		if (typeof props.pickPoints === 'undefined') return 'white'
-		if (props.pickPoints) return '#dbfccc'
-		return '#f7b4b4'
+		if (props.pickPoints > 0) return '#dbfccc'
+		if (props.pickPoints === 0) return '#f7b4b4'
+		if (isChoosable() === 'none') return 'rgba(0, 0, 0, 0.15)'
+		return 'white'
 	}
 
 	const selectionDiffers = () => {
@@ -196,6 +198,11 @@ function GameCard(props) {
 		)
 	}
 
+	const isChoosable = () => {
+		if (hasGameFinished()) return 'none'
+		return timeLeft > 0 ? 'auto' : 'none'
+	}
+
 	return (
 		saving ?
 			<div style={{width: Math.min(480, width), minHeight: 94*getScale(), maxHeight: 94*getScale()}}>
@@ -207,7 +214,7 @@ function GameCard(props) {
 				</Center>
 			</div>
 		:
-		<Card scale={getScale()} style={{...props.style, backgroundColor: getBackgroundColor()}}>
+		<Card scale={getScale()} style={{...props.style, backgroundColor: getBackgroundColor(), pointerEvents: isChoosable()}}>
 			<Icon style={iconStyle}>
 				{pts > 0 && `+ ${pts}`}
 			</Icon>
@@ -247,6 +254,13 @@ function GameCard(props) {
 							display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
 					Unsaved changes&nbsp;<span aria-labelledby="jsx-a11y/accessible-emoji" role="img">⚠️</span>
 				</div>
+				}
+				{timeLeft < 86400000 &&
+					<div style={{gridArea: 'info', marginRight: 8, display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end', marginBottom: 8}}>
+						<span style={{fontSize: 14, fontWeight: 900, color: '#d61609'}}>
+							{timeLeft > 0 ? <span>Locks in &nbsp;{formattedTimeLeft}</span> : !hasGameFinished() ? <span>Game locked!</span> : ''}
+						</span>
+					</div>
 				}
 				{typeof props.pickPoints !== 'undefined' &&
 					<div style={{gridArea: 'info', paddingLeft: 38, marginTop: -12, 
