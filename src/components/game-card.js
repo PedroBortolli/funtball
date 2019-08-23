@@ -248,7 +248,7 @@ function GameCard(props) {
 					})}
 				</Center>
 			</Teams>
-			<Options>
+			<Options style={{cursor: pick ? 'auto' : 'not-allowed'}}>
 				{selectionDiffers() &&
 				<div style={{fontSize: 14, fontWeight: 900, color: '#c69a29', gridArea: 'info', marginRight: 8,
 							display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
@@ -272,7 +272,7 @@ function GameCard(props) {
 						}
 					</div>
 				}
-				<Buttons>
+				<Buttons style={{pointerEvents: pick ? 'auto' : 'none', opacity: pick ? 1 : 0.3}}>
 					<Select options={selectOptions} style={{cursor: 'pointer'}} value={defaultSelectValue} menuPlacement="auto"
 							onChange={e => changePointsDifference(e.value)} components={{ValueContainer}} isSearchable={false} />
 
