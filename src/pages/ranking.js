@@ -14,9 +14,13 @@ const loadingGif = loading()
 
 const Center = styled.div`
 	display: flex;
-	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 	height: calc(100vh - 100px);
 	align-items: ${props => props.loaded ? '' : 'center'};
+	> h2 {
+		margin-bottom: 32px;
+	}
 `
 const RankingContainer = styled.div`
 	display: flex;
@@ -63,6 +67,7 @@ function Ranking() {
 	const winsRanking = [...ranking.sort((a, b) => {return b.wins - a.wins})]
 
 	return <Center loaded={loaded}>
+		<h2>Ranking</h2>
 		{!loaded ? 
 			<CenterScreen>
 				<img src={loadingGif} alt='' width="80" height="80" /> 
