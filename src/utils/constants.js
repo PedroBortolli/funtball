@@ -1,6 +1,6 @@
 export const primaryColor = '#932704'
 export const secondaryColor = '#d84c20'
-export const url = 'http://localhost:5000'
+export const url = 'https://funtball-backend.herokuapp.com'
 
 export const getWeek = () => {
     const current = + new Date()
