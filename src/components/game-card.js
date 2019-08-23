@@ -123,7 +123,7 @@ function GameCard(props) {
 		if (!pick || team === pick) return 1.0
 		return 0.2
 	}
-	
+
 	const hasGameFinished = () => typeof props.pickPoints !== 'undefined'
 
 	const getBackgroundColor = () => {
@@ -271,7 +271,7 @@ function GameCard(props) {
 						}
 					</div>
 				}
-				<Buttons style={{pointerEvents: pick ? 'auto' : 'none', opacity: pick ? 1 : 0.3}}>
+				<Buttons style={{pointerEvents: hasGameFinished() ? 'none' : pick ? 'auto' : 'none', opacity: pick ? 1 : 0.3}}>
 					<Select options={selectOptions} style={{cursor: 'pointer'}} value={defaultSelectValue} menuPlacement="auto"
 							onChange={e => changePointsDifference(e.value)} components={{ValueContainer}} isSearchable={false} />
 
