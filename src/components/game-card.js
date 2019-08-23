@@ -84,6 +84,7 @@ function GameCard(props) {
 	const [originalDouble, changeOriginalDouble] = useState(false)
 	const [originalDifference, changeOriginalDifference] = useState(null)
 	const [allowSameSave, changeAllowSameSave] = useState(true)
+	const [loadingGif, changeLoading] = useState(loading())
 	const [width] = useScreenSize()
 	const [timeLeft, formattedTimeLeft] = useCountdown(new Date(`${props.date.substr(0, 10)} ${props.time.substr(0, 5)} EST`) - 4800000 - new Date())
 	useEffect(() => {
@@ -164,6 +165,7 @@ function GameCard(props) {
 				changeOriginalDouble(double)
 				changeOriginalDifference(pointsDifference)
 				changeAllowSameSave(false)
+				changeLoading(loading())
 				changeSaving(false)
 			}, 300)
 		}
@@ -205,13 +207,10 @@ function GameCard(props) {
 
 	return (
 		saving ?
-			<div style={{width: Math.min(480, width), minHeight: 94*getScale(), maxHeight: 94*getScale()}}>
-				<Center>
-					<p>Saving</p>
-				</Center>
-				<Center style={{marginTop: -20}}>
-					<img alt='' src={loading()} width="60" height="60"/>
-				</Center>
+			<div style={{width: Math.min(480, width), minHeight: 94*getScale(), maxHeight: 94*getScale(),
+						display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}>
+				<span>Saving</span>
+				<img alt='' src={loadingGif} width={Math.min(60, 60*getScale())} height={Math.min(60, 60*getScale())} />
 			</div>
 		:
 		<Card scale={getScale()} style={{...props.style, backgroundColor: getBackgroundColor(), pointerEvents: isChoosable()}}>
