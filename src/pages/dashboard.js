@@ -47,7 +47,7 @@ const CenterScreen = styled.div`
 let aborters = [new AbortController()]
 
 function Dashboard(props) {
-	const [week, changeWeek] = useState(getWeek())
+	const [week, changeWeek] = useState(getWeek()+1)
 	const [loaded, changeLoaded] = useState(false)
 	const [schedule, updateSchedule] = useState([])
 	const [width, height] = useScreenSize()
@@ -64,13 +64,18 @@ function Dashboard(props) {
 			aborters[aborters.length-1].abort()
 			aborters = [...aborters, new AbortController()]
 		}
+		let token = null
+		const getToken = async () => {
+			token = await getCredentials()
+			setToken(token)
+		}
 		const getSchedule = async () => {
 			try {
 				const result = await fetchApi('GET', `${url}/get-schedule/${week.toString()}`, aborters[aborters.length-1].signal)
 				let games = [], promises = []
 				Object.keys(result).forEach(game => {
 					if (typeof result[game] === 'object') {
-						const picks = fetchApi('GET', `${url}/get-pick/${authToken.username}/${result[game]['game_id']}`, aborters[aborters.length-1].signal)
+						const picks = fetchApi('GET', `${url}/get-pick/${token.username}/${result[game]['game_id']}`, aborters[aborters.length-1].signal)
 						promises.push(picks)
 						games.push(result[game])
 					}
@@ -81,18 +86,14 @@ function Dashboard(props) {
 				})
 				updateSchedule(games)
 				changeLoaded(true)
-			} catch(err) {}
+			} catch(err) {console.error(err)}
 		}
 		const getStreaks = async () => {
 			try {
 				let result = {}
-				if (week > 1) result = await fetchApi('GET', `${url}/get-streak/${authToken.username}/${(week-1).toString()}`, aborters[aborters.length-1].signal)
+				if (week > 1) result = await fetchApi('GET', `${url}/get-streak/${token.username}/${(week-1).toString()}`, aborters[aborters.length-1].signal)
 				setStreaks(result)
 			} catch(err) {}
-		}
-		const getToken = async () => {
-			const tempCredentials = await getCredentials()
-			setToken(tempCredentials)
 		}
 		changeLoadingGif(loading())
 		getToken()
