@@ -1,9 +1,10 @@
-import React, {useReducer} from 'react'
+import React, {useState, useReducer} from 'react'
 import styled from 'styled-components'
 import fetchApi from '../api/fetch'
 import beautify from '../utils/parser'
 import loading from '../utils/loading'
 import {url} from '../utils/constants'
+import ReCaptcha from 'react-google-recaptcha'
 import '../components/css/login.css'
 
 const Container = styled.div`
@@ -31,6 +32,7 @@ const Center = styled.div`
 `
 
 function Signup(props) {
+	const [captcha, setCaptcha] = useState(false)
 	const [form, update] = useReducer((state, action) => {
 		return {
 			...state,
@@ -39,11 +41,12 @@ function Signup(props) {
 	}, {})
 	const msg = props.history.getCurrentLocation().state
 
-	const tryLogin = async (form) => {
+	const trySignUp = async (form) => {
 		const ref = document.getElementById('signup-response')
 		ref.innerHTML = `<img src=${loading()} height="42" width="42"/>`
 		let msg = '', response
-		if (!form.username) msg = `Please choose a valid username`
+		if (!captcha) msg = `Please complete the captcha verification`
+		else if (!form.username) msg = `Please choose a valid username`
 		else if (!form.email) msg = `Please provide a valid e-mail`
 		else if (!form.password) msg = `Please choose a valid password`
 		else if (form.email !== form.emailCheck) msg = `E-mails don't match`
@@ -81,9 +84,11 @@ function Signup(props) {
 				<input type="password" className="form-control customForm" placeholder="Repeat password" 
 					onChange={(e) => update({key: 'passwordCheck', value: e.target.value})} />
 
+				<ReCaptcha sitekey="6Ld3n7QUAAAAABWNyyH3fIDHUuBqQ7rJxee2qfpz" onChange={() => setCaptcha(true)} />
+
 				<div id="signup-response" style={{padding: '9px 8px 12px 9px', textAlign: 'center', width: 300, textAlign: 'center'}}></div>
 				<button type="button" style={{width: '100px'}} className="btn btn-light" 
-					onClick={() => tryLogin(form)}>Sign up</button>
+					onClick={() => trySignUp(form)}>Sign up</button>
 			</Container>
 		</Center>
 	)
