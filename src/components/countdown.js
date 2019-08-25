@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react'
 
-function useCountdown(time) {
-	const [timeLeft, changeTimeLeft] = useState(time)
+function Countdown(props) {
+	const date = props.props.date, time = props.props.time, pickPoints = props.props.pickPoints
+	const left = new Date(`${date.substr(0, 10)} ${time.substr(0, 5)} EST`) - 4800000 - new Date()
+	const [timeLeft, changeTimeLeft] = useState(left)
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -10,6 +12,7 @@ function useCountdown(time) {
 					clearInterval(interval)
 					return 0
 				}
+				if (current <= 1000) props.changeChoosable(false)
 				return current - 1000
 			})
 		}, 1000)
@@ -17,6 +20,7 @@ function useCountdown(time) {
 		return () => clearInterval(interval)
 	}, [])
 
+	const hasGameFinished = () => typeof pickPoints !== 'undefined'
 
 	const msToTime = ms => {
 		let seconds = Math.floor((ms / 1000) % 60),
@@ -28,7 +32,14 @@ function useCountdown(time) {
 		return hours + ':' + minutes + ':' + seconds
 	}
 
-	return [timeLeft, msToTime(timeLeft)]
+	return (
+		timeLeft < 86400000 &&
+		<div style={{gridArea: 'info', marginRight: 8, display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end', marginBottom: 8}}>
+			<span style={{fontSize: 14, fontWeight: 900, color: '#d61609'}}>
+				{timeLeft > 0 ? <span>Locks in &nbsp;{msToTime(timeLeft)}</span> : !hasGameFinished() ? <span>Game locked!</span> : ''}
+			</span>
+		</div>
+	)
 }
 
-export default useCountdown
+export default Countdown
