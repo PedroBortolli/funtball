@@ -20,6 +20,7 @@ const Container = styled.div`
 	> :first-child { margin-top: 16px }
 	> input {
 		width: 200px;
+		:last-child() { margin-bottom: 60px }
 	}
 	> h2 {
 		margin-bottom: 24px;
@@ -64,27 +65,29 @@ function Signup(props) {
 		}, 750)
 	}
 
+	const captchaKey = '6Ld3n7QUAAAAABWNyyH3fIDHUuBqQ7rJxee2qfpz'
+
 	return (
 		<Center>
 			<Container>
 				<h2>Sign up</h2>
 				<div style={{color: '#d60000', paddingBottom: 10, fontWeight: 900}}>{msg}</div>
 				<input type="text" className="form-control customForm" placeholder="Username" 
-					onChange={(e) => update({key: 'username', value: e.target.value})} autoFocus/>
+					autoCapitalize="off" onChange={(e) => update({key: 'username', value: e.target.value})} autoFocus/>
 
 				<input type="text" className="form-control customForm" placeholder="E-mail" 
-					onChange={(e) => update({key: 'email', value: e.target.value})} />
+					autoCapitalize="off" onChange={(e) => update({key: 'email', value: e.target.value})} />
 
-					<input type="text" className="form-control customForm" placeholder="Repeat e-mail" 
-					onChange={(e) => update({key: 'emailCheck', value: e.target.value})} />
+				<input type="text" className="form-control customForm" placeholder="Repeat e-mail" 
+					autoCapitalize="off" onChange={(e) => update({key: 'emailCheck', value: e.target.value})} />
 
 				<input type="password" className="form-control customForm" placeholder="Password" 
-					onChange={(e) => update({key: 'password', value: e.target.value})} />
+					autoCapitalize="off" onChange={(e) => update({key: 'password', value: e.target.value})} />
 
 				<input type="password" className="form-control customForm" placeholder="Repeat password" 
-					onChange={(e) => update({key: 'passwordCheck', value: e.target.value})} />
+					autoCapitalize="off" onChange={(e) => update({key: 'passwordCheck', value: e.target.value})} />
 
-				<ReCaptcha sitekey="6Ld3n7QUAAAAABWNyyH3fIDHUuBqQ7rJxee2qfpz" onChange={() => setCaptcha(true)} />
+				<ReCaptcha sitekey={captchaKey} style={{marginTop: 24, marginBottom: 24}} onChange={() => setCaptcha(true)} />
 
 				<div id="signup-response" style={{padding: '9px 8px 12px 9px', textAlign: 'center', width: 300, textAlign: 'center'}}></div>
 				<button type="button" style={{width: '100px'}} className="btn btn-light" 

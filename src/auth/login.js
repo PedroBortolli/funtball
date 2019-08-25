@@ -72,7 +72,7 @@ function Login(props) {
 			<Container>
 				<div style={{color: '#d60000', paddingBottom: 10, fontWeight: 900}}>{msg}</div>
 				<input type="text" style={{width: '200px'}} className="form-control customForm" placeholder="Username" 
-					onChange={(e) => update({key: 'username', value: e.target.value})}
+					onChange={(e) => update({key: 'username', value: e.target.value})} autoCapitalize="off"
 					onKeyPress={(e) => e.key === 'Enter' && tryLogin(form)} autoFocus/>
 				<input type="password" style={{width: '200px'}} className="form-control customForm" placeholder="Password" 
 					onChange={(e) => update({key: 'password', value: e.target.value})}
