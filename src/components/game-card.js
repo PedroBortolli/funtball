@@ -104,9 +104,10 @@ function GameCard(props) {
 
 	const calcPoints = () => {
 		if (typeof props.pickPoints !== 'undefined') {
-			let actualPoints = props.pickPoints
+			let actualPoints = props.pickPoints + (props.streakAway || 0) + (props.streakHome || 0)
 			if (typeof props.differencePoints !== 'undefined')
 				actualPoints += props.differencePoints
+			if (!props.pickPoints) return 0
 			return actualPoints * (props.double ? 2 : 1)
 		}
 		let achievablePoints = 0

@@ -70,6 +70,7 @@ function Dashboard(props) {
 			setToken(token)
 		}
 		const getSchedule = async () => {
+			token = await getCredentials()
 			try {
 				const result = await fetchApi('GET', `${url}/get-schedule/${week.toString()}`, aborters[aborters.length-1].signal)
 				let games = [], promises = []
@@ -89,11 +90,12 @@ function Dashboard(props) {
 			} catch(err) {console.error(err)}
 		}
 		const getStreaks = async () => {
+			token = await getCredentials()
 			try {
 				let result = {}
 				if (week > 1) result = await fetchApi('GET', `${url}/get-streak/${token.username}/${(week-1).toString()}`, aborters[aborters.length-1].signal)
 				setStreaks(result)
-			} catch(err) {}
+			} catch(err) {console.log(err)}
 		}
 		changeLoadingGif(loading())
 		getToken()
