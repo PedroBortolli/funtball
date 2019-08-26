@@ -68,6 +68,16 @@ const Flags = styled.div`
 		cursor: pointer;
 	}
 `
+const FlagsMobile = styled.div`
+	display: flex;
+	justify-content: center;
+	margin-bottom: 28px;
+	> img {
+		:not(:last-child) {
+			margin-right: 16px;
+		}
+	}
+`
 
 const setLang = (lang) => {
 	localStorage.setItem('i18n', lang)
@@ -113,11 +123,13 @@ function Header({menuOpen, changeMenuOpen, isDashMobile}) {
 		<HeaderContainer renderBorder={!isDashMobile}>
 			{isMobile(width) &&
 			<Menu isOpen={menuActive} onStateChange={state => toggleMenu(state)} right width={'180px'}>
-				{credentials ?
-					<a className='menu-item'>
-						<Link to="/logoff" onClick={closeMenu} style={{color: primaryColor}}>{i18n('Logoff')}</Link>
-					</a>
-					:
+				<a className='menu-item'>
+					<FlagsMobile>
+						<img src={Brazil} width={24} alt='Change language to Portuguese' onClick={() => setLang('pt-br')} />
+						<img src={USA} alt='Change language to English' width={24} onClick={() => setLang('en-us')} />
+					</FlagsMobile>
+				</a>
+				{!credentials &&
 					<a className='menu-item'>
 						<Link to="/login" onClick={closeMenu} style={{color: primaryColor}}>{i18n('Login')}</Link>
 					</a>
@@ -129,6 +141,11 @@ function Header({menuOpen, changeMenuOpen, isDashMobile}) {
 				<a className='menu-item'>
 					<Link to="/ranking" onClick={closeMenu} style={{color: primaryColor}}>Ranking</Link>
 				</a>
+				{credentials &&
+					<a className='menu-item'>
+						<Link to="/logoff" onClick={closeMenu} style={{color: primaryColor}}>{i18n('Logoff')}</Link>
+					</a>
+				}
 			</Menu>}
 			{isDashMobile && isMobile(width) && credentials &&
 				<User id='oi'>

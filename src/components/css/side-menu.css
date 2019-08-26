@@ -8,6 +8,7 @@
 	font-family: 'Bookman Old Style';
 	font-weight: 900;
 	font-size: 22px;
+	outline: none;
 }
 
 .bm-item:hover {
