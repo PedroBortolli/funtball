@@ -6,6 +6,7 @@ import { primaryColor } from './utils/constants'
 import { isMobile } from './utils/modules'
 import useScreenSize from './hooks/useScreenSize'
 import Pointer from './components/pointer'
+import i18n from './utils/i18n'
 import footballGif from './assets/loadings/5.gif'
 import GitHubLogo from './assets/github-logo.png'
 import TwitterLogo from './assets/twitter-logo.png'
@@ -76,27 +77,27 @@ function App(props) {
 					<div>
 						<Center>
 							{!isMobile(width) ?
-							<h1>Welcome to Funtball!</h1>
+							<h1>{i18n('Welcome to Funtball!')}</h1>
 							:
-							<h2>Welcome to Funtball!</h2>}
-							{credentials && <span>You are now logged in as <b>{credentials.username}</b></span>}
+							<h2>{i18n('Welcome to Funtball!')}</h2>}
+							{credentials && <span>{i18n('You are logged in as')} <b>{credentials.username}</b></span>}
 						</Center>
 						<Home>
 							<Row style={isMobile(width) ? {marginLeft: 16, marginRight: 16} : {}}>
-								<span id='text'>Funtball is a new pick 'em styled fantasy football game under development</span>
+								<span id='text'>{i18n(`Funtball is a new pick 'em styled fantasy football game under development`)}</span>
 								<Pointer direction='left' />
 							</Row>
 							<Row style={isMobile(width) ? {marginLeft: 16, marginRight: 16} : {}}>
 								<Pointer direction='right' />
-								<span id='text'>Score points by correctly choosing the winner of every game from the upcoming football season</span>
+								<span id='text'>{i18n(`Score points by correctly choosing the winner of every game from the upcoming football season`)}</span>
 							</Row>
 							<Row style={isMobile(width) ? {marginLeft: 16, marginRight: 16} : {}}>
-								<span id='text'>Points may also be gained by correctly guessing the score difference of a given game</span>
+								<span id='text'>{i18n(`Points may also be gained by correctly guessing the score difference of a given game`)}</span>
 								<Pointer direction='left' />
 							</Row>
 							<Row style={isMobile(width) ? {marginLeft: 16, marginRight: 16} : {}}>
 								<Pointer direction='right' />
-								<span id='text'>Play smart! Sacrifice points to double up the reward obtained from a correctly guessed game</span>
+								<span id='text'>{i18n(`Play smart! Sacrifice points to double up the reward obtained from a correctly guessed game`)}</span>
 							</Row>
 						</Home>
 						<Center style={{marginTop: 48}}>
@@ -112,8 +113,8 @@ function App(props) {
 								</a>
 							</ImgLinks>
 							<Center style={{textAlign: 'center'}}>
-								<span>Funtball is open source - feel free to contribute</span>
-								<span>Also, follow me on Twitter for updates about Funtball</span>
+								<span>{i18n('Funtball is open source - feel free to contribute')}</span>
+								<span>{i18n('Follow me on Twitter for updates about Funtball')}</span>
 							</Center>
 						</Footer>
 					</div>

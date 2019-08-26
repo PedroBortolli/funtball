@@ -10,6 +10,9 @@ import pointsLoading from '../assets/loadings/1.gif'
 import useScreenSize from '../hooks/useScreenSize'
 import {url} from '../utils/constants'
 import Menu from 'react-burger-menu/lib/menus/slide'
+import Brazil from '../assets/brazil.png'
+import USA from '../assets/usa.png'
+import i18n from '../utils/i18n'
 import './css/side-menu.css'
 
 const HeaderContainer = styled.div`
@@ -53,7 +56,23 @@ const User = styled.div`
 		font-weight: 900;
 	}
 `
+const Flags = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	> img {
+		:not(:last-child) {
+			margin-bottom: 5px;
+		}
+		cursor: pointer;
+	}
+`
 
+const setLang = (lang) => {
+	localStorage.setItem('i18n', lang)
+	window.location.reload()
+}
 
 function Header({menuOpen, changeMenuOpen, isDashMobile}) {
 	const [width] = useScreenSize()
@@ -96,16 +115,16 @@ function Header({menuOpen, changeMenuOpen, isDashMobile}) {
 			<Menu isOpen={menuActive} onStateChange={state => toggleMenu(state)} right width={'180px'}>
 				{credentials ?
 					<a className='menu-item'>
-						<Link to="/logoff" onClick={closeMenu} style={{color: primaryColor}}>Logoff</Link>
+						<Link to="/logoff" onClick={closeMenu} style={{color: primaryColor}}>{i18n('Logoff')}</Link>
 					</a>
 					:
 					<a className='menu-item'>
-						<Link to="/login" onClick={closeMenu} style={{color: primaryColor}}>Login</Link>
+						<Link to="/login" onClick={closeMenu} style={{color: primaryColor}}>{i18n('Login')}</Link>
 					</a>
 				}
 				<a className='menu-item'>
 					{credentials && 
-					<Link to={{pathname: "/dashboard", upd: updateDashboard}} onClick={closeMenu} style={{color: primaryColor}}>Dashboard</Link>}
+					<Link to={{pathname: "/dashboard", upd: updateDashboard}} onClick={closeMenu} style={{color: primaryColor}}>{i18n('Dashboard')}</Link>}
 				</a>
 				<a className='menu-item'>
 					<Link to="/ranking" onClick={closeMenu} style={{color: primaryColor}}>Ranking</Link>
@@ -114,7 +133,7 @@ function Header({menuOpen, changeMenuOpen, isDashMobile}) {
 			{isDashMobile && isMobile(width) && credentials &&
 				<User id='oi'>
 					<span>{credentials.username}:</span>
-					<span>{typeof userPoints === 'number' ? userPoints : <img width={26} height={26} src={pointsLoading} alt='' />} Points</span>
+					<span>{typeof userPoints === 'number' ? userPoints : <img width={26} height={26} src={pointsLoading} alt='' />} {i18n('Points')}</span>
 				</User>
 			}
 			<Container>
@@ -125,15 +144,19 @@ function Header({menuOpen, changeMenuOpen, isDashMobile}) {
 				<MenuOptions>
 					{credentials &&
 					<div style={{color: primaryColor, marginRight: 32}}>
-						{credentials.username}: {typeof userPoints === 'number' ? userPoints : <img width={26} height={26} src={pointsLoading} alt='' />} Points
+						{credentials.username}: {typeof userPoints === 'number' ? userPoints : <img width={26} height={26} src={pointsLoading} alt='' />} {i18n('Points')}
 					</div>}
-					{credentials && <Link to={{pathname: "/dashboard", upd: updateDashboard}} style={{color: primaryColor}}>Dashboard</Link>}
+					{credentials && <Link to={{pathname: "/dashboard", upd: updateDashboard}} style={{color: primaryColor}}>{i18n('Dashboard')}</Link>}
 					<Link to="/ranking" style={{color: primaryColor}}>Ranking</Link>
 					{credentials ?
-						<Link to="/logoff" style={{color: primaryColor}}>Logoff</Link>
+						<Link to="/logoff" style={{color: primaryColor}}>{i18n('Logoff')}</Link>
 						:
-						<Link to="/login" style={{color: primaryColor}}>Login</Link>
+						<Link to="/login" style={{color: primaryColor}}>{i18n('Login')}</Link>
 					}
+					<Flags>
+						<img src={Brazil} width={24} alt='Change language to Portuguese' onClick={() => setLang('pt-br')} />
+						<img src={USA} alt='Change language to English' width={24} onClick={() => setLang('en-us')} />
+					</Flags>
 				</MenuOptions>}
 			</Container>
 		</HeaderContainer>
