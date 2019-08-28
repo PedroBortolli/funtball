@@ -7,6 +7,7 @@ import loading from '../utils/loading'
 import Countdown from './countdown'
 import streakIcon from '../assets/streak-icon.png'
 import useScreenSize from '../hooks/useScreenSize'
+import i18n from '../utils/i18n'
 import {url} from '../utils/constants'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
@@ -206,12 +207,25 @@ function GameCard(props) {
 		if (!choosable || hasGameFinished()) return 'none'
 		return 'auto'
 	}
+	
+	const getUserDate = () => {
+		const utcDate = new Date(`${props.date.substr(0, 10)} ${props.time.substr(0, 5)} EST`).toLocaleString("en-US", {timeZone: "UTC"})
+		const offset = new Date().getTimezoneOffset() + 60
+		if (utcDate) {
+			const date = new Date(new Date(utcDate).getTime() - offset * 60 * 1000)
+			if (date) {
+				const d = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`, t = date.toTimeString().substr(0, 5)
+				return [d, t]
+			}
+		}
+		return [null, null]
+	}
 
 	return (
 		saving ?
 			<div style={{width: Math.min(480, width), minHeight: 94*getScale(), maxHeight: 94*getScale(),
 						display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}>
-				<span>Saving</span>
+				<span>{i18n('Saving')}</span>
 				<img alt='' src={loadingGif} width={Math.min(60, 60*getScale())} height={Math.min(60, 60*getScale())} />
 			</div>
 		:
@@ -227,8 +241,8 @@ function GameCard(props) {
 
 				<Center style={{gridArea: 'info', fontSize: 11}}>
 					<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-						<div>{props.date.substr(0, 10)}</div>
-						<div>{props.time.substr(0, 5)}</div>
+						<div>{getUserDate()[0]}</div>
+						<div>{getUserDate()[1]}</div>
 					</div>
 				</Center>
 
@@ -251,9 +265,9 @@ function GameCard(props) {
 			</Teams>
 			<Options style={{cursor: pick ? 'auto' : 'not-allowed'}}>
 				{selectionDiffers() &&
-				<div style={{fontSize: 14, fontWeight: 900, color: '#c69a29', gridArea: 'info', marginRight: 8,
+				<div style={{fontSize: 13, fontWeight: 900, color: '#c69a29', gridArea: 'info', marginRight: 8,
 							display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
-					Unsaved changes&nbsp;<span aria-labelledby="jsx-a11y/accessible-emoji" role="img">⚠️</span>
+					{i18n('Unsaved changes')}&nbsp;<span aria-labelledby="jsx-a11y/accessible-emoji" role="img">⚠️</span>
 				</div>
 				}
 				<Countdown props={props} changeChoosable={changeChoosable} />
