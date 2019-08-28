@@ -80,8 +80,10 @@ const FlagsMobile = styled.div`
 `
 
 const setLang = (lang) => {
-	localStorage.setItem('i18n', lang)
-	window.location.reload()
+	if (localStorage.getItem('i18n') !== lang) {
+		localStorage.setItem('i18n', lang)
+		window.location.reload()
+	}
 }
 
 function Header({menuOpen, changeMenuOpen, isDashMobile}) {
@@ -125,8 +127,8 @@ function Header({menuOpen, changeMenuOpen, isDashMobile}) {
 			<Menu isOpen={menuActive} onStateChange={state => toggleMenu(state)} right width={'180px'}>
 				<a className='menu-item'>
 					<FlagsMobile>
-						<img src={Brazil} width={24} alt='Change language to Portuguese' onClick={() => setLang('pt-br')} />
-						<img src={USA} alt='Change language to English' width={24} onClick={() => setLang('en-us')} />
+						<img src={Brazil} width={24} height={16.8} alt='Change language to Portuguese' onClick={() => setLang('pt-br')} />
+						<img src={USA} width={24} height={12.93} alt='Change language to English'  onClick={() => setLang('en-us')} />
 					</FlagsMobile>
 				</a>
 				{!credentials &&
@@ -171,8 +173,8 @@ function Header({menuOpen, changeMenuOpen, isDashMobile}) {
 						<Link to="/login" style={{color: primaryColor}}>{i18n('Login')}</Link>
 					}
 					<Flags>
-						<img src={Brazil} width={24} alt='Change language to Portuguese' onClick={() => setLang('pt-br')} />
-						<img src={USA} alt='Change language to English' width={24} onClick={() => setLang('en-us')} />
+						<img src={Brazil} width={24} height={16.8} alt='Change language to Portuguese' onClick={() => setLang('pt-br')} />
+						<img src={USA} width={24} height={12.93} alt='Change language to English' onClick={() => setLang('en-us')} />
 					</Flags>
 				</MenuOptions>}
 			</Container>
