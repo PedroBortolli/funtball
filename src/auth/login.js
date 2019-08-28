@@ -24,14 +24,24 @@ const Container = styled.div`
 		margin-bottom: 24px;
 	}
 `
-
 const Center = styled.div`
 	display: flex;
 	justify-content: center;
 `
+const LoginResponse = styled.div`
+	padding: 12px 0px 12px;
+	width: 300;
+	text-align: center;
+	> * a {
+		cursor: pointer;
+		text-decoration: underline !important;
+		font-weight: 900;
+	}
+`
 
 function Login(props) {
 	const [loggedIn, changeLoggedIn] = useState(null)
+	const [confirmed, setConfirmed] = useState(true)
 	const [form, update] = useReducer((state, action) => {
 		return {
 			...state,
@@ -56,16 +66,16 @@ function Login(props) {
 			username: form.username,
 			password: form.password
 		})
-		setTimeout(() => {
-			if (response.message === 'Account not confirmed')
-			ref.innerHTML = beautify(response.message)
-
-		}, 1000)
+		console.log(response)
 		if (response.status === 200) {
 			await localStorage.setItem('auth-jwt', response.token)
 			changeLoggedIn(true)
 			props.history.goBack()
 			//Route.browserHistory.push('/')
+		}
+		else if (response.message === 'account not confirmed') {
+			ref.innerHTML = ''
+			setConfirmed(false)
 		}
 		else ref.innerHTML = i18n('Invalid username/password')
 	}
@@ -84,7 +94,18 @@ function Login(props) {
 				<input type="password" style={{width: '200px'}} className="form-control customForm" placeholder={i18n('Password')} 
 					onChange={(e) => update({key: 'password', value: e.target.value})}
 					onKeyPress={(e) => e.key === 'Enter' && tryLogin(form)}/>
-				<div id="login-response" style={{height: 60, paddingTop: 12, width: 300, textAlign: 'center'}}></div>
+				<LoginResponse id="login-response">
+					{!confirmed &&
+						<div>
+							<div>{i18n('Account not confirmed')}</div>
+							<div>
+								{i18n('Click')}
+								<span> <a onClick={() => console.log("Click")}>here</a> </span>
+								{i18n('to resend a confirmation e-mail')}
+							</div>
+						</div>
+					}
+				</LoginResponse>
 				<button type="button" style={{width: '100px'}} className="btn btn-light" 
 					onClick={() => tryLogin(form)}>{i18n('Log in')}</button>
 			</Container>
