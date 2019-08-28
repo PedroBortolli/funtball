@@ -73,8 +73,11 @@ const FlagsMobile = styled.div`
 	justify-content: center;
 	margin-bottom: 28px;
 	> img {
+		width: 34px;
+		height: 22px;
 		:not(:last-child) {
 			margin-right: 16px;
+			width: 36px;
 		}
 	}
 `
@@ -105,6 +108,11 @@ function Header({menuOpen, changeMenuOpen, isDashMobile}) {
 		fetchPoints()
 	}, [dashboard, window.location.href])
 
+	useEffect(() => {
+		if (menuActive) document.body.style.overflow = "hidden"
+		else document.body.style.overflow = "auto"
+	}, [menuActive])
+
 	const toggleMenu = (state) => {
 		changeMenuActive(state.isOpen)
 		if (!state.isOpen) {
@@ -125,7 +133,7 @@ function Header({menuOpen, changeMenuOpen, isDashMobile}) {
 		<HeaderContainer renderBorder={!isDashMobile}>
 			{isMobile(width) &&
 			<Menu isOpen={menuActive} onStateChange={state => toggleMenu(state)} right width={'180px'}>
-				<a className='menu-item'>
+				<a className='menu-item' style={{position: 'fixed', bottom: 0, marginLeft: 18, marginBottom: 0}}>
 					<FlagsMobile>
 						<img src={Brazil} width={24} height={16.8} alt='Change language to Portuguese' onClick={() => setLang('pt-br')} />
 						<img src={USA} width={24} height={12.93} alt='Change language to English'  onClick={() => setLang('en-us')} />
@@ -161,11 +169,11 @@ function Header({menuOpen, changeMenuOpen, isDashMobile}) {
 				</User>
 			}
 			<Container>
-				<Link to="/">
-					<img alt='' style={{float: 'left'}} src={logo} width={isMobile(width) ? 230 : 230} height={isMobile(width) ? 60 : 60} />
+			<Link to="/">
+					<img alt='' style={{float: 'left', marginTop: 8, marginLeft: 4}} src={logo} width={220} height={45} />
 				</Link>
 				{!isMobile(width) &&
-				<MenuOptions>
+				<MenuOptions style={{marginTop: 8}}>
 					{credentials &&
 					<div style={{color: primaryColor, marginRight: 32}}>
 						{credentials.username}: {typeof userPoints === 'number' ? userPoints : <img width={26} height={26} src={pointsLoading} alt='' />} {i18n('Points')}
