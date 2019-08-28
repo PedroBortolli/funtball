@@ -136,6 +136,11 @@ function Header({menuOpen, changeMenuOpen, isDashMobile}) {
 						<Link to="/login" onClick={closeMenu} style={{color: primaryColor}}>{i18n('Login')}</Link>
 					</a>
 				}
+				{!credentials &&
+					<a className='menu-item'>
+						<Link to="/signup" onClick={closeMenu} style={{color: primaryColor}}>{i18n('Sign up')}</Link>
+					</a>
+				}
 				<a className='menu-item'>
 					{credentials && 
 					<Link to={{pathname: "/dashboard", upd: updateDashboard}} onClick={closeMenu} style={{color: primaryColor}}>{i18n('Dashboard')}</Link>}
@@ -167,6 +172,7 @@ function Header({menuOpen, changeMenuOpen, isDashMobile}) {
 					</div>}
 					{credentials && <Link to={{pathname: "/dashboard", upd: updateDashboard}} style={{color: primaryColor}}>{i18n('Dashboard')}</Link>}
 					<Link to="/ranking" style={{color: primaryColor}}>Ranking</Link>
+					{!credentials && <Link to="/signup" style={{color: primaryColor}}>{i18n('Sign up')}</Link>}
 					{credentials ?
 						<Link to="/logoff" style={{color: primaryColor}}>{i18n('Logoff')}</Link>
 						:
