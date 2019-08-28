@@ -20,7 +20,7 @@ const Container = styled.div`
 	}
 	> :first-child { margin-top: 16px }
 	> input {
-		width: 200px;
+		width: 230px;
 		:last-child() { margin-bottom: 60px }
 	}
 	> h2 {
@@ -71,7 +71,7 @@ function Signup(props) {
 	return (
 		<Center>
 			<Container>
-				<h2>Sign up</h2>
+				<h2>{i18n('Sign up')}</h2>
 				<div style={{color: '#d60000', paddingBottom: 10, fontWeight: 900}}>{msg}</div>
 				<input type="text" className="form-control customForm" placeholder={i18n('Username')} 
 					autoCapitalize="off" onChange={(e) => update({key: 'username', value: e.target.value})} autoFocus/>
