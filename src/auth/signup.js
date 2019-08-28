@@ -1,8 +1,9 @@
-import React, {useState, useReducer} from 'react'
+import React, {useState, useReducer, useEffect} from 'react'
 import styled from 'styled-components'
 import fetchApi from '../api/fetch'
 import beautify from '../utils/parser'
 import loading from '../utils/loading'
+import {getCredentials} from './services'
 import i18n from '../utils/i18n'
 import {url} from '../utils/constants'
 import ReCaptcha from 'react-google-recaptcha'
@@ -34,6 +35,7 @@ const Center = styled.div`
 `
 
 function Signup(props) {
+	const [loggedIn, changeLoggedIn] = useState(false)
 	const [captcha, setCaptcha] = useState(false)
 	const [form, update] = useReducer((state, action) => {
 		return {
@@ -41,6 +43,13 @@ function Signup(props) {
 			[action.key]: action.value
 		}
 	}, {})
+	useEffect(() => {
+		const getToken = async () => {
+			const tempCredentials = await getCredentials()
+			changeLoggedIn(tempCredentials ? true : false)
+		}
+		getToken()
+	}, [])
 	const msg = props.history.getCurrentLocation().state
 
 	const trySignUp = async (form) => {
@@ -66,9 +75,12 @@ function Signup(props) {
 		}, 750)
 	}
 
+	if (loggedIn) props.history.push('/')
+
 	const captchaKey = '6Ld3n7QUAAAAABWNyyH3fIDHUuBqQ7rJxee2qfpz'
 
 	return (
+		!loggedIn ?
 		<Center>
 			<Container>
 				<h2>{i18n('Sign up')}</h2>
@@ -94,6 +106,10 @@ function Signup(props) {
 				<button type="button" style={{width: '100px'}} className="btn btn-light" 
 					onClick={() => trySignUp(form)}>{i18n('Sign up')}</button>
 			</Container>
+		</Center>
+		:
+		<Center>
+			<h3>{i18n('Already logged in. Redirecting...')}</h3>
 		</Center>
 	)
 }
