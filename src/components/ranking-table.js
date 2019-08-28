@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import {primaryColor} from '../utils/constants'
+import i18n from '../utils/i18n';
 
 const Title = styled.div`
 	background-color: #912300;
@@ -62,7 +63,7 @@ function RankingTable({ranking = [], title = 'Ranking', itemsPer = 10}) {
 				</div>
 			</RankName>
 			<div style={{display: 'flex', alignItems: 'center'}}>
-				{title === 'Points' ? user.pts : `${user.wins}-${user.losses}`}
+				{title === i18n('Points') ? user.pts : `${user.wins}-${user.losses}`}
 			</div>
 		</div>)
 	})

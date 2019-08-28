@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import fetchApi from '../api/fetch'
+import i18n from '../utils/i18n'
 import {url} from '../utils/constants'
 
 function ConfirmEmail() {
@@ -18,9 +19,9 @@ function ConfirmEmail() {
 	if (confirmed) window.location = 'login'
 
 	return (
-		set ? <h3>Account {confirmed ? 'confirmed. Redirecting...' : 'not confirmed...'}</h3>
+		set ? <h3>{i18n('Account')} {confirmed ? i18n('confirmed. Redirecting...') : i18n('not confirmed...')}</h3>
 		:
-		<h3>Validating...</h3>
+		<h3>{i18n('Validating...')}</h3>
 	)
 }
 

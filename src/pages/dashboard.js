@@ -5,6 +5,7 @@ import Weeks from '../components/weeks'
 import styled from 'styled-components'
 import loading from '../utils/loading'
 import useScreenSize from '../hooks/useScreenSize'
+import i18n from '../utils/i18n'
 import {primaryColor} from '../utils/constants'
 import {url, getWeek} from '../utils/constants'
 import { getCredentials } from '../auth/services'
@@ -112,7 +113,7 @@ function Dashboard(props) {
 			<Center style={{marginTop: 8, marginBottom: 16, position: 'relative', zIndex: 10, userSelect: 'none'}}>
 				<FontAwesomeIcon icon={faChevronLeft} onClick={() => week > 1 && changeWeek(week-1)} 
 					style={{cursor: week > 1 ? 'pointer' : 'auto', opacity: week > 1 ? 1 : 0}} />
-				<h1 style={{color: primaryColor, fontWeight: 900}}>{week > 0 ? `Week ${week}` : `Pre-Season`}</h1>
+				<h1 style={{color: primaryColor, fontWeight: 900}}>{week > 0 ? `${i18n('Week')} ${week}` : `Pre-Season`}</h1>
 				<FontAwesomeIcon icon={faChevronRight} onClick={() => week < 17 && changeWeek(week+1)} 
 				style={{cursor: week < 17 ? 'pointer' : 'auto', opacity: week < 17 ? 1 : 0}} />
 			</Center>

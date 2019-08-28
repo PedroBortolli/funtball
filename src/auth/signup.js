@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import fetchApi from '../api/fetch'
 import beautify from '../utils/parser'
 import loading from '../utils/loading'
+import i18n from '../utils/i18n'
 import {url} from '../utils/constants'
 import ReCaptcha from 'react-google-recaptcha'
 import '../components/css/login.css'
@@ -46,12 +47,12 @@ function Signup(props) {
 		const ref = document.getElementById('signup-response')
 		ref.innerHTML = `<img src=${loading()} height="42" width="42"/>`
 		let msg = '', response
-		if (!captcha) msg = `Please complete the captcha verification`
-		else if (!form.username) msg = `Please choose a valid username`
-		else if (!form.email) msg = `Please provide a valid e-mail`
-		else if (!form.password) msg = `Please choose a valid password`
-		else if (form.email !== form.emailCheck) msg = `E-mails don't match`
-		else if (form.password !== form.passwordCheck) msg = `Passwords don't match`
+		if (!captcha) msg = i18n(`Please complete the captcha verification`)
+		else if (!form.username) msg = i18n(`Please choose a valid username`)
+		else if (!form.email) msg = i18n(`Please provide a valid e-mail`)
+		else if (!form.password) msg = i18n(`Please choose a valid password`)
+		else if (form.email !== form.emailCheck) msg = i18n(`E-mails don't match`)
+		else if (form.password !== form.passwordCheck) msg = i18n(`Passwords don't match`)
 		else {
 			response = await fetchApi('POST', `${url}/sign-up`, undefined, {
 				username: form.username,
@@ -72,26 +73,26 @@ function Signup(props) {
 			<Container>
 				<h2>Sign up</h2>
 				<div style={{color: '#d60000', paddingBottom: 10, fontWeight: 900}}>{msg}</div>
-				<input type="text" className="form-control customForm" placeholder="Username" 
+				<input type="text" className="form-control customForm" placeholder={i18n('Username')} 
 					autoCapitalize="off" onChange={(e) => update({key: 'username', value: e.target.value})} autoFocus/>
 
-				<input type="text" className="form-control customForm" placeholder="E-mail" 
+				<input type="text" className="form-control customForm" placeholder={i18n('E-mail')} 
 					autoCapitalize="off" onChange={(e) => update({key: 'email', value: e.target.value})} />
 
-				<input type="text" className="form-control customForm" placeholder="Repeat e-mail" 
+				<input type="text" className="form-control customForm" placeholder={i18n('Repeat e-mail')} 
 					autoCapitalize="off" onChange={(e) => update({key: 'emailCheck', value: e.target.value})} />
 
-				<input type="password" className="form-control customForm" placeholder="Password" 
+				<input type="password" className="form-control customForm" placeholder={i18n('Password')} 
 					autoCapitalize="off" onChange={(e) => update({key: 'password', value: e.target.value})} />
 
-				<input type="password" className="form-control customForm" placeholder="Repeat password" 
+				<input type="password" className="form-control customForm" placeholder={i18n('Repeat password')} 
 					autoCapitalize="off" onChange={(e) => update({key: 'passwordCheck', value: e.target.value})} />
 
 				<ReCaptcha sitekey={captchaKey} style={{marginTop: 24, marginBottom: 24}} onChange={() => setCaptcha(true)} />
 
 				<div id="signup-response" style={{padding: '9px 8px 12px 9px', textAlign: 'center', width: 300, textAlign: 'center'}}></div>
 				<button type="button" style={{width: '100px'}} className="btn btn-light" 
-					onClick={() => trySignUp(form)}>Sign up</button>
+					onClick={() => trySignUp(form)}>{i18n('Sign up')}</button>
 			</Container>
 		</Center>
 	)

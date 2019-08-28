@@ -3,6 +3,7 @@ import fetchApi from '../api/fetch'
 import styled from 'styled-components'
 import loading from '../utils/loading'
 import RankingTable from '../components/ranking-table'
+import i18n from '../utils/i18n'
 import {url} from '../utils/constants'
 import { isMobile } from '../utils/modules'
 import useScreenSize from '../hooks/useScreenSize'
@@ -76,10 +77,10 @@ function Ranking() {
 		isMobile(width) ?
 			<div>
 				<FlexContainer>
-					<span style={{fontWeight: _switch ? 100 : 900}}>Points</span>
+					<span style={{fontWeight: _switch ? 100 : 900}}>{i18n('Points')}</span>
 					<Switch onChange={() => toggleSwitch(!_switch)} checked={_switch} 
 						uncheckedIcon={false} checkedIcon={false} offColor={'#ffeac9'} onColor={'#ffeac9'}/>
-					<span style={{fontWeight: _switch ? 900 : 100}}>Wins</span>
+					<span style={{fontWeight: _switch ? 900 : 100}}>{i18n('Wins')}</span>
 				</FlexContainer>
 				<RankingContainer>
 					{_switch ?
@@ -91,8 +92,8 @@ function Ranking() {
 			</div>
 		:
 			<RankingContainer>
-				<RankingTable ranking={pointsRanking} title='Points' />
-				<RankingTable ranking={winsRanking} title='Wins' />
+				<RankingTable ranking={pointsRanking} title={i18n('Points')} />
+				<RankingTable ranking={winsRanking} title={i18n('Wins')} />
 			</RankingContainer>
 		}
 	</Center>
