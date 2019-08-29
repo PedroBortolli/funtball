@@ -32,7 +32,15 @@ const translations = {
 	"E-mails don't match": 'E-mails diferentes',
 	"Passwords don't match": 'Senhas diferentes',
 	'Invalid username/password': 'Usuário/senha inválido(s)',
-	'Wins': 'Vitórias'
+	'Wins': 'Vitórias',
+	'Forgot password?': 'Esqueceu sua senha?',
+	'E-mail registered': 'E-mail registrado',
+	'Reset': 'Resetar',
+	'Such e-mail is not registered on Funtball': 'Este e-mail não está registrado no Funtball',
+	'An e-mail with instructions to reset your password has been sent': 'Um e-mail com instruções para resetar sua senha foi enviado',
+	"Sorry, an internal error happened and it wasn't possible to reset your password": 'Desculpe, houve um erro interno e não foi possível resetar a sua senha',
+	'Password successfully reseted': 'Senha resetada com sucesso',
+	'Confirm': 'Confirmar'
 }
 
 function i18n(str) {
