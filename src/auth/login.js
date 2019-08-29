@@ -38,10 +38,34 @@ const LoginResponse = styled.div`
 		font-weight: 900;
 	}
 `
+const PasswordReset = styled.div`
+	margin-top: 42px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	> span {
+		cursor: pointer;
+		text-decoration: underline !important;
+	}
+	> input {
+		margin-top: 24px;
+		margin-bottom: 24px !important;
+	}
+	> button {
+		margin-bottom: 16px !important;
+	}
+	> p {
+		text-align: center;
+	}
+`
 
 function Login(props) {
 	const [loggedIn, changeLoggedIn] = useState(null)
 	const [confirmed, setConfirmed] = useState(true)
+	const [reset, resetPassword] = useState(false)
+	const [email, changeEmail] = useState(null)
+	const [resetReturn, setResetReturn] = useState(null)
 	const [form, update] = useReducer((state, action) => {
 		return {
 			...state,
@@ -66,7 +90,6 @@ function Login(props) {
 			username: form.username,
 			password: form.password
 		})
-		console.log(response)
 		if (response.status === 200) {
 			await localStorage.setItem('auth-jwt', response.token)
 			changeLoggedIn(true)
@@ -78,6 +101,25 @@ function Login(props) {
 			setConfirmed(false)
 		}
 		else ref.innerHTML = i18n('Invalid username/password')
+	}
+
+	const sendResetPassword = async () => {
+		setResetReturn(null)
+		const response = await fetchApi('POST', `${url}/request-new-password`, undefined, {
+			email: email
+		})
+		if (!response.ok) setResetReturn(i18n('Such e-mail is not registered on Funtball'))
+		else setResetReturn(i18n('An e-mail with instructions to reset your password has been sent'))
+	}
+
+	const resendConfirmationEmail = async () => {
+		const ref = document.getElementById('login-response')
+		ref.innerHTML = ''
+		const response = await fetchApi('POST', `${url}/resend-confirmation-email`, undefined, {
+			username: form.username
+		})
+		if (response.ok) ref.innerHTML = 'An e-mail has been sent'
+		else ref.innerHTML = "Sorry, an internal error occured and an e-mail hasn't been sent"
 	}
 
 	if (loggedIn) props.history.push('/')
@@ -100,7 +142,7 @@ function Login(props) {
 							<div>{i18n('Account not confirmed')}</div>
 							<div>
 								{i18n('Click')}
-								<span> <a onClick={() => console.log("Click")}>here</a> </span>
+								<span> <a onClick={resendConfirmationEmail}>here</a> </span>
 								{i18n('to resend a confirmation e-mail')}
 							</div>
 						</div>
@@ -108,6 +150,21 @@ function Login(props) {
 				</LoginResponse>
 				<button type="button" style={{width: '100px'}} className="btn btn-light" 
 					onClick={() => tryLogin(form)}>{i18n('Log in')}</button>
+				
+				<PasswordReset>
+					<span onClick={() => resetPassword(true)}>{i18n('Forgot password?')}</span>
+					{reset &&
+						<>
+							<input type="text" className="form-control customForm" style={{width: 200}} 
+								placeholder={i18n('E-mail registered')} onChange={e => changeEmail(e.target.value)} 
+								onKeyPress={(e) => e.key === 'Enter' && sendResetPassword()} />
+							<button type="button" style={{width: 100}} className="btn btn-light" onClick={sendResetPassword}>
+								{i18n('Reset')}
+							</button>
+							{resetReturn && <p>{resetReturn}</p>}
+						</>
+					}
+				</PasswordReset>
 			</Container>
 		</Center>
 		:

@@ -9,6 +9,7 @@ import Signup from './auth/signup'
 import ConfirmEmail from './auth/confirm-emai'
 import Dashboard from './pages/dashboard'
 import Ranking from './pages/ranking'
+import ResetPassword from './auth/reset-password'
 import 'bootstrap/dist/css/bootstrap.css'
 import {getCredentials} from './auth/services'
 
@@ -29,6 +30,7 @@ const routing = (
 			<Route path="/signup" component={() => <Signup history={browserHistory} />} />
 			<Route path="/confirm-email" component={ConfirmEmail} />
 			<Route path="/ranking" component={Ranking} />
+			<Route path="/reset-password" component={ResetPassword} />
 			<Route component={NotFound} />
 		</Route>
 	</Router>
