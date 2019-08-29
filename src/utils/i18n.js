@@ -9,8 +9,6 @@ const translations = {
 	"Score points by correctly choosing the winner of every game from the upcoming football season": 'Pontue escolhendo corretamente o vencedor de cada jogo da próxima temporada de football',
 	"Points may also be gained by correctly guessing the score difference of a given game": 'Pontos também podem ser obtidos ao acertar a diferença entre os placares de um jogo',
 	"Play smart! Sacrifice points to double up the reward obtained from a correctly guessed game": 'Jogue sabiamente! Sacrifique pontos para dobrar os pontos de um jogo escolhido corretamente',
-	'Funtball is open source - feel free to contribute': 'Funtball é open source - sinta-se à vontade para contribuir',
-	'Follow me on Twitter for updates about Funtball': 'Siga-me no Twitter para notícias sobre Funtball',
 	'Unsaved changes': 'Alterações não salvas',
 	'Saving': 'Salvando',
 	'Week': 'Semana',
@@ -40,7 +38,9 @@ const translations = {
 	'An e-mail with instructions to reset your password has been sent': 'Um e-mail com instruções para resetar sua senha foi enviado',
 	"Sorry, an internal error happened and it wasn't possible to reset your password": 'Desculpe, houve um erro interno e não foi possível resetar a sua senha',
 	'Password successfully reseted': 'Senha resetada com sucesso',
-	'Confirm': 'Confirmar'
+	'Confirm': 'Confirmar',
+	"Funtball isn't affiliated with the NFL in any manner. Funtball is a recreative project and non-commercial.": 'Funtball não é afiliado à NFL de modo algum. Funtball é um projeto recreativo e não comercial',
+	'All the logos from the 32 teams belong exclusively to the NFL. Funtball is a non-profit purposes project.': 'Todos os logos dos 32 times pertencem exclusivamente à NFL. Funtball não possui fins lucrativos com tais marcas.'
 }
 
 function i18n(str) {

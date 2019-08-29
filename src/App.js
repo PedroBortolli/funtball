@@ -109,15 +109,15 @@ function App(props) {
 						<Footer>
 							<ImgLinks>
 								<a target='_blank' href="https://github.com/PedroBortolli/funtball" rel='noopener noreferrer' style={{cursor: 'poiinter'}}>
-									<img alt='' src={GitHubLogo} width={48} height={48}/>
+									<img alt='' src={GitHubLogo} width={42} height={42}/>
 								</a>
 								<a target='_blank' href="https://twitter.com/PedroBortolli" rel='noopener noreferrer' style={{cursor: 'poiinter'}}>
-									<img alt='' src={TwitterLogo} width={48} height={48}/>
+									<img alt='' src={TwitterLogo} width={42} height={42}/>
 								</a>
 							</ImgLinks>
-							<Center style={{textAlign: 'center'}}>
-								<span>{i18n('Funtball is open source - feel free to contribute')}</span>
-								<span>{i18n('Follow me on Twitter for updates about Funtball')}</span>
+							<Center style={{textAlign: 'center', marginTop: 12, fontSize: 11}}>
+								<span>{i18n("Funtball isn't affiliated with the NFL in any manner. Funtball is a recreative project and non-commercial.")}</span>
+								<span>{i18n('All the logos from the 32 teams belong exclusively to the NFL. Funtball is a non-profit purposes project.')}</span>
 							</Center>
 						</Footer>
 					</div>
