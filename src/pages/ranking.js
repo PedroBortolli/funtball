@@ -84,9 +84,9 @@ function Ranking() {
 				</FlexContainer>
 				<RankingContainer>
 					{_switch ?
-						<RankingTable ranking={winsRanking} title='Wins' />
+						<RankingTable ranking={winsRanking} title={i18n('Wins')} />
 						:
-						<RankingTable ranking={pointsRanking} title='Points' />
+						<RankingTable ranking={pointsRanking} title={i18n('Points')} />
 					}
 				</RankingContainer>
 			</div>
