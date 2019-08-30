@@ -46,8 +46,8 @@ const ImgLinks = styled.div`
 	margin-top: 36px;
 	> :not(:last-child) {margin-right: 16px}
 `
-const Footer = styled.div`
-	margin-top: 36px;
+const Container = styled.div`
+	height: 100%;
 `
 
 function App(props) {
@@ -66,9 +66,14 @@ function App(props) {
 	const forceUpdate = () => update(+ new Date())
 	const gap = 90
 
+	const fullContainer = {display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}
+	const fullFooter = {flex: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center', flexDirection: 'column'}
+
 	let divStyle = {height: '100%', paddingTop: gap}
 	if (menuOpen) divStyle = {height: '100%', top: gap, zIndex: -1, position: 'relative'}
 	if (isDashMobile && (!props.children || props.children.props.route.path !== '/dashboard')) changeDashMobile(false)
+
+	console.log(isMobile(width))
 	return (
 		<AppContainer width={width} height={height}>
 			<Header key={foo} menuOpen={menuOpen} changeMenuOpen={changeMenuOpen} isDashMobile={isDashMobile} />
@@ -77,7 +82,7 @@ function App(props) {
 					React.cloneElement(props.children, props={update: forceUpdate, 
 										isDashMobile: isDashMobile, changeDashMobile: changeDashMobile})
 					:
-					<div>
+					<Container style={!isMobile(width) ? fullContainer : {}}>
 						<Center>
 							{!isMobile(width) ?
 							<h1>{i18n('Welcome to Funtball!')}</h1>
@@ -106,7 +111,7 @@ function App(props) {
 						<Center style={{marginTop: 48}}>
 							<img alt='' src={footballGif} width={120} height={120} />
 						</Center>
-						<Footer>
+						<div style={!isMobile(width) ? fullFooter : {}}>
 							<ImgLinks>
 								<a target='_blank' href="https://github.com/PedroBortolli/funtball" rel='noopener noreferrer' style={{cursor: 'poiinter'}}>
 									<img alt='' src={GitHubLogo} width={42} height={42}/>
@@ -119,8 +124,8 @@ function App(props) {
 								<span>{i18n("Funtball isn't affiliated with the NFL in any manner. Funtball is a recreative project and non-commercial.")}</span>
 								<span>{i18n('All the logos from the 32 teams belong exclusively to the NFL. Funtball is a non-profit purposes project.')}</span>
 							</Center>
-						</Footer>
-					</div>
+						</div>
+					</Container>
 				}
 			</div>
 		</AppContainer>
