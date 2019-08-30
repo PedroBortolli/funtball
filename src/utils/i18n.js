@@ -40,7 +40,20 @@ const translations = {
 	'Password successfully reseted': 'Senha resetada com sucesso',
 	'Confirm': 'Confirmar',
 	"Funtball isn't affiliated with the NFL in any manner. Funtball is a recreative project and non-commercial.": 'Funtball não é afiliado à NFL de modo algum. Funtball é um projeto recreativo e não comercial',
-	'All the logos from the 32 teams belong exclusively to the NFL. Funtball is a non-profit purposes project.': 'Todos os logos dos 32 times pertencem exclusivamente à NFL. Funtball não possui fins lucrativos com tais marcas.'
+	'All the logos from the 32 teams belong exclusively to the NFL. Funtball is a non-profit purposes project.': 'Todos os logos dos 32 times pertencem exclusivamente à NFL. Funtball não possui fins lucrativos com tais marcas.',
+	'How to play': 'Como jogar',
+	'Basics of Funtball': 'Conceitos básicos de Funtball',
+	'Pick': 'Escolha',
+	'Gain +10 points if the team you picked wins the game.': 'Ganhe +10 pontos se o time que você escolheu ganhar seu jogo.',
+	'Score difference': 'Diferença do placar',
+	'Choose the difference between the points scored by the winning team and losing team. If the actual points difference is smaller than what you chose you get points. For example, in the demonstration below we select "< 15". That means we score points if the Seahawks beat the Bengals by 14 points or less. Smaller differences lead to more points scored, may you win.': 'Escolha a diferença entre os pontos conquistados pelo time vencedor e o time perdedor. Se a diferença do jogo for menor do que a escolhida você ganha pontos. Por exemplo, na demonstração abaixo nós selecionamos a opção "< 15". Isso significa que pontuamos se o Seahawks ganhar do Bengals por 14 pontos ou menos. Diferenças menores resultam em mais pontos obtidos, caso você ganhe.',
+	'Double points': 'Dobrar pontos',
+	'If you select this option you instantly lose 15 points from your total Funtball score. Then, if the team you picked wins you get the 15 points back and double up the points gained by your entire pick.': 'Se essa opção for selecionada você instantaneamente perde 15 pontos de sua pontuação total. Então, se o time que você escolheu ganhar os 15 pontos são retornados e os pontos ganhos de sua escolha completa são dobrados.',
+	'Tip': 'Dica',
+	'As you make your pick, a points preview will be displayed on the left, telling the amount of points you get if you are right about your entire selection.': 'Conforme suas escolhas são feitas, uma previsão de pontos é mostrada à esquerda, dizendo quantos pontos você ganhará se estiver certo sobre toda a sua escolha.',
+	'Another way to score points is by win streaking the results of a given team.': 'Outro jeito de pontuar é entrando em uma sequência de acertos dos resultados de times.',
+	"For example, if two weeks ago you picked the Patriots to win and they did, and last week you picked them to lose and they did, you are now in a 2 games streak for the Patriots. That means that if you get the verdict of the next Patriots' game right again you get +2 extra points for that. Streaks stack up to 3 only.": 'Por exemplo, se duas semanas atrás você escolheu que o Patriots ganharia e eles ganharam, e na semana anterior você escolheu que perderiam e de fato perderam, você está agora numa sequência de 2 jogos com o Patriots. Isso significa que se você acertar novamente o veredicto do próximo jogo do Patriots você ganhará +2 pontos por isso. Sequências acumulam até 3 jogos.',
+	'The two footballs below the Patriots helmet indicate that your current streak is 2.': 'As duas bolas abaixo do capacete do Patriots indicam que sua sequência atual é de 2 jogos.'
 }
 
 function i18n(str) {

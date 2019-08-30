@@ -10,6 +10,9 @@ import i18n from './utils/i18n'
 import footballGif from './assets/loadings/5.gif'
 import GitHubLogo from './assets/github-logo.png'
 import TwitterLogo from './assets/twitter-logo.png'
+import selection from './assets/selection.gif'
+import streakExample from './assets/streak-example.PNG'
+import differencePts from './assets/difference-pts.png'
 
 const AppContainer = styled.div`
 	width: ${props => props.width > 1005 ? '1006px' : '100%'};
@@ -49,6 +52,42 @@ const ImgLinks = styled.div`
 const Container = styled.div`
 	height: 100%;
 `
+const Rules = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	.selectionGif {
+		margin-bottom: 16px;
+		width: 350px;
+		height: 206px;
+	}
+	> * p, p {
+		margin-left: 12px;
+		margin-right: 12px;
+		text-align: center;
+		word-break: break-word;
+		max-width: 640px;
+	}
+	.differencePoints {
+		margin-bottom: 8px;
+		width: 350px;
+		height: 66px;
+	}
+	.streakExample {
+		width: 350px;
+		height: 69px;
+		margin: 4px 0px 8px;
+	}
+`
+const Text = styled.div`
+	margin-top: 24px;
+	margin-bottom: 32px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+`
 
 function App(props) {
 	const [width, height] = useScreenSize()
@@ -73,7 +112,6 @@ function App(props) {
 	if (menuOpen) divStyle = {height: '100%', top: gap, zIndex: -1, position: 'relative'}
 	if (isDashMobile && (!props.children || props.children.props.route.path !== '/dashboard')) changeDashMobile(false)
 
-	console.log(isMobile(width))
 	return (
 		<AppContainer width={width} height={height}>
 			<Header key={foo} menuOpen={menuOpen} changeMenuOpen={changeMenuOpen} isDashMobile={isDashMobile} />
@@ -81,6 +119,41 @@ function App(props) {
 				{props.children ?
 					React.cloneElement(props.children, props={update: forceUpdate, 
 										isDashMobile: isDashMobile, changeDashMobile: changeDashMobile})
+					:
+					credentials ?
+					<Rules>
+						<h2>{i18n('How to play')}</h2>
+						<p>{i18n('Basics of Funtball')}</p>
+
+						<Text>
+							<p>
+								<b>{i18n('Pick')}: </b>
+								{i18n(`Gain +10 points if the team you picked wins the game.`)}
+							</p>
+							<p>
+								<b>{i18n('Score difference')}: </b>
+								{i18n('Choose the difference between the points scored by the winning team and losing team. If the actual points difference is smaller than what you chose you get points. For example, in the demonstration below we select "< 15". That means we score points if the Seahawks beat the Bengals by 14 points or less. Smaller differences lead to more points scored, may you win.')}
+							</p>
+							<img className="differencePoints" src={differencePts} />
+							<p style={{marginTop: 8}}>
+								<b>{i18n('Double points')}: </b>
+								{i18n('If you select this option you instantly lose 15 points from your total Funtball score. Then, if the team you picked wins you get the 15 points back and double up the points gained by your entire pick.')}
+							</p>
+						</Text>
+
+						<img className="selectionGif" src={selection} />
+
+						<p><b>{i18n('Tip')}: </b>{i18n('As you make your pick, a points preview will be displayed on the left, telling the amount of points you get if you are right about your entire selection.')}</p>
+
+						<hr style={{width: '100%', marginBottom: 28}} />
+
+						<p>{i18n('Another way to score points is by win streaking the results of a given team.')}</p>
+						<p>{i18n("For example, if two weeks ago you picked the Patriots to win and they did, and last week you picked them to lose and they did, you are now in a 2 games streak for the Patriots. That means that if you get the verdict of the next Patriots' game right again you get +2 extra points for that. Streaks stack up to 3 only.")}</p>
+
+						<img className="streakExample" src={streakExample} />
+
+						<p>{i18n('The two footballs below the Patriots helmet indicate that your current streak is 2.')}</p>
+					</Rules>
 					:
 					<Container style={!isMobile(width) ? fullContainer : {}}>
 						<Center>
