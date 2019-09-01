@@ -58,8 +58,8 @@ const translations = {
 
 function i18n(str) {
 	const lang = localStorage.getItem('i18n')
-	if (!lang || lang !== 'pt-br') return str
-	return translations[str] || str
+	if ((!lang && str in translations) || lang === 'pt-br') return translations[str]
+	return str
 }
 
 export default i18n
