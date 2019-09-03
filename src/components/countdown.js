@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react'
 
+const DAY = 86400000
+
 function Countdown(props) {
 	const date = props.props.date, time = props.props.time, pickPoints = props.props.pickPoints
 	const left = new Date(`${date.substr(0, 10)} ${time.substr(0, 5)} EST`) - 4800000 - new Date()
@@ -25,7 +27,7 @@ function Countdown(props) {
 	const msToTime = ms => {
 		let seconds = Math.floor((ms / 1000) % 60),
 			minutes = Math.floor((ms / (1000 * 60)) % 60),
-			hours = Math.floor((ms / (1000 * 60 * 60)) % 24)
+			hours = Math.floor((ms / (1000 * 60 * 60)))
 		hours = (hours < 10) ? '0' + hours : hours
 		minutes = (minutes < 10) ? '0' + minutes : minutes
 		seconds = (seconds < 10) ? '0' + seconds : seconds
@@ -33,7 +35,7 @@ function Countdown(props) {
 	}
 
 	return (
-		timeLeft < 86400000 &&
+		timeLeft < 2*DAY &&
 		<div style={{gridArea: 'info', marginRight: 8, display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end', marginBottom: 8}}>
 			<span style={{fontSize: 14, fontWeight: 900, color: '#d61609'}}>
 				{timeLeft > 0 ? <span>Locks in &nbsp;{msToTime(timeLeft)}</span> : !hasGameFinished() ? <span>Game locked!</span> : ''}

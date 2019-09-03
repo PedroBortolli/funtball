@@ -264,13 +264,14 @@ function GameCard(props) {
 				</Center>
 			</Teams>
 			<Options style={{cursor: pick ? 'auto' : 'not-allowed'}}>
-				{selectionDiffers() &&
-				<div style={{fontSize: 13, fontWeight: 900, color: '#c69a29', gridArea: 'info', marginRight: 8,
-							display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
-					{i18n('Unsaved changes')}&nbsp;<span aria-labelledby="jsx-a11y/accessible-emoji" role="img">⚠️</span>
-				</div>
+				{selectionDiffers() ?
+					<div style={{fontSize: 13, fontWeight: 900, color: '#c69a29', gridArea: 'info', marginRight: 8,
+								display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
+						{i18n('Unsaved changes')}&nbsp;<span aria-labelledby="jsx-a11y/accessible-emoji" role="img">⚠️</span>
+					</div>
+					:
+					<Countdown props={props} changeChoosable={changeChoosable} />
 				}
-				<Countdown props={props} changeChoosable={changeChoosable} />
 				{typeof props.pickPoints !== 'undefined' &&
 					<div style={{gridArea: 'info', paddingLeft: 38, marginTop: -12, 
 						color: isDifferenceCorrect() ? '#44893b' : 'red'}}>
