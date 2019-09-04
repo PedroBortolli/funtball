@@ -86,7 +86,7 @@ function GameCard(props) {
 	const [originalDifference, changeOriginalDifference] = useState(null)
 	const [allowSameSave, changeAllowSameSave] = useState(true)
 	const [loadingGif, changeLoading] = useState(loading())
-	const [choosable, changeChoosable] = useState(new Date(`${props.date.substr(0, 10)} ${props.time.substr(0, 5)} EST`) - 4800000 - new Date() > 0)
+	const [choosable, changeChoosable] = useState(new Date(`${props.date.substr(0, 10)} ${props.time.substr(0, 5)}-0500`) - 4800000 - new Date() > 0)
 	const [width] = useScreenSize()
 
 	useEffect(() => {
@@ -209,7 +209,7 @@ function GameCard(props) {
 	}
 	
 	const getUserDate = () => {
-		const utcDate = new Date(`${props.date.substr(0, 10)} ${props.time.substr(0, 5)} EST`).toLocaleString("en-US", {timeZone: "UTC"})
+		const utcDate = new Date(`${props.date.substr(0, 10)} ${props.time.substr(0, 5)}-0500`).toLocaleString("en-US", {timeZone: "UTC"})
 		const offset = new Date().getTimezoneOffset() + 60
 		if (utcDate) {
 			const date = new Date(new Date(utcDate).getTime() - offset * 60 * 1000)
@@ -221,6 +221,7 @@ function GameCard(props) {
 		return [null, null]
 	}
 
+	const [formattedDate, formattedTime] = getUserDate()
 	return (
 		saving ?
 			<div style={{width: Math.min(480, width), minHeight: 94*getScale(), maxHeight: 94*getScale(),
@@ -241,8 +242,8 @@ function GameCard(props) {
 
 				<Center style={{gridArea: 'info', fontSize: 11}}>
 					<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-						<div>{getUserDate()[0]}</div>
-						<div>{getUserDate()[1]}</div>
+						<div>{formattedDate}</div>
+						<div>{formattedTime}</div>
 					</div>
 				</Center>
 

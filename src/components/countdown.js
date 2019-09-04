@@ -5,7 +5,7 @@ const DAY = 86400000
 
 function Countdown(props) {
 	const date = props.props.date, time = props.props.time, pickPoints = props.props.pickPoints
-	const left = new Date(`${date.substr(0, 10)} ${time.substr(0, 5)} EST`) - 4800000 - new Date()
+	const left = new Date(`${date.substr(0, 10)} ${time.substr(0, 5)}-0500`) - 4800000 - new Date()
 	const [timeLeft, changeTimeLeft] = useState(left)
 
 	useEffect(() => {
