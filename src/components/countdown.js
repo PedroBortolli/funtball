@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import i18n from '../utils/i18n'
 
 const DAY = 86400000
 
@@ -38,7 +39,7 @@ function Countdown(props) {
 		timeLeft < 2*DAY &&
 		<div style={{gridArea: 'info', marginRight: 8, display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end', marginBottom: 8}}>
 			<span style={{fontSize: 14, fontWeight: 900, color: '#d61609'}}>
-				{timeLeft > 0 ? <span>Locks in &nbsp;{msToTime(timeLeft)}</span> : !hasGameFinished() ? <span>Game locked!</span> : ''}
+				{timeLeft > 0 ? <span>{i18n('Locks in')} &nbsp;{msToTime(timeLeft)}</span> : !hasGameFinished() ? <span>{i18n('Game locked!')}</span> : ''}
 			</span>
 		</div>
 	)
