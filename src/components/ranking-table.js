@@ -50,7 +50,7 @@ const Pages = styled.div`
 	> p {color: ${primaryColor};}
 `
 
-function RankingTable({ranking = [], title = 'Ranking', itemsPer = 10}) {
+function RankingTable({ranking = [], title = 'Ranking', itemsPer = 100}) {
 	const [page, changePage] = useState(1)
 
 	const entries = []
