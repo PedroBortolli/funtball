@@ -252,8 +252,8 @@ function GameCard(props) {
 
 				{typeof props.homeScore !== 'undefined' && typeof props.awayScore !== 'undefined' &&
 					<div style={{gridArea: 'gameScore', display: 'flex', justifyContent: 'space-around', fontSize: 18, color: '#591006'}}>
-						<span style={{fontWeight: props.awayScore > props.homeScore ? 900 : 100}}>{props.awayScore}</span>
-						<span style={{fontWeight: props.homeScore > props.awayScore ? 900 : 100}}>{props.homeScore}</span>
+						<span style={{fontWeight: props.awayScore > props.homeScore ? 900 : 400}}>{props.awayScore}</span>
+						<span style={{fontWeight: props.homeScore > props.awayScore ? 900 : 400}}>{props.homeScore}</span>
 					</div>
 				}
 

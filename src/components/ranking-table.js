@@ -55,7 +55,7 @@ function RankingTable({ranking = [], title = 'Ranking', username = null, itemsPe
 
 	const entries = []
 	ranking.forEach((user, i) => {
-		entries.push(<div key={i+1} style={{fontWeight: user.username === username ? 900: 100}}>
+		entries.push(<div key={i+1} style={{fontWeight: user.username === username ? 900: 400}}>
 			<RankName>
 				<div>{i+1}.</div>
 				<div style={{fontSize: user.username.length > 20 ? 12 : 16}}>
