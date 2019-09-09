@@ -8,6 +8,7 @@ import Countdown from './countdown'
 import streakIcon from '../assets/streak-icon.png'
 import useScreenSize from '../hooks/useScreenSize'
 import i18n from '../utils/i18n'
+import fullName from '../utils/teams-names'
 import {url} from '../utils/constants'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
@@ -237,8 +238,8 @@ function GameCard(props) {
 				{pts !== 0 && `${pts > 0 ? '+': '‒'} ${Math.abs(pts)}`}
 			</Icon>
 			<Teams>
-				<img alt='' src={helmets[props.away + '.png']} width="72" height="72" style={{cursor: 'pointer', 
-					opacity: setOpacity(props.away), gridArea: 'awayTeam', transition: 'opacity 0.3s'}}
+				<img alt={fullName(props.away)} title={fullName(props.away)} src={helmets[props.away + '.png']} width="72" height="72" 
+					style={{cursor: 'pointer', opacity: setOpacity(props.away), gridArea: 'awayTeam', transition: 'opacity 0.3s'}}
 					onClick={() => changePick(props.away)} className="awayTeam"
 				/>
 
@@ -256,8 +257,8 @@ function GameCard(props) {
 					</div>
 				}
 
-				<img alt='' src={helmets[props.home + '2.png']} width="72" height="72" style={{cursor: 'pointer', 
-					opacity: setOpacity(props.home), gridArea: 'homeTeam', transition: 'opacity 0.3s'}}
+				<img alt={fullName(props.home)} title={fullName(props.home)} src={helmets[props.home + '2.png']} width="72" height="72" 
+					style={{cursor: 'pointer', opacity: setOpacity(props.home), gridArea: 'homeTeam', transition: 'opacity 0.3s'}}
 					onClick={() => changePick(props.home)}
 				/>
 
