@@ -109,7 +109,7 @@ function GameCard(props) {
 			let actualPoints = props.pickPoints + (props.streakAway || 0) + (props.streakHome || 0)
 			if (typeof props.differencePoints !== 'undefined')
 				actualPoints += props.differencePoints
-			if (!props.pickPoints) return 0
+			if (!props.pickPoints) return props.double ? -15 : 0
 			return actualPoints * (props.double ? 2 : 1)
 		}
 		let achievablePoints = 0
@@ -119,6 +119,7 @@ function GameCard(props) {
 			achievablePoints += props.streakAway + props.streakHome
 			if (double) achievablePoints *= 2
 		}
+		console.log(achievablePoints, double)
 		return achievablePoints
 	}
 
@@ -185,7 +186,7 @@ function GameCard(props) {
 								label: pointsDifference ? `< ${pointsDifference}` : '-'}
 	const getScale = () => {return Math.min(width/480.0, 1.0)}
 	const pts = calcPoints()
-	const iconStyle = hasGameFinished() ? {color: '#44893b'} : {}
+	const iconStyle = hasGameFinished() ? {color: pts > 0 ? '#44893b' : '#de0206'} : {}
 
 	const ValueContainer = ({ children, ...props }) => {
 		let pos = 'flex-end', minWidth = 35
@@ -232,7 +233,7 @@ function GameCard(props) {
 		:
 		<Card scale={getScale()} style={{...props.style, backgroundColor: getBackgroundColor(), pointerEvents: isChoosable()}}>
 			<Icon style={iconStyle}>
-				{pts > 0 && `+ ${pts}`}
+				{pts !== 0 && `${pts > 0 ? '+': '‒'} ${Math.abs(pts)}`}
 			</Icon>
 			<Teams>
 				<img alt='' src={helmets[props.away + '.png']} width="72" height="72" style={{cursor: 'pointer', 
