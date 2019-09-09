@@ -132,7 +132,7 @@ function Dashboard(props) {
 								pick={game.pick} double={game.double} difference={game.difference} 
 								pickPoints={game.pickPoints} differencePoints={game.differencePoints}
 								streakHome={streaks[game['home_team']] || 0} streakAway={streaks[game['away_team']] || 0} 
-								forceUpdate={props.update} authToken={authToken} />
+								homeScore={game.home_score} awayScore={game.away_score} forceUpdate={props.update} authToken={authToken} />
 						</div>
 					})}
 				</Schedule>

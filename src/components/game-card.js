@@ -36,7 +36,7 @@ const Teams = styled.div`
 	grid-template-columns: 6px 72px 104px 72px 6px;
 	grid-template-rows: 66px 22px;
 	grid-template-areas: ". awayTeam info homeTeam ."
-						". awayStreak . homeStreak .";
+						". awayStreak gameScore homeStreak .";
 	font-size: 30px;
 	
 `
@@ -222,6 +222,7 @@ function GameCard(props) {
 		return [null, null]
 	}
 
+	console.log(props)
 	const [formattedDate, formattedTime] = getUserDate()
 	return (
 		saving ?
@@ -247,6 +248,13 @@ function GameCard(props) {
 						<div>{formattedTime}</div>
 					</div>
 				</Center>
+
+				{typeof props.homeScore !== 'undefined' && typeof props.awayScore !== 'undefined' &&
+					<div style={{gridArea: 'gameScore', display: 'flex', justifyContent: 'space-around', fontSize: 18, color: '#591006'}}>
+						<span style={{fontWeight: props.awayScore > props.homeScore ? 900 : 100}}>{props.awayScore}</span>
+						<span style={{fontWeight: props.homeScore > props.awayScore ? 900 : 100}}>{props.homeScore}</span>
+					</div>
+				}
 
 				<img alt='' src={helmets[props.home + '2.png']} width="72" height="72" style={{cursor: 'pointer', 
 					opacity: setOpacity(props.home), gridArea: 'homeTeam', transition: 'opacity 0.3s'}}
