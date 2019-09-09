@@ -50,12 +50,12 @@ const Pages = styled.div`
 	> p {color: ${primaryColor};}
 `
 
-function RankingTable({ranking = [], title = 'Ranking', itemsPer = 100}) {
+function RankingTable({ranking = [], title = 'Ranking', username = null, itemsPer = 100}) {
 	const [page, changePage] = useState(1)
 
 	const entries = []
 	ranking.forEach((user, i) => {
-		entries.push(<div key={i+1}>
+		entries.push(<div key={i+1} style={{fontWeight: user.username === username ? 900: 100}}>
 			<RankName>
 				<div>{i+1}.</div>
 				<div style={{fontSize: user.username.length > 20 ? 12 : 16}}>
@@ -80,12 +80,14 @@ function RankingTable({ranking = [], title = 'Ranking', itemsPer = 100}) {
 		<Table>
 			{entries.slice((page-1)*itemsPer, page*itemsPer).map(entry => {return entry})}
 		</Table>
+		{/*
 		<Pages>
 			{Array(totalPages).fill(0).map((foo, i) => {
 				return <p key={i+1} style={i+1 === page ? disableButton : {cursor: 'pointer'}} 
 						onClick={() => changePage(i+1)}>{i+1}</p>
 			})}
 		</Pages>
+		*/}
 	</div>
 }
 

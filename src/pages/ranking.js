@@ -7,6 +7,7 @@ import i18n from '../utils/i18n'
 import {url} from '../utils/constants'
 import { isMobile } from '../utils/modules'
 import useScreenSize from '../hooks/useScreenSize'
+import { getCredentials } from '../auth/services'
 import Switch from 'react-switch'
 import '../components/css/toggle-switch.css'
 
@@ -51,6 +52,7 @@ function Ranking() {
 	const [ranking, setRanking] = useState([])
 	const [loaded, changeLoaded] = useState(false)
 	const [_switch, toggleSwitch] = useState(false)
+	const [username, setUsername] = useState(null)
 	const [width] = useScreenSize()
 	useEffect(() => {
 		const fetchRanking = async () => {
@@ -62,7 +64,12 @@ function Ranking() {
 				changeLoaded(true)
 			}, Math.max(1, 500-(endReq-beginReq)))
 		}
+		const getUser = async () => {
+			const user = await getCredentials()
+			if (user && user.username) setUsername(user.username)
+		}
 		fetchRanking()
+		getUser()
 	}, [])
 	const pointsRanking = [...ranking.sort((a, b) => {return b.pts - a.pts})]
 	const winsRanking = [...ranking.sort((a, b) => {return b.wins - a.wins})]
@@ -84,16 +91,16 @@ function Ranking() {
 				</FlexContainer>
 				<RankingContainer>
 					{_switch ?
-						<RankingTable ranking={winsRanking} title={i18n('Wins')} />
+						<RankingTable ranking={winsRanking} title={i18n('Wins')} username={username} />
 						:
-						<RankingTable ranking={pointsRanking} title={i18n('Points')} />
+						<RankingTable ranking={pointsRanking} title={i18n('Points')} username={username} />
 					}
 				</RankingContainer>
 			</div>
 		:
 			<RankingContainer>
-				<RankingTable ranking={pointsRanking} title={i18n('Points')} />
-				<RankingTable ranking={winsRanking} title={i18n('Wins')} />
+				<RankingTable ranking={pointsRanking} title={i18n('Points')} username={username} />
+				<RankingTable ranking={winsRanking} title={i18n('Wins')} username={username} />
 			</RankingContainer>
 		}
 	</Center>
