@@ -120,7 +120,6 @@ function GameCard(props) {
 			achievablePoints += props.streakAway + props.streakHome
 			if (double) achievablePoints *= 2
 		}
-		console.log(achievablePoints, double)
 		return achievablePoints
 	}
 
@@ -223,7 +222,6 @@ function GameCard(props) {
 		return [null, null]
 	}
 
-	console.log(props)
 	const [formattedDate, formattedTime] = getUserDate()
 	return (
 		saving ?
