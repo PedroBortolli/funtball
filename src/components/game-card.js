@@ -87,7 +87,7 @@ function GameCard(props) {
 	const [originalDifference, changeOriginalDifference] = useState(null)
 	const [allowSameSave, changeAllowSameSave] = useState(true)
 	const [loadingGif, changeLoading] = useState(loading())
-	const [choosable, changeChoosable] = useState(new Date(`${props.date.substr(0, 10).replace(/-/g, '/')} ${props.time.substr(0, 5)} GMT-0500`) - 4800000 - new Date() > 0)
+	const [choosable, changeChoosable] = useState(new Date(`${props.date.substr(0, 10).replace(/-/g, '/')} ${props.time.substr(0, 5)} GMT-0600`) - 4800000 - new Date() > 0)
 	const [width] = useScreenSize()
 
 	useEffect(() => {
