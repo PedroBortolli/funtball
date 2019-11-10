@@ -210,7 +210,7 @@ function GameCard(props) {
 	}
 	
 	const getUserDate = () => {
-		const utcDate = new Date(`${props.date.substr(0, 10).replace(/-/g, '/')} ${props.time.substr(0, 5)} GMT-0500`).toLocaleString("en-US", {timeZone: "UTC"})
+		const utcDate = new Date(`${props.date.substr(0, 10).replace(/-/g, '/')} ${props.time.substr(0, 5)} GMT-0600`).toLocaleString("en-US", {timeZone: "UTC"})
 		const offset = new Date().getTimezoneOffset() + 60
 		if (utcDate) {
 			const date = new Date(new Date(utcDate).getTime() - offset * 60 * 1000)

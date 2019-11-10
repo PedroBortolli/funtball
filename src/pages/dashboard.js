@@ -77,14 +77,20 @@ function Dashboard(props) {
 				let games = [], promises = []
 				Object.keys(result).forEach(game => {
 					if (typeof result[game] === 'object') {
-						const picks = fetchApi('GET', `${url}/get-pick/${token.username}/${result[game]['game_id']}`, aborters[aborters.length-1].signal)
-						promises.push(picks)
+						//const picks = fetchApi('GET', `${url}/getpick/${token.username}/${result[game]['game_id']}`, aborters[aborters.length-1].signal)
+						//promises.push(picks)
 						result[game].order = `${result[game].game_date.substr(0, 10).replace(/-/g, '/')} ${result[game].game_time} GMT-0600`
 						games.push(result[game])
 					}
 				})
+
 				games.sort((a, b) => new Date(a.order) - new Date(b.order))
-				const allPicks = await Promise.all(promises)
+				games.forEach(game => {
+					const picks = fetchApi('GET', `${url}/get-pick/${token.username}/${game.game_id}`, aborters[aborters.length-1].signal)
+					promises.push(picks)
+				})
+
+				const allPicks = await Promise.all(promises)				
 				allPicks.forEach((picks, i) => {
 					games[i] = {...games[i], ...picks}
 				})
