@@ -183,7 +183,7 @@ function Header({menuOpen, changeMenuOpen, isDashMobile}) {
 					</div>}
 					{credentials && <Link to={{pathname: "/dashboard", upd: updateDashboard}} style={{color: primaryColor}}>{i18n('Dashboard')}</Link>}
 					<Link to="/ranking" style={{color: primaryColor}}>Ranking</Link>
-					<Link to="/hall-of-fame" style={{color: primaryColor}}>{i18n('Hall of Fame')}</Link>
+					<Link to="/hall-of-fame" style={{color: primaryColor, fontSize: 20}}>{i18n('Hall of Fame')}</Link>
 					{!credentials && <Link to="/signup" style={{color: primaryColor}}>{i18n('Sign up')}</Link>}
 					{credentials ?
 						<Link to="/logoff" style={{color: primaryColor}}>{i18n('Logoff')}</Link>
