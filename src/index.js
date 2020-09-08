@@ -12,6 +12,7 @@ import Ranking from './pages/ranking'
 import ResetPassword from './auth/reset-password'
 import 'bootstrap/dist/css/bootstrap.css'
 import {getCredentials} from './auth/services'
+import HallOfFame from './pages/halloffame'
 
 const verifyLogin = () => {
 	const credentials = getCredentials()
@@ -31,6 +32,7 @@ const routing = (
 			<Route path="/confirm-email" component={ConfirmEmail} />
 			<Route path="/ranking" component={Ranking} />
 			<Route path="/reset-password" component={ResetPassword} />
+			<Route path="/hall-of-fame" component={HallOfFame} />
 			<Route component={NotFound} />
 		</Route>
 	</Router>

@@ -55,7 +55,9 @@ const translations = {
 	"For example, if two weeks ago you picked the Patriots to win and they did, and last week you picked them to lose and they did, you are now in a 2 games streak for the Patriots. That means that if you get the verdict of the next Patriots' game right again you get +2 extra points for that. Streaks stack up to 3 only.": 'Por exemplo, se duas semanas atrás você escolheu que o Patriots ganharia e eles ganharam, e na semana anterior você escolheu que perderiam e de fato perderam, você está agora numa sequência de 2 jogos com o Patriots. Isso significa que se você acertar novamente o veredicto do próximo jogo do Patriots você ganhará +2 pontos por isso. Sequências acumulam até 3 jogos.',
 	'The two footballs below the Patriots helmet indicate that your current streak is 2.': 'As duas bolas abaixo do capacete do Patriots indicam que sua sequência atual é de 2 jogos.',
 	'Locks in': 'Encerra em',
-	'Game locked!': 'Palpites encerrados!'
+	'Game locked!': 'Palpites encerrados!',
+	'Hall of Fame': 'Hall da Fama',
+	'Check results from previous Funtball seasons': 'Confira os resultados de temporadas anteriores de Funtball'
 }
 
 function i18n(str) {
