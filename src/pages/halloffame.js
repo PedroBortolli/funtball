@@ -80,7 +80,7 @@ function Ranking() {
 
 	return <Center loaded={loaded}>
 		<h2 style={{marginBottom: 8}}>{i18n('Hall of Fame')}</h2>
-		<p>{i18n('Check results from previous Funtball seasons')}</p>
+		<p style={{textAlign: 'center', margin: '0 12px'}}>{i18n('Check results from previous Funtball seasons')}</p>
 		<h3 style={{marginTop: 16, marginBottom: 16}}>2019</h3>
 		{!loaded ? 
 			<CenterScreen>
