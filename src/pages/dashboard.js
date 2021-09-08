@@ -79,7 +79,7 @@ function Dashboard(props) {
 					if (typeof result[game] === 'object') {
 						//const picks = fetchApi('GET', `${url}/getpick/${token.username}/${result[game]['game_id']}`, aborters[aborters.length-1].signal)
 						//promises.push(picks)
-						result[game].order = `${result[game].game_date.substr(0, 10).replace(/-/g, '/')} ${result[game].game_time} GMT-0500`
+						result[game].order = `${result[game].game_date.substr(0, 10).replace(/-/g, '/')} ${result[game].game_time} GMT-0600`
 						games.push(result[game])
 					}
 				})
@@ -122,8 +122,8 @@ function Dashboard(props) {
 				<FontAwesomeIcon icon={faChevronLeft} onClick={() => week > 1 && changeWeek(week-1)} 
 					style={{cursor: week > 1 ? 'pointer' : 'auto', opacity: week > 1 ? 1 : 0}} />
 				<h1 style={{color: primaryColor, fontWeight: 900}}>{week > 0 ? `${i18n('Week')} ${week}` : `Pre-Season`}</h1>
-				<FontAwesomeIcon icon={faChevronRight} onClick={() => week < 17 && changeWeek(week+1)} 
-				style={{cursor: week < 17 ? 'pointer' : 'auto', opacity: week < 17 ? 1 : 0}} />
+				<FontAwesomeIcon icon={faChevronRight} onClick={() => week < 18 && changeWeek(week+1)} 
+				style={{cursor: week < 18 ? 'pointer' : 'auto', opacity: week < 18 ? 1 : 0}} />
 			</Center>
 
 			{!loaded ? 
