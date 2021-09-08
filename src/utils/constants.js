@@ -20,6 +20,6 @@ export const getWeek = () => {
     if (current < + new Date(2021, 11, 15, 5)) return 14
     if (current < + new Date(2021, 11, 22, 5)) return 15
     if (current < + new Date(2021, 11, 31, 5)) return 16
-    if (current < + new Date(2021, 11, 31, 5)) return 17
+    if (current < + new Date(2022, 0, 5, 5)) return 17
     return 18
 }
